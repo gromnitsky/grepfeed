@@ -65,13 +65,34 @@ feedparser.on('meta', function() {
     }
 })
 
+let article_count = 1
+let article_tprop = {}
+
 feedparser.on('readable', function() {
     let stream = this
     let item
 
     while ((item = stream.read()) ) {
-	console.log(item)
+	if (article_count > 1) console.log("")
+
+//	console.log(item)
+	feed.article(item, article_count).forEach( (idx) => {
+	    let key = Object.keys(idx)[0]
+	    if (article_tprop[key]) return
+	    if (idx[key]) {
+		if (Array.isArray(idx[key]) && idx[key].length === 0) return
+		if (key.match(/\.__text$/))
+		    article_tprop[key.split(".")[0]] = true
+		console.log(`${key}: ${Array.isArray(idx[key]) ? idx[key].join(", ") : idx[key]}`)
+	    }
+	})
+
+	article_count++
     }
+})
+
+feedparser.on('end', function() {
+//    console.log("END")
 })
 
 process.stdin.pipe(feedparser)
