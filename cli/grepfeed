@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+
+'use strict';
+
+let path = require('path')
+let util = require('util')
+
+let minimist = require('minimist')
+let FeedParser = require('feedparser')
+//let Mustache = require('mustache')
+
+let feed = require('../lib/feed')
+
+let errx = function(msg) {
+    console.error(path.basename(process.argv[1]) + " error: " + msg)
+    process.exit(1)
+}
+
+Array.prototype.indexOf_object_key = function(str) {
+    if (!str || str.match(/^\s*$/)) return -1
+    let idx = 0
+    for (idx = 0; idx < this.length; ++idx) {
+	let key = Object.keys(this[idx])[0]
+	if (key === str) return idx
+    }
+    return -1
+}
+
+let argv = minimist(process.argv.slice(2),
+		    { boolean: ['v', 'e', 'x', 'm', 'debug'],
+		      string: ['d', 'c', 'n'] })
+//console.log(argv)
+
+/*
+  filter by:
+
+  -d [-]date[,date]
+  -c categories
+
+  by default (in this order): title, summary, description, author
+
+  -e: print only articles w/ enclosures
+  -n digit: number of articles to print
+  -x: print xml
+  -m: print only meta
+*/
+
+let feedparser = new FeedParser({ addmeta: false })
+
+feedparser.on('error', function(e) {
+    errx(`feedparser: ${e.message}`)
+})
+
+feedparser.on('meta', function() {
+    if (argv.m) {
+	if (argv.debug) {
+	    console.log(util.inspect(this.meta, { depth: null }))
+	} else {
+	    feed.meta2arr(this.meta).forEach( (idx) => {
+		let key = Object.keys(idx)[0]
+		if (idx[key]) console.log(`${key}: ${idx[key]}`)
+	    })
+	}
+	process.exit(0)
+    }
+})
+
+feedparser.on('readable', function() {
+    let stream = this
+    let item
+
+    while ((item = stream.read()) ) {
+	console.log(item)
+    }
+})
+
+process.stdin.pipe(feedparser)
