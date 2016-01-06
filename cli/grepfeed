@@ -16,14 +16,8 @@ let errx = function(msg) {
     process.exit(1)
 }
 
-Array.prototype.indexOf_object_key = function(str) {
-    if (!str || str.match(/^\s*$/)) return -1
-    let idx = 0
-    for (idx = 0; idx < this.length; ++idx) {
-	let key = Object.keys(this[idx])[0]
-	if (key === str) return idx
-    }
-    return -1
+Array.prototype.toString = function() {
+    return this.join(", ")
 }
 
 let argv = minimist(process.argv.slice(2),
@@ -79,11 +73,10 @@ feedparser.on('readable', function() {
 	feed.article(item, article_count).forEach( (idx) => {
 	    let key = Object.keys(idx)[0]
 	    if (article_tprop[key]) return
+
 	    if (idx[key]) {
-		if (Array.isArray(idx[key]) && idx[key].length === 0) return
-		if (key.match(/\.__text$/))
-		    article_tprop[key.split(".")[0]] = true
-		console.log(`${key}: ${Array.isArray(idx[key]) ? idx[key].join(", ") : idx[key]}`)
+		if (key.match(/\.__text$/)) article_tprop[key.split(".")[0]] = true
+		console.log(`${key}: ${idx[key]}`)
 	    }
 	})
 
