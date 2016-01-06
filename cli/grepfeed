@@ -4,6 +4,7 @@
 
 let path = require('path')
 let util = require('util')
+const EventEmitter = require('events')
 
 let minimist = require('minimist')
 let FeedParser = require('feedparser')
@@ -20,11 +21,111 @@ Array.prototype.toString = function() {
     return this.join(", ")
 }
 
-let argv = minimist(process.argv.slice(2),
-		    { boolean: ['v', 'e', 'x', 'm', 'debug'],
-		      string: ['d', 'c', 'n'] })
-//console.log(argv)
+class MyFeedParser {
 
+    // opts -- a result from minimist
+    constructor(opts) {
+	this.opts = opts
+
+	this.event = new EventEmitter()
+	this.event.once('meta', () => {
+	    this.print_meta(this.meta)
+	    process.exit(0)
+	})
+
+	let that = this
+	this.fp = new FeedParser({ addmeta: false })
+
+	this.fp.on('error', function(e) {
+	    let msg = e.message
+	    if (that.opts.debug) msg += "\n" + e.stack
+	    errx(`feedparser: ${msg}`)
+	})
+
+	this.fp.on('end', function(e) {
+	    that.done = true
+	    // react on -m CLO only after all articles were analyzed
+	    if (that.opts.m) that.event.emit("meta")
+	})
+
+	this.fp.on('meta', function() {
+	    if (that.opts.m && that.opts.debug)
+		console.log(util.inspect(this.meta, { depth: null }))
+	    that.meta = feed.meta2arr(this.meta)
+	})
+
+	this.fp.on('readable', function() {
+	    let stream = this
+	    let item
+
+	    while ((item = stream.read()) ) {
+		//console.log(item)
+		that._article_count++
+		let r = feed.article(item, that._article_count)
+		that.articles.push(r)
+		if (that.is_no_filter_mode()) return
+
+		let article = feed.article_match(r, this.opts)
+		if (article) that.print_article(article)
+	    }
+	})
+    }
+
+    reset() {
+	this._article_count = 0
+	this._article_text_prop = {}
+	this.articles = []
+	this.meta = []
+	this.done = false
+    }
+
+    parse(from) {
+	this.reset()
+	from.pipe(this.fp)
+    }
+
+    is_no_filter_mode() {
+	return this.opts.m
+    }
+
+    print_meta(data) {
+	data.forEach( (idx) => {
+	    let key = Object.keys(idx)[0]
+	    if (idx[key]) console.log(`${key}: ${idx[key]}`)
+	})
+	let encl = {
+	    articles: 0,
+	    total: 0
+	}
+	this.articles.forEach( (item) => {
+	    let idx = item.indexOf_object_key("enclosures")
+	    let e = item[idx].enclosures
+	    if (!e) return
+	    encl.articles++
+	    encl.total += e.length
+	})
+	if (encl.total)
+	    console.log(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}`)
+    }
+
+    print_article(article) {
+	if (this._article_count > 1) console.log("")
+
+	article.forEach( (idx) => {
+	    let key = Object.keys(idx)[0]
+	    if (this._article_text_prop[key]) return
+
+	    if (idx[key]) {
+		if (key.match(/\.__text$/))
+		    this._article_text_prop[key.split(".")[0]] = true
+		console.log(`${key}: ${idx[key]}`)
+	    }
+	})
+    }
+}
+
+
+// main
 /*
   filter by:
 
@@ -39,53 +140,10 @@ let argv = minimist(process.argv.slice(2),
   -m: print only meta
 */
 
-let feedparser = new FeedParser({ addmeta: false })
+let argv = minimist(process.argv.slice(2),
+		    { boolean: ['v', 'e', 'x', 'm', 'debug'],
+		      string: ['d', 'c', 'n'] })
+//console.log(argv)
 
-feedparser.on('error', function(e) {
-    errx(`feedparser: ${e.message}`)
-})
-
-feedparser.on('meta', function() {
-    if (argv.m) {
-	if (argv.debug) {
-	    console.log(util.inspect(this.meta, { depth: null }))
-	} else {
-	    feed.meta2arr(this.meta).forEach( (idx) => {
-		let key = Object.keys(idx)[0]
-		if (idx[key]) console.log(`${key}: ${idx[key]}`)
-	    })
-	}
-	process.exit(0)
-    }
-})
-
-let article_count = 1
-let article_tprop = {}
-
-feedparser.on('readable', function() {
-    let stream = this
-    let item
-
-    while ((item = stream.read()) ) {
-	if (article_count > 1) console.log("")
-
-//	console.log(item)
-	feed.article(item, article_count).forEach( (idx) => {
-	    let key = Object.keys(idx)[0]
-	    if (article_tprop[key]) return
-
-	    if (idx[key]) {
-		if (key.match(/\.__text$/)) article_tprop[key.split(".")[0]] = true
-		console.log(`${key}: ${idx[key]}`)
-	    }
-	})
-
-	article_count++
-    }
-})
-
-feedparser.on('end', function() {
-//    console.log("END")
-})
-
-process.stdin.pipe(feedparser)
+let mfp = new MyFeedParser(argv)
+mfp.parse(process.stdin)
