@@ -26,6 +26,7 @@ class MyFeedParser {
     // opts -- a result from minimist
     constructor(opts) {
 	this.opts = opts
+	this.expect = !opts.v	// see fp 'readable' event handler below
 
 	this.event = new EventEmitter()
 	this.event.once('meta', () => {
@@ -73,7 +74,8 @@ class MyFeedParser {
 		    return
 		}
 
-		if (feed.article_match(r, that.opts)) {
+		// by default, that.expect is true, but it's false with -v CLO
+		if (feed.article_match(r, that.opts) === that.expect) {
 		    that._articles_matched++
 		    that.print_article(r)
 		}
