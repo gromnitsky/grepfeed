@@ -160,3 +160,9 @@ let argv = minimist(process.argv.slice(2),
 
 let mfp = new MyFeedParser(argv)
 mfp.parse(process.stdin)
+
+process.on("exit", () => {
+    if (!argv.m && mfp._articles_matched === 0) {
+	process.exit(1)
+    }
+})
