@@ -30,6 +30,8 @@ class MyFeedParser {
 	this.event = new EventEmitter()
 	this.event.once('meta', () => {
 	    this.print_meta(this.meta)
+	})
+	this.event.once('exit', () => {
 	    process.exit(0)
 	})
 
@@ -65,8 +67,16 @@ class MyFeedParser {
 		that.articles.push(r)
 		if (that.is_no_filter_mode()) return
 
-		let article = feed.article_match(r, this.opts)
-		if (article) that.print_article(article)
+		// -n CLO
+		if (that.opts.n && that._articles_matched >= that.opts.n) {
+		    that.event.emit("exit")
+		    return
+		}
+
+		if (feed.article_match(r, that.opts)) {
+		    that._articles_matched++
+		    that.print_article(r)
+		}
 	    }
 	})
     }
@@ -74,6 +84,7 @@ class MyFeedParser {
     reset() {
 	this._article_count = 0
 	this._article_text_prop = {}
+	this._articles_matched = 0
 	this.articles = []
 	this.meta = []
 	this.done = false
@@ -98,18 +109,18 @@ class MyFeedParser {
 	    total: 0
 	}
 	this.articles.forEach( (item) => {
-	    let idx = item.indexOf_object_key("enclosures")
-	    let e = item[idx].enclosures
+	    let e = item.find_by_object_key("enclosures")
 	    if (!e) return
 	    encl.articles++
 	    encl.total += e.length
 	})
 	if (encl.total)
 	    console.log(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}`)
+	process.exit(0)
     }
 
     print_article(article) {
-	if (this._article_count > 1) console.log("")
+	if (this._articles_matched > 1) console.log("")
 
 	article.forEach( (idx) => {
 	    let key = Object.keys(idx)[0]
