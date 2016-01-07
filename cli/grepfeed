@@ -102,11 +102,7 @@ class MyFeedParser {
 	return this.opts.m
     }
 
-    print_meta(data) {
-	data.forEach( (idx) => {
-	    let key = Object.keys(idx)[0]
-	    if (idx[key]) console.log(`${key}: ${idx[key]}`)
-	})
+    encl_stat() {
 	let encl = {
 	    articles: 0,
 	    total: 0
@@ -117,6 +113,15 @@ class MyFeedParser {
 	    encl.articles++
 	    encl.total += e.length
 	})
+	return encl
+    }
+
+    print_meta(data) {
+	data.forEach( (idx) => {
+	    let key = Object.keys(idx)[0]
+	    if (idx[key]) console.log(`${key}: ${idx[key]}`)
+	})
+	let encl = this.encl_stat()
 	if (encl.total)
 	    console.log(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}`)
 	process.exit(0)
