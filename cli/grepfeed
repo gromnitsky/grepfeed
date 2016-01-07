@@ -16,15 +16,20 @@
 'use strict';
 
 let path = require('path')
+let util = require('util')
 
 let minimist = require('minimist')
-//let Mustache = require('mustache')
+let xml_encode = require('ent/encode')
 
 let feed = require('../lib/feed')
 
 let errx = function(msg) {
     console.error(path.basename(process.argv[1]) + " error: " + msg)
     process.exit(1)
+}
+
+Date.prototype.toString = function() {
+    return this.toUTCString()
 }
 
 Array.prototype.toString = function() {
@@ -58,14 +63,89 @@ class MyGrep extends feed.Grep {
 
 	article.forEach( (idx) => {
 	    let key = Object.keys(idx)[0]
+	    if (!idx[key]) return
 	    if (this._article_text_prop[key]) return
 
-	    if (idx[key]) {
-		if (key.match(/\.__text$/))
-		    this._article_text_prop[key.split(".")[0]] = true
-		console.log(`${key}: ${idx[key]}`)
-	    }
+	    if (key.match(/\.__text$/))
+		this._article_text_prop[key.split(".")[0]] = true
+
+	    console.log(`${key}: ${idx[key]}`)
 	})
+    }
+}
+
+class MyGrepXML extends MyGrep {
+    constructor(opts) {
+	super(opts)
+
+	Array.prototype.toString = function() {
+	    return this.join("\n")
+	}
+	feed.Enclosure.prototype.toString = function() {
+	    return `<enclosure url="${this.obj.url}" type="${this.obj.type}" length="${this.obj.length}" />`
+	}
+	feed.Category.prototype.toString = function() {
+	    return `<category>${xml_encode(this.name)}</category>`
+	}
+
+	this.event.once("end", () => {
+	    if (this._articles_matched !== 0)
+		console.log("\n</channel>\n</rss>")
+	})
+    }
+
+    print_meta(data) {
+	console.log(`<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>`)
+	data.forEach( (idx) => {
+	    let key = Object.keys(idx)[0]
+	    if (!idx[key] || key.match(/^itunes:/)) return
+	    if (key === "author") {
+		console.log(`<!-- ${key}: ${xml_encode(idx[key])} -->`)
+		return
+	    }
+	    if (key === "categories") {
+		console.log(idx[key].toString())
+		return
+	    }
+	    console.log(`<${key}>${xml_encode(idx[key].toString())}</${key}>`)
+	})
+
+	let encl = this.encl_stat()
+	if (encl.total)
+	    console.log(`<!-- enclosures: ${encl.total}/${encl.articles}/${this.articles.length} -->`)
+    }
+
+    print_article(article) {
+	if (this._articles_matched === 1) this.print_meta(this.meta)
+
+	console.log("\n<item>")
+	article.forEach( (idx) => {
+	    let key = Object.keys(idx)[0]
+	    if (!idx[key]) return
+	    if (this._article_text_prop[key]) return
+
+	    if (key.match(/\.__text$/))
+		this._article_text_prop[key.split(".")[0]] = true
+
+	    let val = xml_encode(idx[key].toString())
+
+	    if (key.match(/^summary/)) return // rss 2.0 lacks it
+	    if (key.match(/^(#|author)$/)) {
+		console.log(`<!-- ${key}: ${val} -->`)
+		return
+	    }
+	    if (key.match(/^(categories|enclosures)$/)) {
+		console.log(idx[key].toString())
+		return
+	    }
+	    if (key.match(/^description/)) key = "description"
+
+	    console.log(`<${key}>${val}</${key}>`)
+	})
+
+	console.log("</item>")
     }
 }
 
@@ -77,10 +157,9 @@ let argv = minimist(process.argv.slice(2),
 		      string: ['d', 'c', 'n'] })
 if (argv.debug) console.error(argv)
 
-let mfp = new MyGrep(argv)
+let mfp = argv.x ? new MyGrepXML(argv) : new MyGrep(argv)
 mfp.parse(process.stdin)
-mfp.event.on("end", () => {
-    if (!argv.m && mfp._articles_matched === 0) {
-	process.exit(1)
-    }
+mfp.event.once("end", () => {
+    if (!argv.m && mfp._articles_matched === 0) process.exit(1)
+    process.exit(0)
 })
