@@ -157,7 +157,7 @@ class MyFeedParser {
 let argv = minimist(process.argv.slice(2),
 		    { boolean: ['v', 'e', 'x', 'm', 'debug'],
 		      string: ['d', 'c', 'n'] })
-//console.error(argv)
+if (argv.debug) console.error(argv)
 
 let mfp = new MyFeedParser(argv)
 mfp.parse(process.stdin)

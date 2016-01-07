@@ -34,6 +34,7 @@ suite('Feed', function() {
     test('category_match', function() {
 	assert.equal(true, feed.category_match())
 	assert.equal(false, feed.category_match("1", null))
+	assert.equal(false, feed.category_match("1", []))
 	assert.equal(true, feed.category_match(null, 1))
 
 	assert.equal(false, feed.category_match("foo", []))
