@@ -1,13 +1,23 @@
 #!/usr/bin/env node
+/*
+  filter by:
+
+  -d [-]date[,date]
+  -c categories
+
+  by default (in this order): title, summary, description, author
+
+  -e: print only articles w/ enclosures
+  -n digit: number of articles to print
+  -x: print xml
+  -m: print only meta
+*/
 
 'use strict';
 
 let path = require('path')
-let util = require('util')
-const EventEmitter = require('events')
 
 let minimist = require('minimist')
-let FeedParser = require('feedparser')
 //let Mustache = require('mustache')
 
 let feed = require('../lib/feed')
@@ -21,99 +31,15 @@ Array.prototype.toString = function() {
     return this.join(", ")
 }
 
-class MyFeedParser {
-
-    // opts -- a result from minimist
-    constructor(opts) {
-	this.opts = opts
-	this.expect = !opts.v	// see fp 'readable' event handler below
-
-	this.event = new EventEmitter()
-	this.event.once('meta', () => {
-	    this.print_meta(this.meta)
-	})
-	this.event.once('exit', () => {
-	    process.exit(0)
-	})
-
-	let that = this
-	this.fp = new FeedParser({ addmeta: false })
-
-	this.fp.on('error', function(e) {
-	    let msg = e.message
-	    if (that.opts.debug) msg += "\n" + e.stack
-	    errx(`feedparser: ${msg}`)
-	})
-
-	this.fp.on('end', function(e) {
-	    that.done = true
-	    // react on -m CLO only after all articles were analyzed
-	    if (that.opts.m) that.event.emit("meta")
-	})
-
-	this.fp.on('meta', function() {
-	    if (that.opts.m && that.opts.debug)
-		console.log(util.inspect(this.meta, { depth: null }))
-	    that.meta = feed.meta2arr(this.meta)
-	})
-
-	this.fp.on('readable', function() {
-	    let stream = this
-	    let item
-
-	    while ((item = stream.read()) ) {
-		that._article_count++
-		let r = feed.article(item, that._article_count)
-		that.articles.push(r)
-		if (that.is_no_filter_mode()) return
-
-		// -n CLO
-		if (that.opts.n && that._articles_matched >= that.opts.n) {
-		    that.event.emit("exit")
-		    return
-		}
-
-		// by default, that.expect is true, but it's false with -v CLO
-		if (feed.article_match(r, that.opts) === that.expect) {
-		    that._articles_matched++
-		    that.print_article(r)
-		    if (that.opts.debug)
-			console.log(util.inspect(item, { depth: null }))
-		}
-	    }
-	})
+class MyGrep extends feed.Grep {
+    event_exit() {
+	process.exit(0)
     }
 
-    reset() {
-	this._article_count = 0
-	this._article_text_prop = {}
-	this._articles_matched = 0
-	this.articles = []
-	this.meta = []
-	this.done = false
-    }
-
-    parse(from) {
-	this.reset()
-	from.pipe(this.fp)
-    }
-
-    is_no_filter_mode() {
-	return this.opts.m
-    }
-
-    encl_stat() {
-	let encl = {
-	    articles: 0,
-	    total: 0
-	}
-	this.articles.forEach( (item) => {
-	    let e = item.find_by_object_key("enclosures")
-	    if (!e) return
-	    encl.articles++
-	    encl.total += e.length
-	})
-	return encl
+    event_fp_error(err) {
+	let msg = err.message
+	if (this.opts.debug) msg += "\n" + err.stack
+	errx(`feedparser: ${msg}`)
     }
 
     print_meta(data) {
@@ -145,29 +71,15 @@ class MyFeedParser {
 
 
 // main
-/*
-  filter by:
-
-  -d [-]date[,date]
-  -c categories
-
-  by default (in this order): title, summary, description, author
-
-  -e: print only articles w/ enclosures
-  -n digit: number of articles to print
-  -x: print xml
-  -m: print only meta
-*/
 
 let argv = minimist(process.argv.slice(2),
 		    { boolean: ['v', 'e', 'x', 'm', 'debug'],
 		      string: ['d', 'c', 'n'] })
 if (argv.debug) console.error(argv)
 
-let mfp = new MyFeedParser(argv)
+let mfp = new MyGrep(argv)
 mfp.parse(process.stdin)
-
-process.on("exit", () => {
+mfp.event.on("end", () => {
     if (!argv.m && mfp._articles_matched === 0) {
 	process.exit(1)
     }
