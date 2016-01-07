@@ -48,10 +48,9 @@ class MyGrep extends feed.Grep {
     }
 
     print_meta(data) {
-	data.forEach( (idx) => {
-	    let key = Object.keys(idx)[0]
-	    if (idx[key]) console.log(`${key}: ${idx[key]}`)
-	})
+	for (let key in data) {
+	    if (data[key]) console.log(`${key}: ${data[key]}`)
+	}
 	let encl = this.encl_stat()
 	if (encl.total)
 	    console.log(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}`)
@@ -61,16 +60,15 @@ class MyGrep extends feed.Grep {
     print_article(article) {
 	if (this._articles_matched > 1) console.log("")
 
-	article.forEach( (idx) => {
-	    let key = Object.keys(idx)[0]
-	    if (!idx[key]) return
-	    if (this._article_text_prop[key]) return
+	for (let key in article) {
+	    if (!article[key]) continue
+	    if (this._article_text_prop[key]) continue
 
 	    if (key.match(/\.__text$/))
 		this._article_text_prop[key.split(".")[0]] = true
 
-	    console.log(`${key}: ${idx[key]}`)
-	})
+	    console.log(`${key}: ${article[key]}`)
+	}
     }
 }
 
@@ -89,61 +87,53 @@ class MyGrepXML extends MyGrep {
 	}
 
 	this.event.once("end", () => {
-	    if (this._articles_matched !== 0)
+	    if (this._articles_matched !== 0 || opts.m)
 		console.log("\n</channel>\n</rss>")
 	})
     }
 
     print_meta(data) {
 	console.log(`<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>`)
-	data.forEach( (idx) => {
-	    let key = Object.keys(idx)[0]
-	    if (!idx[key] || key.match(/^itunes:/)) return
-	    if (key === "author") {
-		console.log(`<!-- ${key}: ${xml_encode(idx[key])} -->`)
-		return
-	    }
+	let xmlurl = data["atom:link"] || "http://example.com/missing/atom/self/link"
+	console.log(`<atom:link href="${xmlurl}" rel="self" type="application/rss+xml" />`)
+	for (let key in data) {
+	    if (!data[key] || key.match(/^(itunes|atom):/)) continue
 	    if (key === "categories") {
-		console.log(idx[key].toString())
-		return
+		console.log(data[key].toString())
+		continue
 	    }
-	    console.log(`<${key}>${xml_encode(idx[key].toString())}</${key}>`)
-	})
-
-	let encl = this.encl_stat()
-	if (encl.total)
-	    console.log(`<!-- enclosures: ${encl.total}/${encl.articles}/${this.articles.length} -->`)
+	    console.log(`<${key}>${xml_encode(data[key].toString())}</${key}>`)
+	}
     }
 
     print_article(article) {
 	if (this._articles_matched === 1) this.print_meta(this.meta)
 
 	console.log("\n<item>")
-	article.forEach( (idx) => {
-	    let key = Object.keys(idx)[0]
-	    if (!idx[key]) return
-	    if (this._article_text_prop[key]) return
+	for (let key in article) {
+	    if (!article[key]) continue
+	    if (this._article_text_prop[key]) continue
 
 	    if (key.match(/\.__text$/))
 		this._article_text_prop[key.split(".")[0]] = true
 
-	    let val = xml_encode(idx[key].toString())
+	    let val = xml_encode(article[key].toString())
 
-	    if (key.match(/^summary/)) return // rss 2.0 lacks it
-	    if (key.match(/^(#|author)$/)) {
+	    if (key.match(/^summary/)) continue // rss 2.0 lacks it
+	    if (key.match(/^#$/)) {
 		console.log(`<!-- ${key}: ${val} -->`)
-		return
+		continue
 	    }
 	    if (key.match(/^(categories|enclosures)$/)) {
-		console.log(idx[key].toString())
-		return
+		console.log(article[key].toString())
+		continue
 	    }
 	    if (key.match(/^description/)) key = "description"
 
 	    console.log(`<${key}>${val}</${key}>`)
-	})
+	}
 
 	console.log("</item>")
     }
