@@ -62,7 +62,6 @@ class MyFeedParser {
 	    let item
 
 	    while ((item = stream.read()) ) {
-		//console.log(item)
 		that._article_count++
 		let r = feed.article(item, that._article_count)
 		that.articles.push(r)
@@ -78,6 +77,8 @@ class MyFeedParser {
 		if (feed.article_match(r, that.opts) === that.expect) {
 		    that._articles_matched++
 		    that.print_article(r)
+		    if (that.opts.debug)
+			console.log(util.inspect(item, { depth: null }))
 		}
 	    }
 	})

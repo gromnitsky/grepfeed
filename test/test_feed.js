@@ -9,9 +9,10 @@ suite('Feed', function() {
     setup(function() {
     })
 
-    test('date', function() {
-	assert.equal(false, feed.date_match())
-	assert.equal(true, feed.date_match("2000", "omglol"))
+    test('date_match', function() {
+	assert.equal(true, feed.date_match())
+	assert.equal(false, feed.date_match("2000", "omglol"))
+	assert.equal(false, feed.date_match("2000", null))
 
 	assert.equal(true, feed.date_match("-2016", new Date("2016")))
 	assert.equal(true, feed.date_match("-2017", new Date("2016")))
@@ -30,4 +31,12 @@ suite('Feed', function() {
 		       /invalid pattern/)
     })
 
+    test('category_match', function() {
+	assert.equal(true, feed.category_match())
+	assert.equal(false, feed.category_match("1", null))
+	assert.equal(true, feed.category_match(null, 1))
+
+	assert.equal(false, feed.category_match("foo", []))
+	assert.equal(true, feed.category_match("bar", ["foo", "bar"]))
+    })
 })
