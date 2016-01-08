@@ -37,9 +37,6 @@ Array.prototype.toString = function() {
 }
 
 class MyGrep extends feed.Grep {
-    event_exit() {
-	process.exit(0)
-    }
 
     event_fp_error(err) {
 	let msg = err.message
@@ -56,7 +53,6 @@ class MyGrep extends feed.Grep {
 	let encl = this.encl_stat()
 	if (encl.total)
 	    console.log(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}`)
-	process.exit(0)
     }
 
     print_article(article) {
