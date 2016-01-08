@@ -44,7 +44,9 @@ class MyGrep extends feed.Grep {
     event_fp_error(err) {
 	let msg = err.message
 	if (this.opts.debug) msg += "\n" + err.stack
-	errx(`feedparser: ${msg}`)
+	let prefix = "feedparser: "
+	if (err instanceof feed.GrepError) prefix = ""
+	errx(`${prefix}${msg}`)
     }
 
     print_meta(data) {
