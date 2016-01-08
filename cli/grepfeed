@@ -47,16 +47,20 @@ class MyGrep extends feed.Grep {
     }
 
     print_meta(data) {
+	let r = []
 	for (let key in data) {
-	    if (data[key]) this.push(`${key}: ${data[key]}\n`)
+	    if (data[key]) r.push(`${key}: ${data[key]}`)
 	}
 	let encl = this.encl_stat()
 	if (encl.total)
-	    this.push(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}\n`)
+	    r.push(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}`)
+	r.push("")
+	this.push(r.join("\n"))
     }
 
     print_article(article) {
-	if (this._articles_matched > 1) this.push("\n")
+	let r = []
+	if (this._articles_matched > 1) r.push("")
 
 	for (let key in article) {
 	    if (!article[key]) continue
@@ -65,8 +69,10 @@ class MyGrep extends feed.Grep {
 	    if (key.match(/\.__text$/))
 		this._article_text_prop[key.split(".")[0]] = true
 
-	    this.push(`${key}: ${article[key]}\n`)
+	    r.push(`${key}: ${article[key]}`)
 	}
+	r.push("")
+	this.push(r.join("\n"))
     }
 }
 
@@ -91,23 +97,27 @@ class MyGrepXML extends MyGrep {
     }
 
     print_meta(data) {
-	this.push(`<?xml version="1.0" encoding="UTF-8"?>
+	let r = []
+	r.push(`<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
-<channel>\n`)
+<channel>`)
 	for (let key in data) {
 	    if (!data[key] || key.match(/^(itunes):/)) continue
 	    if (key === "categories") {
-		this.push(data[key].toString() + "\n")
+		r.push(data[key].toString())
 		continue
 	    }
-	    this.push(`<${key}>${xml_encode(data[key].toString())}</${key}>\n`)
+	    r.push(`<${key}>${xml_encode(data[key].toString())}</${key}>`)
 	}
+	r.push("")
+	this.push(r.join("\n"))
     }
 
     print_article(article) {
+	let r = []
 	if (this._articles_matched === 1) this.print_meta(this.meta)
 
-	this.push("\n<item>\n")
+	r.push("\n<item>")
 	for (let key in article) {
 	    if (!article[key]) continue
 	    if (this._article_text_prop[key]) continue
@@ -119,19 +129,20 @@ class MyGrepXML extends MyGrep {
 
 	    if (key.match(/^summary/)) continue // rss 2.0 lacks it
 	    if (key.match(/^#$/)) {
-		this.push(`<!-- ${key}: ${val} -->\n`)
+		r.push(`<!-- ${key}: ${val} -->`)
 		continue
 	    }
 	    if (key.match(/^(categories|enclosures)$/)) {
-		this.push(article[key].toString() + "\n")
+		r.push(article[key].toString())
 		continue
 	    }
 	    if (key.match(/^description/)) key = "description"
 
-	    this.push(`<${key}>${val}</${key}>\n`)
+	    r.push(`<${key}>${val}</${key}>`)
 	}
 
-	this.push("</item>\n")
+	r.push("</item>\n")
+	this.push(r.join("\n"))
     }
 }
 
