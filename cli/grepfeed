@@ -48,15 +48,15 @@ class MyGrep extends feed.Grep {
 
     print_meta(data) {
 	for (let key in data) {
-	    if (data[key]) console.log(`${key}: ${data[key]}`)
+	    if (data[key]) this.push(`${key}: ${data[key]}\n`)
 	}
 	let encl = this.encl_stat()
 	if (encl.total)
-	    console.log(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}`)
+	    this.push(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}\n`)
     }
 
     print_article(article) {
-	if (this._articles_matched > 1) console.log("")
+	if (this._articles_matched > 1) this.push("\n")
 
 	for (let key in article) {
 	    if (!article[key]) continue
@@ -65,7 +65,7 @@ class MyGrep extends feed.Grep {
 	    if (key.match(/\.__text$/))
 		this._article_text_prop[key.split(".")[0]] = true
 
-	    console.log(`${key}: ${article[key]}`)
+	    this.push(`${key}: ${article[key]}\n`)
 	}
     }
 }
@@ -86,30 +86,28 @@ class MyGrepXML extends MyGrep {
 
 	this.event.once("end", () => {
 	    if (this._articles_matched !== 0 || opts.m)
-		console.log("\n</channel>\n</rss>")
+		this.push("\n</channel>\n</rss>\n")
 	})
     }
 
     print_meta(data) {
-	console.log(`<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-<channel>`)
-	let xmlurl = data["atom:link"] || "http://example.com/missing/atom/self/link"
-	console.log(`<atom:link href="${xmlurl}" rel="self" type="application/rss+xml" />`)
+	this.push(`<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>\n`)
 	for (let key in data) {
-	    if (!data[key] || key.match(/^(itunes|atom):/)) continue
+	    if (!data[key] || key.match(/^(itunes):/)) continue
 	    if (key === "categories") {
-		console.log(data[key].toString())
+		this.push(data[key].toString() + "\n")
 		continue
 	    }
-	    console.log(`<${key}>${xml_encode(data[key].toString())}</${key}>`)
+	    this.push(`<${key}>${xml_encode(data[key].toString())}</${key}>\n`)
 	}
     }
 
     print_article(article) {
 	if (this._articles_matched === 1) this.print_meta(this.meta)
 
-	console.log("\n<item>")
+	this.push("\n<item>\n")
 	for (let key in article) {
 	    if (!article[key]) continue
 	    if (this._article_text_prop[key]) continue
@@ -121,19 +119,19 @@ class MyGrepXML extends MyGrep {
 
 	    if (key.match(/^summary/)) continue // rss 2.0 lacks it
 	    if (key.match(/^#$/)) {
-		console.log(`<!-- ${key}: ${val} -->`)
+		this.push(`<!-- ${key}: ${val} -->\n`)
 		continue
 	    }
 	    if (key.match(/^(categories|enclosures)$/)) {
-		console.log(article[key].toString())
+		this.push(article[key].toString() + "\n")
 		continue
 	    }
 	    if (key.match(/^description/)) key = "description"
 
-	    console.log(`<${key}>${val}</${key}>`)
+	    this.push(`<${key}>${val}</${key}>\n`)
 	}
 
-	console.log("</item>")
+	this.push("</item>\n")
     }
 }
 
@@ -146,7 +144,16 @@ let argv = minimist(process.argv.slice(2),
 if (argv.debug) console.error(argv)
 
 let mfp = argv.x ? new MyGrepXML(argv) : new MyGrep(argv)
-mfp.parse(process.stdin)
+
+process.stdin.on("end", function() {
+    // how else can we signal tp fp stream that stdin has ended?
+    mfp.fp.emit("end")
+})
+
+process.stdin
+    .pipe(mfp)
+    .pipe(process.stdout)
+
 mfp.event.once("end", () => {
     if (!argv.m && mfp._articles_matched === 0) process.exit(1)
     process.exit(0)
