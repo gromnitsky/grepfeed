@@ -14,7 +14,9 @@
 	"minimist": "~1.2.0",
 	"feedparser": "~1.1.4",
 	"mustache": "~2.2.1",
-	"ent": "~2.2.0"
+	"ent": "~2.2.0",
+
+	"request": "~2.67.0"
     },
 
     "devDependencies": {
