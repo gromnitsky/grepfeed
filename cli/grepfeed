@@ -156,8 +156,9 @@ if (argv.debug) console.error(argv)
 
 let mfp = argv.x ? new MyGrepXML(argv) : new MyGrep(argv)
 
-process.stdin.on("end", function() {
-    // how else can we signal tp fp stream that stdin has ended?
+process.stdin.once("end", () => {
+    mfp.fp.end()
+    // w/o this stdout closes too early
     mfp.fp.emit("end")
 })
 
