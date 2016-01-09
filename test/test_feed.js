@@ -1,6 +1,7 @@
 'use strict';
 
 let assert = require('assert')
+let execSync = require('child_process').execSync
 
 let feed = require('../lib/feed')
 
@@ -59,4 +60,17 @@ suite('Feed', function() {
 	assert.equal(true, feed.article_match(a2, {_: ["a2"]}))
 	assert.equal(false, feed.article_match(a2, {d: "2000", _: ["a2"]}))
     })
+
+    test('smoke', function() {
+	this.timeout(20000)
+	let r = execSync("cli/grepfeed -x < test/data/back2work.xml | cli/grepfeed -x | cli/grepfeed -x | grep '^<!-- #' | wc -l")
+	assert.equal("252\n", r.toString())
+
+	r = execSync("cli/grepfeed '(apple|ios|itunes|iphone)' -v < test/data/back2work.xml | grep '^#:' | wc -l")
+	assert.equal("147\n", r.toString())
+
+	r = execSync("cli/grepfeed -d=-2012 < test/data/back2work.xml | grep '^#:' | wc -l")
+	assert.equal("47\n", r.toString())
+    })
+
 })
