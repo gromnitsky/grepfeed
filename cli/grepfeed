@@ -26,24 +26,28 @@ let errx = function(msg) {
     process.exit(1)
 }
 
-Array.prototype.toString = function() {
-    return this.join(", ")
-}
-
 class MyGrep extends feed.Grep {
+
+    constructor(opts) {
+	super(opts)
+
+	this.to_s_rules = {
+	    "Array": function() { return this.join(", ") }
+	}
+    }
 
     event_fp_error(err) {
 	let msg = err.message
 	if (this.opts.debug) msg += "\n" + err.stack
-	let prefix = "feedparser: "
-	if (err instanceof feed.GrepError) prefix = ""
-	errx(`${prefix}${msg}`)
+	errx(msg)
     }
 
     print_meta(data) {
 	let r = []
 	for (let key in data) {
-	    if (data[key]) r.push(`${key}: ${data[key]}`)
+	    if (!this.is_printable(data[key])) continue
+	    this.to_s_set_rules(data[key])
+	    r.push(`${key}: ${data[key]}`)
 	}
 	let encl = this.encl_stat()
 	if (encl.total)
@@ -54,15 +58,17 @@ class MyGrep extends feed.Grep {
 
     print_article(article) {
 	let r = []
+	let _article_text_prop = {}
 	if (this._articles_matched > 1) r.push("")
 
 	for (let key in article) {
-	    if (!article[key]) continue
-	    if (this._article_text_prop[key]) continue
+	    if (!this.is_printable(article[key])) continue
+	    if (_article_text_prop[key]) continue
 
 	    if (key.match(/\.__text$/))
-		this._article_text_prop[key.split(".")[0]] = true
+		_article_text_prop[key.split(".")[0]] = true
 
+	    this.to_s_set_rules(article[key])
 	    r.push(`${key}: ${article[key]}`)
 	}
 	r.push("")

@@ -63,7 +63,7 @@ suite('Feed', function() {
 
     test('smoke', function() {
 	this.timeout(20000)
-	let r = execSync("cli/grepfeed -x < test/data/back2work.xml | cli/grepfeed -x | cli/grepfeed -x | grep '^<!-- #' | wc -l")
+	let r = execSync("cli/grepfeed -x < test/data/back2work.xml | cli/grepfeed -x | cli/grepfeed -x | xmllint - | grep '^<!-- #' | wc -l")
 	assert.equal("252\n", r.toString())
 
 	r = execSync("cli/grepfeed '(apple|ios|itunes|iphone)' -v < test/data/back2work.xml | grep '^#:' | wc -l")
