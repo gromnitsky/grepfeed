@@ -32,9 +32,7 @@ class MyGrepHTTP extends feed.MyGrepXML {
     event_fp_error(err) {
 	let msg = err.message
 	if (this.opts.debug) msg += "\n" + err.stack
-	let prefix = "feedparser: "
-	if (err instanceof feed.GrepError) prefix = ""
-	errx(this.opts.__http.res, 400, `${this.opts.__http.xmlurl}: ${prefix}${msg}`)
+	errx(this.opts.__http.res, 400, `${this.opts.__http.xmlurl}: ${msg}`)
     }
 }
 
