@@ -8,14 +8,24 @@ let url = require('url')
 let request = require('request')
 
 let feed = require('../lib/feed')
+let meta = require('../package.json')
 
+
+let user_agent = function() {
+    return `${meta.name}/${meta.version} (${process.platform}; ${process.arch}) node/${process.versions.node}`
+}
+
+// a flag to prevent a double erroring during a request
+let request_had_error = false
 
 let errx = function(res, code, msg) {
-    res.statusCode = code
-    res.statusMessage = msg
-    res.setHeader('Content-Type', 'text/plain')
-    res.end()
+    if (!request_had_error) {
+	res.statusCode = code
+	res.statusMessage = msg
+	res.end()
+    }
     console.error(`ERROR: ${msg}`)
+    request_had_error = true
 }
 
 class MyGrepHTTP extends feed.MyGrepXML {
@@ -28,18 +38,13 @@ class MyGrepHTTP extends feed.MyGrepXML {
     }
 }
 
-let urlfeed = function(argv) {
-    if (!argv.url) return null
-    let name = argv.url.trim()
-    return (name.length === 0) ? null : name
-}
-
 
 // main
 
 let server = http.createServer(function (req, res) {
+    request_had_error = false
     let argv = url.parse(req.url, true).query
-    let xmlurl = urlfeed(argv)
+    let xmlurl = argv.url
     if (!xmlurl) {
 	errx(res, 412, "`?url=str` param is required")
 	return
@@ -47,9 +52,7 @@ let server = http.createServer(function (req, res) {
 
     let cur = request.get({
 	url: xmlurl,
-	headers: {
-	    'User-Agent': req.headers['user-agent'] || 'omglol'
-	}
+	headers: { 'User-Agent': user_agent() }
     }).on('error', (err) => {
 	errx(res, 500, `${err.message}: ${xmlurl}`)
     }).on('response', (xmlres) => {
