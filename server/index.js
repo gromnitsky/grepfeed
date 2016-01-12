@@ -47,8 +47,10 @@ let server = http.createServer(function (req, res) {
 	errx(res, 412, "`?url=str` param is required")
 	return
     }
+    argv.size = parseInt(argv.size)
 
     let cur
+    let size = 0
     try {
 	cur = request.get({
 	    url: xmlurl,
@@ -63,6 +65,13 @@ let server = http.createServer(function (req, res) {
 
     cur.on('error', (err) => {
 	errx(res, 500, `${err.message}: ${xmlurl}`)
+    }).on('data', (chunk) => {
+	size += chunk.length
+	if (argv.size && size >= argv.size) {
+	    // the user has no clue why the data was incomplete
+	    cur.abort()
+	    console.error(`${xmlurl}: data >= ${argv.size}b`)
+	}
     }).on('response', (xmlres) => {
 	if (xmlres.statusCode !== 200) {
 	    errx(res, xmlres.statusCode, `error retrieving url: ${xmlurl}`)
