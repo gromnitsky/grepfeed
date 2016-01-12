@@ -48,10 +48,20 @@ let server = http.createServer(function (req, res) {
 	return
     }
 
-    let cur = request.get({
-	url: xmlurl,
-	headers: { 'User-Agent': user_agent() }
-    }).on('error', (err) => {
+    let cur
+    try {
+	cur = request.get({
+	    url: xmlurl,
+	    headers: { 'User-Agent': user_agent() }
+	})
+    } catch (e) {
+	// usually it's an "Invalid URI" bump, like if you pass
+	// file:///etc/passwd
+	errx(res, 400, e.message)
+	return
+    }
+
+    cur.on('error', (err) => {
 	errx(res, 500, `${err.message}: ${xmlurl}`)
     }).on('response', (xmlres) => {
 	if (xmlres.statusCode !== 200) {
