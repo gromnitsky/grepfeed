@@ -45,13 +45,17 @@ static: $(static.dest)
 
 
 node-sass := node_modules/.bin/node-sass
-SASS_OPT := -q
+SASS_OPT := -q --output-style compressed
+ifeq ($(out), development)
+# embedded source maps don't work in chrome 47
+SASS_OPT := -q --source-map true
+endif
 sass.src := $(wildcard $(src)/client/*.sass)
 sass.dest := $(patsubst $(src)/%.sass, $(out)/%.css, $(sass.src))
 
 $(out)/client/%.css: $(src)/client/%.sass
 	$(mkdir)
-	$(node-sass) $(SASS_OPT) $< $@
+	$(node-sass) $(SASS_OPT) -o $(dir $@) $<
 
 $(sass.dest): node_modules
 
@@ -61,6 +65,9 @@ sass: $(sass.dest)
 
 
 babel := node_modules/.bin/babel
+ifeq ($(out), development)
+BABEL_OPT := -s inline
+endif
 js.src := $(wildcard $(src)/lib/*.js)
 js.dest := $(patsubst $(src)/%.js, $(out)/%.js, $(js.src))
 
@@ -76,6 +83,7 @@ jsx.src := $(wildcard $(src)/client/*.jsx)
 jsx.dest := $(patsubst $(src)/%.jsx, $(out)/%.js, $(jsx.src))
 
 $(jsx.dest): node_modules
+# we use .jsx files only as input for browserify
 .INTERMEDIATE: $(jsx.dest)
 
 $(out)/client/%.js: $(src)/client/%.jsx
@@ -85,12 +93,36 @@ $(out)/client/%.js: $(src)/client/%.jsx
 
 
 browserify := node_modules/.bin/browserify
-$(out)/client/main.browserify.js: $(out)/client/main.js $(js.dest)
+browserify.dest.sfx := .es5
+ifeq ($(out), development)
+browserify.dest.sfx := .js
+BROWSERIFY_OPT := -d
+endif
+
+bundle1 := $(out)/client/main.browserify$(browserify.dest.sfx)
+$(bundle1): $(out)/client/main.js $(js.dest)
 	$(mkdir)
 	$(browserify) $(BROWSERIFY_OPT) $< -o $@
 
 .PHONY: js
-js: $(out)/client/main.browserify.js
+js:
+
+
+
+# will be empty in development mode
+es5.dest := $(patsubst %.es5, %.js, $(bundle1))
+
+UGLIFYJS_OPT := --screw-ie8 -m -c
+%.js: %.es5
+	node_modules/.bin/uglifyjs $(UGLIFYJS_OPT) -o $@ -- $<
+
+ifneq ($(browserify.dest.sfx), .js)
+js: $(es5.dest)
+# we don't need .es5 files around
+.INTERMEDIATE: $(bundle1)
+else
+js: $(bundle1)
+endif
 
 
 
