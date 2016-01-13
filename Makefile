@@ -69,17 +69,18 @@ $(js.dest): node_modules
 
 $(out)/lib/%.js: $(mkf.dir)/lib/%.js
 	@mkdir -p $(dir $@)
-	$(babel) --presets babel-preset-es2015 $(BABEL_OPT) $< -o $@
+	$(babel) --presets es2015 $(BABEL_OPT) $< -o $@
 
-js.bundle.dest := $(out)/client/main.js
-$(js.bundle.dest): $(src)/client/main.js
+$(out)/tmp.client/%.js: $(mkf.dir)/client/%.jsx
+	@mkdir -p $(dir $@)
+	$(babel) --presets es2015,react $(BABEL_OPT) $< -o $@
+
+$(out)/client/main.js: $(out)/tmp.client/main.js $(js.dest)
 	@mkdir -p $(dir $@)
 	$(browserify) $(BROWSERIFY_OPT) $< -o $@
 
-$(js.bundle.dest): $(js.dest)
-
 .PHONY: js
-js: $(js.bundle.dest)
+js: $(out)/client/main.js
 
 
 

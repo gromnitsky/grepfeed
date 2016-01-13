@@ -23,11 +23,12 @@
 	"mocha": "~2.3.4",
 
 	"node-sass": "~3.4.2",
-	"react": "latest",
-	"react-dom": "latest",
-	"babel-cli": "latest",
-	"babel-preset-es2015": "latest",
-	"babel-polyfill": "latest",
-	"browserify": "latest"
+	"react": "~0.14.6",
+	"react-dom": "~0.14.6",
+	"babel-cli": "~6.4.0",
+	"babel-preset-es2015": "~6.3.13",
+	"babel-polyfill": "~6.3.14",
+	"babel-preset-react": "~6.3.13",
+	"browserify": "~13.0.0"
     }
 }

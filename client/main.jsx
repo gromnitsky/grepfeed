@@ -10,7 +10,6 @@ let feed = require('../lib/feed')
 
 let grep = new feed.MyGrepXML({})
 
-ReactDOM.render(
-    React.createElement("span", null, 'Hello, world!'),
-    document.getElementById('result-opts')
-)
+ReactDOM.render(/*jshint ignore:start */
+	<span>Hello, World!</span>,
+    /*jshint ignore:end */ document.getElementById('result-opts'))
