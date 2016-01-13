@@ -60,5 +60,28 @@ sass: $(sass.dest)
 
 
 
+babel := node_modules/.bin/babel
+browserify := node_modules/.bin/browserify
+js.src := $(wildcard $(src)/lib/*.js)
+js.dest := $(patsubst $(mkf.dir)/%.js, $(out)/%.js, $(js.src))
+
+$(js.dest): node_modules
+
+$(out)/lib/%.js: $(mkf.dir)/lib/%.js
+	@mkdir -p $(dir $@)
+	$(babel) --presets babel-preset-es2015 $(BABEL_OPT) $< -o $@
+
+js.bundle.dest := $(out)/client/main.js
+$(js.bundle.dest): $(src)/client/main.js
+	@mkdir -p $(dir $@)
+	$(browserify) $(BROWSERIFY_OPT) $< -o $@
+
+$(js.bundle.dest): $(js.dest)
+
+.PHONY: js
+js: $(js.bundle.dest)
+
+
+
 .PHONY: compile
-compile: static sass
+compile: static sass js

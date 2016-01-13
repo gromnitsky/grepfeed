@@ -21,6 +21,13 @@
 
     "devDependencies": {
 	"mocha": "~2.3.4",
-	"node-sass": "~3.4.2"
+
+	"node-sass": "~3.4.2",
+	"react": "latest",
+	"react-dom": "latest",
+	"babel-cli": "latest",
+	"babel-preset-es2015": "latest",
+	"babel-polyfill": "latest",
+	"browserify": "latest"
     }
 }
