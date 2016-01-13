@@ -1,0 +1,29 @@
+// Body
+
+$body-width: 700px;
+$my-margin: 10px;
+
+@media (min-width: $body-width + 1px)
+  body
+    width: $body-width;
+    margin: 0 auto;
+
+
+input[type="url"], input[type="text"]
+    width: 100%
+    margin-top: $my-margin / 2
+
+
+// Footer
+
+footer
+  border-top: 1px solid black
+  display: flex
+
+.footer-item:first-child
+  margin-right: $my-margin
+  padding-top: $my-margin
+  flex: 2 0 0
+
+.footer-item:nth-child(2)
+  flex: 1 0 0

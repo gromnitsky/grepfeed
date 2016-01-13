@@ -63,13 +63,13 @@ suite('Feed', function() {
 
     test('smoke', function() {
 	this.timeout(20000)
-	let r = execSync("cli/grepfeed -x < test/data/back2work.xml | cli/grepfeed -x | cli/grepfeed -x | xmllint - | grep '^<!-- #' | wc -l")
+	let r = execSync(`${__dirname}/../cli/grepfeed -x < ${__dirname}/data/back2work.xml | ${__dirname}/../cli/grepfeed -x | ${__dirname}/../cli/grepfeed -x | xmllint - | grep '^<!-- #' | wc -l`)
 	assert.equal("252\n", r.toString())
 
-	r = execSync("cli/grepfeed '(apple|ios|itunes|iphone)' -v < test/data/back2work.xml | grep '^#:' | wc -l")
+	r = execSync(`${__dirname}/../cli/grepfeed '(apple|ios|itunes|iphone)' -v < ${__dirname}/data/back2work.xml | grep '^#:' | wc -l`)
 	assert.equal("147\n", r.toString())
 
-	r = execSync("cli/grepfeed -d=-2012 < test/data/back2work.xml | grep '^#:' | wc -l")
+	r = execSync(`${__dirname}/../cli/grepfeed -d=-2012 < ${__dirname}/data/back2work.xml | grep '^#:' | wc -l`)
 	assert.equal("47\n", r.toString())
     })
 
