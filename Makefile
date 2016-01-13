@@ -33,7 +33,7 @@ npm: node_modules
 
 
 static.src := $(wildcard $(mkf.dir)/client/*.html $(mkf.dir)/client/*.svg)
-static.dest := $(call src2dest,static)
+static.dest :=  $(call src2dest,static)
 
 $(static.dest): $(out)/%: $(mkf.dir)/%
 	@mkdir -p $(dir $@)
@@ -47,9 +47,9 @@ static: $(static.dest)
 node-sass := node_modules/.bin/node-sass
 SASS_OPT := -q
 sass.src := $(wildcard $(mkf.dir)/client/*.sass)
-sass.dest := $(call src2dest,sass)
+sass.dest := $(patsubst $(mkf.dir)/%.sass, $(out)/%.css, $(sass.src))
 
-$(sass.dest): $(out)/%: $(mkf.dir)/%
+$(out)/client/%.css: $(mkf.dir)/client/%.sass
 	@mkdir -p $(dir $@)
 	$(node-sass) $(SASS_OPT) $< $@
 
