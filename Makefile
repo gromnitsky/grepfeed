@@ -3,10 +3,10 @@
 pp-%:
 	@echo "$(strip $($*))" | tr ' ' \\n
 
-mkf.dir := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 out := $(or $(NODE_ENV),development)
-src := $(mkf.dir)
-src2dest = $(subst $(mkf.dir),$(out),$($1.src))
+src := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+src2dest = $(subst $(src),$(out),$($1.src))
+mkdir = @mkdir -p $(dir $@)
 
 
 
@@ -24,7 +24,7 @@ node_modules: package.json
 	npm install
 	touch $@
 
-package.json: $(mkf.dir)/package.json
+package.json: $(src)/package.json
 	cp -a $< $@
 
 .PHONY: npm
@@ -32,11 +32,11 @@ npm: node_modules
 
 
 
-static.src := $(wildcard $(mkf.dir)/client/*.html $(mkf.dir)/client/*.svg)
+static.src := $(wildcard $(src)/client/*.html $(src)/client/*.svg)
 static.dest :=  $(call src2dest,static)
 
-$(static.dest): $(out)/%: $(mkf.dir)/%
-	@mkdir -p $(dir $@)
+$(static.dest): $(out)/%: $(src)/%
+	$(mkdir)
 	cp -a $< $@
 
 .PHONY: static
@@ -46,11 +46,11 @@ static: $(static.dest)
 
 node-sass := node_modules/.bin/node-sass
 SASS_OPT := -q
-sass.src := $(wildcard $(mkf.dir)/client/*.sass)
-sass.dest := $(patsubst $(mkf.dir)/%.sass, $(out)/%.css, $(sass.src))
+sass.src := $(wildcard $(src)/client/*.sass)
+sass.dest := $(patsubst $(src)/%.sass, $(out)/%.css, $(sass.src))
 
-$(out)/client/%.css: $(mkf.dir)/client/%.sass
-	@mkdir -p $(dir $@)
+$(out)/client/%.css: $(src)/client/%.sass
+	$(mkdir)
 	$(node-sass) $(SASS_OPT) $< $@
 
 $(sass.dest): node_modules
@@ -61,26 +61,36 @@ sass: $(sass.dest)
 
 
 babel := node_modules/.bin/babel
-browserify := node_modules/.bin/browserify
 js.src := $(wildcard $(src)/lib/*.js)
-js.dest := $(patsubst $(mkf.dir)/%.js, $(out)/%.js, $(js.src))
+js.dest := $(patsubst $(src)/%.js, $(out)/%.js, $(js.src))
 
 $(js.dest): node_modules
 
-$(out)/lib/%.js: $(mkf.dir)/lib/%.js
-	@mkdir -p $(dir $@)
+$(out)/%.js: $(src)/%.js
+	$(mkdir)
 	$(babel) --presets es2015 $(BABEL_OPT) $< -o $@
 
-$(out)/tmp.client/%.js: $(mkf.dir)/client/%.jsx
-	@mkdir -p $(dir $@)
+
+
+jsx.src := $(wildcard $(src)/client/*.jsx)
+jsx.dest := $(patsubst $(src)/%.jsx, $(out)/%.js, $(jsx.src))
+
+$(jsx.dest): node_modules
+.INTERMEDIATE: $(jsx.dest)
+
+$(out)/client/%.js: $(src)/client/%.jsx
+	$(mkdir)
 	$(babel) --presets es2015,react $(BABEL_OPT) $< -o $@
 
-$(out)/client/main.js: $(out)/tmp.client/main.js $(js.dest)
-	@mkdir -p $(dir $@)
+
+
+browserify := node_modules/.bin/browserify
+$(out)/client/main.browserify.js: $(out)/client/main.js $(js.dest)
+	$(mkdir)
 	$(browserify) $(BROWSERIFY_OPT) $< -o $@
 
 .PHONY: js
-js: $(out)/client/main.js
+js: $(out)/client/main.browserify.js
 
 
 
