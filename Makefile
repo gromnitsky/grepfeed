@@ -4,7 +4,8 @@ pp-%:
 	@echo "$(strip $($*))" | tr ' ' \\n
 
 out := $(or $(NODE_ENV),development)
-src := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+src.mkf := $(realpath $(lastword $(MAKEFILE_LIST)))
+src := $(dir $(src.mkf))
 src2dest = $(subst $(src),$(out),$($1.src))
 mkdir = @mkdir -p $(dir $@)
 
@@ -128,3 +129,14 @@ endif
 
 .PHONY: compile
 compile: static sass js
+
+
+
+.PHONY: watch
+watch:
+	-pkill watchman
+	@mkdir -p $(out)
+	m4 -D_SRC="$(src)" -D_TTY=`tty` \
+		-D_OUT_PARENT=`pwd` \
+		-D_MAKE="$(MAKE)" -D_MK="$(src.mkf)" \
+		$(src)/mk/watchman.json | watchman -n -j

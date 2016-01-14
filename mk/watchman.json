@@ -1,0 +1,19 @@
+[
+    "trigger",
+    "_SRC",
+    {
+	"expression": [
+	    "anyof",
+	    ["pcre", "^(client|lib)/[^#]+$", "wholename"],
+	    ["pcre", "^package.json$", "wholename"]
+	],
+	"name": "assets",
+	"command": [
+	    "_SRC/mk/build.sh",
+	    "_MAKE", "-C", "_OUT_PARENT", "-f", "_MK", "compile"
+	],
+	"append_files": false,
+	"stderr": ">_TTY",
+	"stdout": ">_TTY"
+    }
+]
