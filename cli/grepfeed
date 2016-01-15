@@ -17,9 +17,8 @@
 
 let path = require('path')
 
-let minimist = require('minimist')
-
 let feed = require('../lib/feed')
+let u = require('../lib/u')
 
 let errx = function(msg) {
     console.error(path.basename(process.argv[1]) + " error: " + msg)
@@ -79,9 +78,7 @@ class MyGrep extends feed.Grep {
 
 // main
 
-let argv = minimist(process.argv.slice(2),
-		    { boolean: ['v', 'e', 'x', 'm', 'debug'],
-		      string: ['d', 'c', 'n'] })
+let argv = u.opts_parse(process.argv.slice(2))
 if (argv.debug) console.error(argv)
 
 let mfp = argv.x ? new feed.MyGrepXML(argv) : new MyGrep(argv)
