@@ -10,12 +10,15 @@ printf "\033[0;33m%s\033[0;m\n" "$*"
 # run make
 "$@"
 
+ec=$?
 media=/usr/share/sounds/freedesktop/stereo
 
-if [ $? -eq 0 ]; then
+if [ $ec -eq 0 ]; then
     play $media/message.oga 2> /dev/null
 else
     play $media/bell.oga 2> /dev/null
     # raise xterm window
     printf "\033[05t"
 fi
+
+exit $ec

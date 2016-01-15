@@ -134,7 +134,7 @@ compile: static sass js
 
 .PHONY: watch
 watch:
-	-pkill watchman
+	watchman trigger-del $(src) assets
 	@mkdir -p $(out)
 	m4 -D_SRC="$(src)" -D_TTY=`tty` \
 		-D_OUT_PARENT=`pwd` \
