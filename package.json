@@ -22,6 +22,8 @@
     "devDependencies": {
 	"mocha": "~2.3.4",
 
+	"shell-quote": "~1.4.3",
+
 	"node-sass": "~3.4.2",
 	"react": "~0.14.6",
 	"react-dom": "~0.14.6",

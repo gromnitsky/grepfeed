@@ -11,33 +11,8 @@
       <h1>Grepfeed</h1>
     </header>
 
-    <form>
-      <p><label>RSS URL:<br>
-	  <input name="url" type="url" required></label>
-      </p>
-      <p>
-	<label>Filter options: <code>
-	    [-d [-]date[,date]] [-c regexp]
-	    [-e] [-n digit] [-x] [-m] [regexp]
-	  </code><br>
-	  <input name="opts" type="text" spellcheck="false"></label>
-      </p>
-      <p><input type="submit">
-	<input type="reset"></p>
-    </form>
-
-    <div id="result">
-      <p id="result-opts">
-      </p>
-      <p id="result-request">
-	<!-- of fetch & parse -->
-      </p>
-      <p id="result-url">
-      </p>
-      <p id="result-rss-meta">
-      </p>
-      <p id="result-rss-articles">
-      </p>
+    <div id="content">
+      Loading...
     </div>
 
     <footer>
@@ -49,7 +24,6 @@
 	<p>&copy; 2016 Alexander Gromnitsky</p>
       </div>
     </footer>
-
 
     <script src="main.browserify.js"></script>
 
