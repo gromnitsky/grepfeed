@@ -20,6 +20,7 @@ let request_had_error = false
 
 let errx = function(res, code, msg) {
     if (!request_had_error) {
+	res.setHeader('Access-Control-Allow-Origin', '*')
 	res.statusCode = code
 	res.statusMessage = msg
 	res.end()
@@ -79,6 +80,7 @@ let server = http.createServer(function (req, res) {
 	}
 	// copy the content-type value from the orig url
 	res.setHeader('Content-Type', xmlres.headers['content-type'])
+	res.setHeader('Access-Control-Allow-Origin', '*')
 
 	argv.__http = {
 	    res: res,
