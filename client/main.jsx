@@ -15,55 +15,52 @@ let FeedBox = React.createClass({
 	return { url: '', filter: '' }
     },
 
-    handle_feedForm: function(filter) {
-	this.setState({filter: filter})
-	console.log("FeedBox:handle_feedForm", filter)
+    handle_feedForm: function(data) {
+	this.setState(data)
+	if (data.filter) console.log("FeedBox:handle_feedForm", data.filter)
     },
 
-    handle_feedForm_submit: function(data) {
-	this.setState(data)
-	console.log("FeedBox:handle_feedForm_submit", data)
+    handle_feedForm_submit: function() {
+	console.log("FeedBox:handle_feedForm_submit", this.state)
     },
 
     render: function() {
 	return (
 	    <div className="feedBox">
 	      <FeedForm on_data_change={this.handle_feedForm}
-			on_data_sumbit={this.handle_feedForm_submit} />
+			on_submit={this.handle_feedForm_submit} />
 	      <FeedArgv filter={this.state.filter} />
 	    </div>
 	)
     }
 });
 
+// hand all state issues over to the parent
 let FeedForm = React.createClass({
-    getInitialState: function() {
-	return { url: '', filter: '' }
-    },
-
     on_change_url: function(elm) {
-	this.setState({url: elm.target.value})
+	this.props.on_data_change({url: elm.target.value})
     },
 
     on_change_filter: function(elm) {
-	// call the parent
-	this.props.on_data_change(elm.target.value)
-	this.setState({filter: elm.target.value})
+	this.props.on_data_change({filter: elm.target.value})
     },
 
     submit: function(elm) {
 	elm.preventDefault()
-	this.props.on_data_sumbit({url: this.state.url,
-				   filter: this.state.filter})
+	this.props.on_submit()
+    },
+
+    reset: function() {
+	this.props.on_data_change({filter: '', url: ''})
     },
 
     render: function() {
 	return (
-	    <form className="feedForm" onSubmit={this.submit}>
+	    <form className="feedForm" onSubmit={this.submit}
+		  onReset={this.reset}>
 	      <p><label>RSS URL:<br/>
 		  <input type="url"
 			 placeholder="http://example.com/rss.xml"
-			 value={this.state.url}
 			 onChange={this.on_change_url}
 			 required />
 		</label>
@@ -71,10 +68,9 @@ let FeedForm = React.createClass({
 	      <p>
 		<label>Filter options: <code>
 		    [-d [-]date[,date]] [-c regexp]
-		    [-e] [-n digit] [-x] [-m] [regexp]
+		    [-e] [-n digit] [regexp]
 		  </code><br />
-		  <input type="text" spellcheck="false"
-			 value={this.state.filter}
+		  <input type="text" spellCheck="false"
 			 onChange={this.on_change_filter}
 			 />
 		</label>
