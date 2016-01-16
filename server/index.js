@@ -4,8 +4,11 @@
 
 let http = require('http')
 let url = require('url')
+let fs = require('fs')
+let path = require('path')
 
 let request = require('request')
+let mime = require('mime')
 
 let feed = require('../lib/feed')
 let meta = require('../package.json')
@@ -37,12 +40,44 @@ class MyGrepHTTP extends feed.MyGrepXML {
     }
 }
 
+let serve_static = function(req, res, purl) {
+    if (purl.pathname.match(/\/$/)) purl.pathname += 'index.html'
+    let fname = path.join(public_root, purl.pathname)
+    fs.stat(fname, (err, stats) => {
+	if (err) {
+	    errx(res, 404, `${err.syscall} ${err.code}`)
+	    return
+	}
+	res.setHeader('Content-Length', stats.size)
+	res.setHeader('Last-Modified', stats.mtime.toUTCString())
+	res.setHeader('Content-Type', mime.lookup(fname))
+
+	let stream = fs.createReadStream(fname)
+	stream.on('error', (err) => {
+	    errx(res, 500, `${err.syscall} ${err.code}`)
+	})
+	stream.pipe(res)
+    })
+}
 
 // main
 
+if (process.argv.length < 3) {
+    console.error("Usage: index.js public_dir")
+    process.exit(1)
+}
+process.chdir(process.argv[2])
+let public_root = fs.realpathSync(process.cwd())
+
 let server = http.createServer(function (req, res) {
     request_had_error = false
-    let argv = url.parse(req.url, true).query
+    let purl = url.parse(req.url, true)
+    if (!purl.pathname.match(/^\/api/)) {
+	serve_static(req, res, purl)
+	return
+    }
+
+    let argv = purl.query
     let xmlurl = argv.url
     if (!xmlurl) {
 	errx(res, 412, "`?url=str` param is required")
@@ -97,4 +132,7 @@ let server = http.createServer(function (req, res) {
 
 })
 
-server.listen(8000)
+server.listen(8000, '127.0.0.1', function() {
+    console.error('http://' + this.address().address +
+		  (this.address().port === 80 ? "" : ":" + this.address().port))
+})
