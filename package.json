@@ -22,11 +22,13 @@
     "devDependencies": {
 	"mocha": "~2.3.4",
 
-	"shell-quote": "~1.4.3",
-
-	"node-sass": "~3.4.2",
 	"react": "~0.14.6",
 	"react-dom": "~0.14.6",
+	"shell-quote": "~1.4.3",
+	"whatwg-fetch": "~0.10.1",
+	"xmlToJSON": "metatribal/xmlToJSON#ca8bcd1",
+
+	"node-sass": "~3.4.2",
 	"babel-cli": "~6.4.0",
 	"babel-preset-es2015": "~6.3.13",
 	"babel-polyfill": "~6.3.14",

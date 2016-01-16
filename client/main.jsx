@@ -3,16 +3,40 @@
 require("babel-polyfill")
 
 let util = require('util')
+let url = require('url')
 
 let React = require('react')
 let ReactDOM = require('react-dom')
 let shellquote = require('shell-quote')
+require('whatwg-fetch')
+let xmlToJSON = require('xmlToJSON')
 
 let u = require('../lib/u')
 
 let FeedBox = React.createClass({
     getInitialState: function() {
-	return { url: '', filter: '' }
+	this.server_url_template = {
+	    protocol: 'http',
+	    hostname: '127.0.0.1',
+	    port: 8000,
+	    pathname: '/api'
+	}
+	return { url: '', filter: '', last_req: null, feed: null, xmlurl: null }
+    },
+
+    url: function() {
+	let obj = util._extend({
+	    query: u.opts_parse(shellquote.parse(this.state.filter))
+	}, this.server_url_template)
+	obj.query.url = this.state.url
+
+	let query = {}
+	for (let key in obj.query) {
+	    if (obj.query[key]) query[key] = obj.query[key]
+	}
+	obj.query = query
+
+	return url.format(obj)
     },
 
     handle_feedForm: function(data) {
@@ -21,7 +45,28 @@ let FeedBox = React.createClass({
     },
 
     handle_feedForm_submit: function() {
-	console.log("FeedBox:handle_feedForm_submit", this.state)
+	let xmlurl = this.url()
+	this.setState({
+	    last_req: "Loading...",
+	    feed: null,
+	    xmlurl: xmlurl
+	})
+	let q = window
+	fetch(xmlurl)
+	    .then( (res) => {
+		if (res.status !== 200)
+		    throw new Error(`${res.status} ${res.statusText}`)
+		return res.text()
+	    }).then( (body) => {
+		if (body.length === 0)
+		    throw new Error("no matched articles")
+		this.setState({
+		    last_req: "OK",
+		    feed: xmlToJSON.parseString(body)
+		})
+	    }).catch( (err) => {
+		this.setState({last_req: err})
+	    })
     },
 
     render: function() {
@@ -30,6 +75,8 @@ let FeedBox = React.createClass({
 	      <FeedForm on_data_change={this.handle_feedForm}
 			on_submit={this.handle_feedForm_submit} />
 	      <FeedArgv filter={this.state.filter} />
+	      <FeedReq status={this.state.last_req} />
+	      <FeedTable feed={this.state.feed} xmlurl={this.state.xmlurl} />
 	    </div>
 	)
     }
@@ -62,7 +109,7 @@ let FeedForm = React.createClass({
 		  <input type="url"
 			 placeholder="http://example.com/rss.xml"
 			 onChange={this.on_change_url}
-			 required />
+			 />
 		</label>
 	      </p>
 	      <p>
@@ -95,7 +142,112 @@ let FeedArgv = React.createClass({
 	    </div>
 	)
     }
-});
+})
+
+let FeedReq = React.createClass({
+    render: function() {
+	if (!this.props.status) return null
+	let className = "feedReq-error"
+	if (this.props.status === "Loading...") className = "feedReq-loading"
+	if (this.props.status === "OK") className = "feedReq-ok"
+
+	return (
+	    <div className={className}>
+	      <b>Request result: </b>
+	      { this.props.status.toString() }
+	    </div>
+	)
+    }
+})
+
+let FeedTable = React.createClass({
+    render: function() {
+	if (!this.props.feed) return null
+
+	let meta = []
+	window.q = this.props.feed
+	let channel = this.props.feed.rss[0].channel[0]
+	let items = this.props.feed.rss[0].channel[0].item
+
+	let mval = function(arr) {
+	    return arr.map( (idx) => idx._text )
+	}
+
+	channel["matched articles"] = [{_text: items.length}]
+
+	for (let key in channel) {
+	    if (key === "item") continue
+	    meta.push(
+		<tr key={key}>
+		  <td>{key}</td>
+		  <td>{mval(channel[key]).join(", ")}</td>
+		</tr>
+	    )
+	}
+
+	let articles = []
+	for (let idx=0; idx < items.length; ++idx) {
+	    articles.push(
+		<FeedTableArticle key={idx} id={idx+1} article={items[idx]} />
+	    )
+	}
+
+	return (
+	    <div className="feedTable">
+	      <p>
+		<a href={this.props.xmlurl}>{this.props.xmlurl}</a>
+	      </p>
+
+	      <table className="feedTableMeta">
+		<thead>
+		  <tr><th colSpan="2">Metadata</th></tr>
+		</thead>
+		<tbody>
+		  {meta}
+		</tbody>
+	      </table>
+
+	      {articles}
+
+	    </div>
+	)
+    }
+})
+
+let FeedTableArticle = React.createClass({
+    render: function() {
+	let aval = function(key, arr) {
+	    if (key === "enclosure") {
+		return arr.map( (idx) => {
+		    return `${idx._attr.url._value} (${idx._attr.type._value} ${idx._attr.length._value})`
+		})
+	    }
+	    return arr.map( (idx) => idx._text )
+	}
+
+	let rows = []
+	for (let key in this.props.article) {
+	    rows.push(
+		<tr key={key}>
+		  <td>{key}</td>
+		  <td>{aval(key, this.props.article[key]).join(", ")}</td>
+		</tr>
+	    )
+	}
+
+	return (
+	    <table className="feedTableArticle">
+	      <thead>
+		<tr><th colSpan="2">#{this.props.id}</th></tr>
+	      </thead>
+	      <tbody>
+		{rows}
+	      </tbody>
+	    </table>
+	)
+    }
+})
+
 
 ReactDOM.render(
     <FeedBox />,

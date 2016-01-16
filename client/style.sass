@@ -17,6 +17,7 @@ input[type="url"], input[type="text"]
 // Footer
 
 footer
+  margin-top: $my-margin
   border-top: 1px solid black
   display: flex
 
@@ -29,9 +30,58 @@ footer
   flex: 1 0 0
 
 
-// Feed argv
+// Feed status
 
 .feedArgv
   padding: $my-margin
-  margin-bottom: $my-margin
   background: #fafafa
+
+.feedReq-loading
+  @extend .feedArgv
+  background: midnightblue
+  color: white
+
+.feedReq-ok
+  @extend .feedReq-loading
+  background: lightgreen
+  color: black
+
+.feedReq-error
+  @extend .feedReq-loading
+  background: tomato
+  color: white
+
+
+// Feed rendering
+
+$flag_blue: #005bbb
+$flag_yellow: #ffd500
+
+.feedTable
+  p
+    word-wrap: break-word
+
+.feedTableMeta
+  margin-top: $my-margin
+  width: 100%
+  border-collapse: collapse
+
+  th
+    height: 2em
+    background-color: $flag_blue
+    color: white
+
+  tr:nth-child(even)
+    background-color: whitesmoke
+
+  th, td
+    padding: 4px
+    border: 1px solid whitesmoke
+
+.feedTableArticle
+  @extend .feedTableMeta
+
+  th
+    height: 2em
+    background-color: $flag_yellow
+    color: black
