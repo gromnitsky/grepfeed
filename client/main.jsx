@@ -173,9 +173,9 @@ let FeedArgv = React.createClass({
 let FeedReq = React.createClass({
     render: function() {
 	if (!this.props.status) return null
-	let className = "feedReq-error"
-	if (this.props.status === "Loading...") className = "feedReq-loading"
-	if (this.props.status === "OK") className = "feedReq-ok"
+	let className = "feedReq-loading"
+	if (this.props.status instanceof Error) className = "feedReq-error"
+	if (this.props.status === "OK") return null
 
 	return (
 	    <div className={className}>
@@ -220,9 +220,12 @@ let FeedTable = React.createClass({
 
 	return (
 	    <div className="feedTable">
-	      <p>
-		<a href={this.props.xmlurl}>{this.props.xmlurl}</a>
-	      </p>
+	      <div className="feedResUrl">
+		A URL for your RSS reader or podcatcher:
+		<pre>
+		  <a href={this.props.xmlurl}>{this.props.xmlurl}</a>
+		</pre>
+	      </div>
 
 	      <table className="feedTableMeta">
 		<colgroup>

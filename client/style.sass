@@ -32,23 +32,15 @@ footer
 
 // Feed status
 
-.feedArgv
-  padding: $my-margin
-  background: #fafafa
-
 .feedReq-loading
-  @extend .feedArgv
+  margin-top: $my-margin
+  padding: $my-margin
   background: midnightblue
   color: white
 
-.feedReq-ok
-  @extend .feedReq-loading
-  background: lightgreen
-  color: black
-
 .feedReq-error
   @extend .feedReq-loading
-  background: tomato
+  background: red
   color: white
 
 
@@ -57,9 +49,16 @@ footer
 $flag_blue: #005bbb
 $flag_yellow: #ffd500
 
-.feedTable
-  p
+.feedResUrl
+  margin-top: $my-margin
+  padding: $my-margin $my-margin 0
+  border: 1px solid darkgray
+
+  pre
     word-wrap: break-word
+
+  a
+    text-decoration: none
 
 .feedTableMeta
   margin-top: $my-margin
