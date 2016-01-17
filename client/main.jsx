@@ -191,11 +191,10 @@ let FeedTable = React.createClass({
 	if (!this.props.feed) return null
 
 	let meta = []
-	window.q = this.props.feed
 	let channel = this.props.feed.rss[0].channel[0]
 	let items = this.props.feed.rss[0].channel[0].item
 
-	let mval = function(arr) {
+	let transform = function(arr) {
 	    return arr.map( (idx) => idx._text )
 	}
 
@@ -206,7 +205,7 @@ let FeedTable = React.createClass({
 	    meta.push(
 		<tr key={key}>
 		  <td>{key}</td>
-		  <td>{mval(channel[key]).join(", ")}</td>
+		  <td>{transform(channel[key]).join(", ")}</td>
 		</tr>
 	    )
 	}
@@ -249,7 +248,7 @@ let FeedTable = React.createClass({
 
 let FeedTableArticle = React.createClass({
     render: function() {
-	let aval = function(key, arr) {
+	let transform = function(key, arr) {
 	    if (key === "enclosure") {
 		return arr.map( (idx) => {
 		    return `<a href="${idx._attr.url._value}">${idx._attr.url._value}</a> (${idx._attr.type._value} ${idx._attr.length._value})`
@@ -264,9 +263,10 @@ let FeedTableArticle = React.createClass({
 		<tr key={key}>
 		  <td>{key}</td>
 		  <td> {
-			aval(key, this.props.article[key]).map( (val, idx) => {
+			transform(key, this.props.article[key])
+			  .map( (val, idx) => {
 			    if (idx > 0) val = ", " + val
-			    return <span dangerouslySetInnerHTML={{__html: val}} />
+			    return <span key={idx} dangerouslySetInnerHTML={{__html: val}} />
 			})
 		    } </td>
 		</tr>
