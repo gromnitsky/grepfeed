@@ -40,6 +40,11 @@ class MyGrepHTTP extends feed.MyGrepXML {
     }
 }
 
+let set_cache_headers = function(res) {
+    res.setHeader('Cache-Control', 'public; max-age=600')
+    res.setHeader('Expires', new Date(Date.now() + 600*1000).toUTCString())
+}
+
 let serve_static = function(req, res, purl) {
     if (purl.pathname.match(/\/$/)) purl.pathname += 'index.html'
     let fname = path.join(public_root, purl.pathname)
@@ -49,7 +54,7 @@ let serve_static = function(req, res, purl) {
 	    return
 	}
 	res.setHeader('Content-Length', stats.size)
-	res.setHeader('Last-Modified', stats.mtime.toUTCString())
+	set_cache_headers(res)
 	res.setHeader('Content-Type', mime.lookup(fname))
 
 	let stream = fs.createReadStream(fname)
@@ -71,6 +76,11 @@ let public_root = fs.realpathSync(process.cwd())
 
 let server = http.createServer(function (req, res) {
     request_had_error = false
+    if (req.method !== "GET") {
+	errx(res, 501, "not implemented")
+	return
+    }
+
     let purl = url.parse(req.url, true)
     if (!purl.pathname.match(/^\/api/)) {
 	serve_static(req, res, purl)
@@ -116,6 +126,7 @@ let server = http.createServer(function (req, res) {
 	// copy the content-type value from the orig url
 	res.setHeader('Content-Type', xmlres.headers['content-type'])
 	res.setHeader('Access-Control-Allow-Origin', '*')
+	set_cache_headers(res)
 
 	argv.__http = {
 	    res: res,
