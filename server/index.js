@@ -34,6 +34,7 @@ let errx = function(res, code, msg) {
 
 class MyGrepHTTP extends feed.MyGrepXML {
     event_fp_error(err) {
+	if (this.first_bytes_are_here) request_had_error = true
 	let msg = err.message
 	if (this.opts.debug) msg += "\n" + err.stack
 	errx(this.opts.__http.res, 400, `${this.opts.__http.xmlurl}: ${msg}`)
