@@ -71,6 +71,9 @@ suite('Feed', function() {
 
 	r = execSync(`${__dirname}/../cli/grepfeed -d=-2012 < ${__dirname}/data/back2work.xml | grep '^#:' | wc -l`)
 	assert.equal("47\n", r.toString())
+
+	r = execSync(`${__dirname}/../cli/grepfeed -e < ${__dirname}/data/irishhistorypodcast.xml | grep '^#:' | wc -l`)
+	assert.equal("4\n", r.toString())
     })
 
 })
