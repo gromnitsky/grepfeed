@@ -252,7 +252,7 @@ let FeedTableArticle = React.createClass({
 	let aval = function(key, arr) {
 	    if (key === "enclosure") {
 		return arr.map( (idx) => {
-		    return `${idx._attr.url._value} (${idx._attr.type._value} ${idx._attr.length._value})`
+		    return `<a href="${idx._attr.url._value}">${idx._attr.url._value}</a> (${idx._attr.type._value} ${idx._attr.length._value})`
 		})
 	    }
 	    return arr.map( (idx) => idx._text )
@@ -263,7 +263,12 @@ let FeedTableArticle = React.createClass({
 	    rows.push(
 		<tr key={key}>
 		  <td>{key}</td>
-		  <td>{aval(key, this.props.article[key]).join(", ")}</td>
+		  <td> {
+			aval(key, this.props.article[key]).map( (val, idx) => {
+			    if (idx > 0) val = ", " + val
+			    return <span dangerouslySetInnerHTML={{__html: val}} />
+			})
+		    } </td>
 		</tr>
 	    )
 	}
