@@ -217,6 +217,10 @@ let FeedTable = React.createClass({
 	      </p>
 
 	      <table className="feedTableMeta">
+		<colgroup>
+		  <col style={{width: '20%'}} />
+		  <col style={{width: '80%'}} />
+		</colgroup>
 		<thead>
 		  <tr><th colSpan="2">Metadata</th></tr>
 		</thead>
@@ -255,6 +259,10 @@ let FeedTableArticle = React.createClass({
 
 	return (
 	    <table className="feedTableArticle">
+	      <colgroup>
+		<col style={{width: '15%'}} />
+		<col style={{width: '85%'}} />
+	      </colgroup>
 	      <thead>
 		<tr><th colSpan="2">#{this.props.id}</th></tr>
 	      </thead>
