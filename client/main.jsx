@@ -16,9 +16,9 @@ let u = require('../lib/u')
 let FeedBox = React.createClass({
     getInitialState: function() {
 	this.server_url_template = {
-	    protocol: 'http',
-	    hostname: '127.0.0.1',
-	    port: 8000,
+	    protocol: window.location.protocol,
+	    hostname: window.location.hostname,
+	    port: window.location.port === 80 ? null : window.location.port,
 	    pathname: '/api'
 	}
 	return { url: '', filter: '', last_req: null, feed: null, xmlurl: null }
