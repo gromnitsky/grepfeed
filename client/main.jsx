@@ -3,7 +3,7 @@
 require("babel-polyfill")
 
 let util = require('util')
-let url = require('url')
+let nodeurl = require('url')
 
 let React = require('react')
 let ReactDOM = require('react-dom')
@@ -26,7 +26,7 @@ let FeedBox = React.createClass({
 
     url: function() {
 	let obj = util._extend({
-	    query: u.opts_parse(shellquote.parse(this.state.filter))
+	    query: u.opts_parse(shellquote.parse(this.state.filter || ""))
 	}, this.server_url_template)
 	obj.query.url = this.state.url
 
@@ -36,15 +36,15 @@ let FeedBox = React.createClass({
 	}
 	obj.query = query
 
-	return url.format(obj)
+	return nodeurl.format(obj)
     },
 
     handle_feedForm: function(data) {
 	this.setState(data)
-	if (data.filter) console.log("FeedBox:handle_feedForm", data.filter)
     },
 
     handle_feedForm_submit: function() {
+	console.log("FeedBox.handle_feedForm_submit")
 	let xmlurl = this.url()
 	this.setState({
 	    last_req: "Loading...",
@@ -69,11 +69,27 @@ let FeedBox = React.createClass({
 	    })
     },
 
+    componentDidMount: function() {
+	console.info("Loaded")
+	// we don't need any "router" here, as we just can invoke
+	// handle_feedForm_submit() if there is anything useful in
+	// query params
+	let purl = nodeurl.parse(window.location.href, true)
+	if (purl.query.url) {
+	    this.setState({
+		url: purl.query.url,
+		filter: purl.query.filter
+	    }, this.handle_feedForm_submit)
+	}
+    },
+
     render: function() {
 	return (
 	    <div className="feedBox">
 	      <FeedForm on_data_change={this.handle_feedForm}
-			on_submit={this.handle_feedForm_submit} />
+			on_submit={this.handle_feedForm_submit}
+			filter={this.state.filter}
+			url={this.state.url} />
 	      <FeedArgv filter={this.state.filter} />
 	      <FeedReq status={this.state.last_req} />
 	      <FeedTable feed={this.state.feed} xmlurl={this.state.xmlurl} />
@@ -106,7 +122,8 @@ let FeedForm = React.createClass({
 	    <form className="feedForm" onSubmit={this.submit}
 		  onReset={this.reset}>
 	      <p><label>RSS URL:<br/>
-		  <input type="url"
+		  <input type="url" spellCheck="false"
+			 value={this.props.url}
 			 placeholder="http://example.com/rss.xml"
 			 onChange={this.on_change_url}
 			 />
@@ -118,6 +135,7 @@ let FeedForm = React.createClass({
 		    [-e] [-n digit] [regexp]
 		  </code><br />
 		  <input type="text" spellCheck="false"
+			 value={this.props.filter}
 			 onChange={this.on_change_filter}
 			 />
 		</label>
@@ -131,7 +149,7 @@ let FeedForm = React.createClass({
 
 let FeedArgv = React.createClass({
     filter2argv: function(str) {
-	return u.opts_parse(shellquote.parse(str))
+	return u.opts_parse(shellquote.parse(str || ""))
     },
 
     render: function() {
