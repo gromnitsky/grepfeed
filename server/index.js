@@ -48,7 +48,7 @@ let set_cache_headers = function(res) {
 
 let serve_static = function(req, res, purl) {
     if (purl.pathname.match(/\/$/)) purl.pathname += 'index.html'
-    let fname = path.join(public_root, purl.pathname)
+    let fname = path.join(public_root, path.normalize(purl.pathname))
     fs.stat(fname, (err, stats) => {
 	if (err) {
 	    errx(res, 404, `${err.syscall} ${err.code}`)
