@@ -56,7 +56,7 @@ sass.dest := $(patsubst $(src)/%.sass, $(out)/%.css, $(sass.src))
 
 $(out)/client/%.css: $(src)/client/%.sass
 	$(mkdir)
-	$(node-sass) $(SASS_OPT) -o $(dir $@) $<
+	$(node-sass) $(SASS_OPT) --include-path node_modules -o $(dir $@) $<
 
 $(sass.dest): node_modules
 

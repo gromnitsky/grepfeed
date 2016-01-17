@@ -10,6 +10,7 @@ let ReactDOM = require('react-dom')
 let shellquote = require('shell-quote')
 require('whatwg-fetch')
 let xmlToJSON = require('xmlToJSON')
+let NProgress = require('nprogress')
 
 let u = require('../lib/u')
 
@@ -59,7 +60,7 @@ let FeedBox = React.createClass({
 	    feed: null,
 	    xmlurl: xmlurl
 	})
-	let q = window
+	NProgress.start()
 	fetch(xmlurl)
 	    .then( (res) => {
 		if (res.status !== 200)
@@ -72,8 +73,10 @@ let FeedBox = React.createClass({
 		    last_req: "OK",
 		    feed: xmlToJSON.parseString(body)
 		})
+		NProgress.done()
 	    }).catch( (err) => {
 		this.setState({last_req: err})
+		NProgress.done()
 	    })
     },
 
