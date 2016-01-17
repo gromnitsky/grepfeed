@@ -140,7 +140,7 @@ let FeedForm = React.createClass({
 	      <p>
 		<label>Filter options: <code>
 		    [-d [-]date[,date]] [-c regexp]
-		    [-e] [-n digit] [regexp]
+		    [-e] [-n digit] [-v] [regexp]
 		  </code><br />
 		  <input type="text" spellCheck="false"
 			 value={this.props.filter}
@@ -155,9 +155,17 @@ let FeedForm = React.createClass({
     }
 });
 
+// Visualize filter parsing
 let FeedArgv = React.createClass({
+
     filter2argv: function(str) {
-	return u.opts_parse(shellquote.parse(str || ""))
+	let argv = u.opts_parse(shellquote.parse(str || ""))
+	for (let key in argv) {
+	    if (!key.match(/^[dcenv_]$/)) delete argv[key]
+	}
+	argv.regexp = argv['_'][0] || ""
+	delete argv['_']
+	return argv
     },
 
     render: function() {
