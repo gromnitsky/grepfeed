@@ -40,7 +40,15 @@ let FeedBox = React.createClass({
     },
 
     handle_feedForm: function(data) {
-	this.setState(data)
+	this.setState(data, () => {
+	    // update the url bar
+	    let obj = util._extend({query: {}}, this.server_url_template)
+	    obj.pathname = null
+	    if (this.state.url) obj.query.url = this.state.url
+	    if (this.state.filter) obj.query.filter = this.state.filter
+//	    console.log(nodeurl.format(obj))
+	    window.history.replaceState(null, null, nodeurl.format(obj))
+	})
     },
 
     handle_feedForm_submit: function() {
