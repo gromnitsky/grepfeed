@@ -25,7 +25,7 @@ None is required. Run `npm install` to get all the deps.
 
 0. Clone the repo
 
-1. chdir to some tmp dir
+1. chdir to some tmp loc
 
 2. Run
 
@@ -64,9 +64,9 @@ start a server, run
 (To select a diff host/port, use `HOSTNAME` & `PORT` env vars.)
 
 This returns the same xml as in the `cli/grepfeed` example, only does
-it via http:
+it through http:
 
-	$ curl http://example.com/rss '192.168.8.128:3000/api/?_=apple&d=2016&url=http%3A%2F%2Fexample.com%2Frss'
+	$ curl '192.168.8.128:3000/api/?_=apple&d=2016&url=http%3A%2F%2Fexample.com%2Frss'
 
 Notice `d` means `-d` in the `cli/grepfeed` example, `-x` doesn't
 apply here & `_` means the 1st command line arg, `apple` in this
