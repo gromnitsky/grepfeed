@@ -8,7 +8,7 @@ let nodeurl = require('url')
 let React = require('react')
 let ReactDOM = require('react-dom')
 let shellquote = require('shell-quote')
-require('whatwg-fetch')
+let $ = require('jquery')
 let xmlToJSON = require('xmlToJSON')
 let NProgress = require('nprogress')
 
@@ -22,7 +22,8 @@ let FeedBox = React.createClass({
 	    port: window.location.port === 80 ? null : window.location.port,
 	    pathname: '/api'
 	}
-	return { url: '', filter: '', last_req: null, feed: null, xmlurl: null }
+	return { url: '', filter: '',
+		 last_req: null, feed: null, xmlurl: null, request: null }
     },
 
     url: function() {
@@ -61,23 +62,36 @@ let FeedBox = React.createClass({
 	    xmlurl: xmlurl
 	})
 	NProgress.start()
-	fetch(xmlurl)
-	    .then( (res) => {
-		if (res.status !== 200)
-		    throw new Error(`${res.status} ${res.statusText}`)
-		return res.text()
-	    }).then( (body) => {
-		if (body.length === 0)
-		    throw new Error("no matched articles")
+	let request = $.get({url: xmlurl, dataType: 'text'})
+	this.setState({request: request})
+
+	// jquery promises is an abomination
+	request.then( (body, status, res) => {
+	    if (body.length === 0)
+		return $.Deferred().reject({status: res.status, statusText: "no matched articles"})
+	    try {
 		this.setState({
-		    last_req: "OK",
-		    feed: xmlToJSON.parseString(body)
+		    feed: xmlToJSON.parseString(body),
+		    last_req: "OK"
 		})
-		NProgress.done()
-	    }).catch( (err) => {
-		this.setState({last_req: err})
-		NProgress.done()
-	    })
+	    } catch (err) {
+		console.error("FeedBox.handle_feedForm_submit", err)
+		return $.Deferred().reject({status: res.status, statusText: err.message})
+	    }
+	    return true // nobody cares, except js2-mode
+
+	}).fail( (err) => {
+	    err = new Error(`${err.status} ${err.statusText}`)
+	    this.setState({last_req: err})
+	}).always( ()=> {
+	    this.setState({request: null})
+	    NProgress.done()
+	})
+
+    },
+
+    handle_feedForm_reset: function() {
+	this.state.request.abort("user interrupt")
     },
 
     componentDidMount: function() {
@@ -99,6 +113,8 @@ let FeedBox = React.createClass({
 	    <div className="feedBox">
 	      <FeedForm on_data_change={this.handle_feedForm}
 			on_submit={this.handle_feedForm_submit}
+			on_reset={this.handle_feedForm_reset}
+			is_busy={this.state.request}
 			filter={this.state.filter}
 			url={this.state.url} />
 	      <FeedArgv filter={this.state.filter} />
@@ -124,8 +140,13 @@ let FeedForm = React.createClass({
 	this.props.on_submit()
     },
 
-    reset: function() {
-	this.props.on_data_change({filter: '', url: ''})
+    reset: function(elm) {
+	elm.preventDefault()
+	if (!this.props.is_busy) {
+	    this.props.on_data_change({filter: '', url: ''})
+	    return
+	}
+	this.props.on_reset()
     },
 
     render: function() {
@@ -151,7 +172,7 @@ let FeedForm = React.createClass({
 			 />
 		</label>
 	      </p>
-	      <p><input type="submit" />&nbsp;
+	      <p><input type="submit" disabled={this.props.is_busy} />&nbsp;
 		<input type="reset" /></p>
 	    </form>
 	)
