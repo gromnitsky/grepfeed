@@ -144,9 +144,9 @@ let server = http.createServer(function (req, res) {
 
 })
 
-server.listen(process.env.PORT || 3000, process.env.HOSTNAME || '127.0.0.1',
+server.listen(process.env.PORT || 3000,
 	      function() {
-		  console.error('http://' + this.address().address +
+		  console.error('Listening: http://' + this.address().address +
 				(this.address().port === 80 ?
 				 "" : ":" + this.address().port))
 })
