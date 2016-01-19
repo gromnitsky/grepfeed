@@ -3,6 +3,8 @@
 Filters out rss/atom feeds. Returns all articles in a feed that match
 any of input patterns. The output is another valid xml feed.
 
+A live example: https://limitless-retreat-4049.herokuapp.com/
+
 ## What is included
 
 * a cli util `grepfeed`;
@@ -19,13 +21,14 @@ any of input patterns. The output is another valid xml feed.
 
 ### cli/server
 
-None is required. Run `npm install` to get all the deps.
+Run `npm install --ignore-scripts` to get all the deps. A separate
+build step isn't required.
 
 ### web client
 
-0. Clone the repo
+0. Clone the repo, don't run any `npm ...` commands by yourself.
 
-1. chdir to some tmp loc
+1. chdir to some tmp location
 
 2. Run
 
@@ -61,7 +64,7 @@ start a server, run
 
 	$ server/index .
 
-(To select a diff host/port, use `HOSTNAME` & `PORT` env vars.)
+(To select a diff port, use `PORT` env vars.)
 
 This returns the same xml as in the `cli/grepfeed` example, only does
 it through http:
@@ -80,7 +83,7 @@ A web client is a simple React SPA that internally talks to the above
 server. If you indeed had build the web client, run the server w/ the
 compiled files directory, as:
 
-	$ NODE_PATH=node_modules HOSTNAME=127.0.0.1 ../grepfeed/server/index.js production/client
+	$ NODE_PATH=node_modules ../grepfeed/server/index.js production/client
 
 Then open http://127.0.0.1:3000 in your browser.
 
