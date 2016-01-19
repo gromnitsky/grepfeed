@@ -10,6 +10,15 @@
 	"url": "http://www.opensource.org/licenses/mit-license.php"
     },
 
+    "engines": {
+	"node": "5.4.1"
+    },
+
+    "scripts": {
+	"postinstall": "make -o node_modules out=_out/${NODE_ENV:-development} compile",
+	"start": "node server/index.js _out/${NODE_ENV:-development}/client"
+    },
+
     "dependencies": {
 	"minimist": "~1.2.0",
 	"feedparser": "~1.1.4",
@@ -17,11 +26,7 @@
 	"ent": "~2.2.0",
 
 	"request": "~2.67.0",
-	"mime": "~1.3.4"
-    },
-
-    "devDependencies": {
-	"mocha": "~2.3.4",
+	"mime": "~1.3.4",
 
 	"react": "~0.14.6",
 	"react-dom": "~0.14.6",
@@ -37,5 +42,9 @@
 	"babel-preset-react": "~6.3.13",
 	"browserify": "~13.0.0",
 	"uglify-js": "~2.6.1"
+    },
+
+    "devDependencies": {
+	"mocha": "~2.3.4"
     }
 }

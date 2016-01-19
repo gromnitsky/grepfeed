@@ -3,7 +3,8 @@
 pp-%:
 	@echo "$(strip $($*))" | tr ' ' \\n
 
-out := $(or $(NODE_ENV),development)
+NODE_ENV ?= development
+out := $(NODE_ENV)
 src.mkf := $(realpath $(lastword $(MAKEFILE_LIST)))
 src := $(dir $(src.mkf))
 src2dest = $(subst $(src),$(out),$($1.src))
@@ -22,7 +23,7 @@ test: node_modules
 export NODE_PATH = $(realpath node_modules)
 
 node_modules: package.json
-	npm install
+	npm install --ignore-scripts
 	touch $@
 
 package.json: $(src)/package.json
@@ -47,8 +48,7 @@ static: $(static.dest)
 
 node-sass := node_modules/.bin/node-sass
 SASS_OPT := -q --output-style compressed
-ifeq ($(out), development)
-# embedded source maps don't work in chrome 47
+ifeq ($(NODE_ENV), development)
 SASS_OPT := -q --source-map true
 endif
 sass.src := $(wildcard $(src)/client/*.sass)
@@ -66,7 +66,7 @@ sass: $(sass.dest)
 
 
 babel := node_modules/.bin/babel
-ifeq ($(out), development)
+ifeq ($(NODE_ENV), development)
 BABEL_OPT := -s inline
 endif
 js.src := $(wildcard $(src)/lib/*.js)
@@ -95,7 +95,7 @@ $(out)/client/%.js: $(src)/client/%.jsx
 
 browserify := node_modules/.bin/browserify
 browserify.dest.sfx := .es5
-ifeq ($(out), development)
+ifeq ($(NODE_ENV), development)
 browserify.dest.sfx := .js
 BROWSERIFY_OPT := -d
 endif
