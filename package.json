@@ -34,6 +34,7 @@
 	"xmlToJSON": "metatribal/xmlToJSON#ca8bcd1",
 	"nprogress": "~0.2.0",
 	"jquery": "~2.2.0",
+	"q": "~1.4.1",
 
 	"node-sass": "~3.4.2",
 	"babel-cli": "~6.4.0",

@@ -8,11 +8,11 @@ let nodeurl = require('url')
 let React = require('react')
 let ReactDOM = require('react-dom')
 let shellquote = require('shell-quote')
-let $ = require('jquery')
 let xmlToJSON = require('xmlToJSON')
 let NProgress = require('nprogress')
 
 let u = require('../lib/u')
+let dom = require('../lib/dom')
 
 let FeedBox = React.createClass({
     getInitialState: function() {
@@ -62,36 +62,32 @@ let FeedBox = React.createClass({
 	    xmlurl: xmlurl
 	})
 	NProgress.start()
-	let request = $.get({url: xmlurl, dataType: 'text'})
+	let request = dom.http_get(xmlurl, 60*2*1000) // timeout in 2m
 	this.setState({request: request})
+	let req_state = null
 
-	// jquery promises is an abomination
-	request.then( (body, status, res) => {
-	    if (body.length === 0)
-		return $.Deferred().reject({status: res.status, statusText: "no matched articles"})
-	    try {
-		this.setState({
-		    feed: xmlToJSON.parseString(body),
-		    last_req: "OK"
-		})
-	    } catch (err) {
-		console.error("FeedBox.handle_feedForm_submit", err)
-		return $.Deferred().reject({status: res.status, statusText: err.message})
-	    }
-	    return true // nobody cares, except js2-mode
-
-	}).fail( (err) => {
-	    err = new Error(`${err.status} ${err.statusText}`)
-	    this.setState({last_req: err})
-	}).always( ()=> {
-	    this.setState({request: null})
+	request.promise.then( (body, status, res) => {
+	    if (body.length === 0) throw new Error("no matched articles")
+	    dom.nprogress("yellow")
+	    // parse xml
+	    this.setState({ feed: xmlToJSON.parseString(body) })
+	    req_state = "OK"
+	}).catch( (err) => {
+	    req_state = dom.jqxhr2error(err)
+	}).progress( (event) => {
+	    let bytes = event.loaded.toString().commas()
+	    this.setState({ last_req: `Loading... ${bytes} B` })
+	}).finally( ()=> {
+	    this.setState({
+		request: null,
+		last_req: req_state
+	    })
 	    NProgress.done()
-	})
-
+	}).done()
     },
 
     handle_feedForm_reset: function() {
-	this.state.request.abort("user interrupt")
+	this.state.request.jqXHR.abort("user interrupt")
     },
 
     componentDidMount: function() {
@@ -211,7 +207,7 @@ let FeedReq = React.createClass({
 
 	return (
 	    <div className={className}>
-	      <b>Request result: </b>
+	      <b>Request state: </b>
 	      { this.props.status.toString() }
 	    </div>
 	)
