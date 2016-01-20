@@ -26,7 +26,7 @@ let FeedBox = React.createClass({
 		 last_req: null, feed: null, xmlurl: null, request: null }
     },
 
-    url: function() {
+    url4server: function() {
 	let obj = util._extend({
 	    query: u.opts_parse(shellquote.parse(this.state.filter || ""))
 	}, this.server_url_template)
@@ -41,21 +41,24 @@ let FeedBox = React.createClass({
 	return nodeurl.format(obj)
     },
 
+    url4browser: function() {
+	let obj = util._extend({query: {}}, this.server_url_template)
+	obj.pathname = null
+	if (this.state.url) obj.query.url = this.state.url
+	if (this.state.filter) obj.query.filter = this.state.filter
+	return nodeurl.format(obj)
+    },
+
     handle_feedForm: function(data) {
 	this.setState(data, () => {
 	    // update the url bar
-	    let obj = util._extend({query: {}}, this.server_url_template)
-	    obj.pathname = null
-	    if (this.state.url) obj.query.url = this.state.url
-	    if (this.state.filter) obj.query.filter = this.state.filter
-//	    console.log(nodeurl.format(obj))
-	    window.history.replaceState(null, null, nodeurl.format(obj))
+	    window.history.replaceState(null, null, this.url4browser())
 	})
     },
 
     handle_feedForm_submit: function() {
 	console.log("FeedBox.handle_feedForm_submit")
-	let xmlurl = this.url()
+	let xmlurl = this.url4server()
 	this.setState({
 	    last_req: "Loading...",
 	    feed: null,
@@ -90,11 +93,7 @@ let FeedBox = React.createClass({
 	this.state.request.jqXHR.abort("user interrupt")
     },
 
-    componentDidMount: function() {
-	console.info("Loaded")
-	// we don't need any "router" here, as we just can invoke
-	// handle_feedForm_submit() if there is anything useful in
-	// query params
+    submit_invoke: function() {
 	let purl = nodeurl.parse(window.location.href, true)
 	if (purl.query.url) {
 	    this.setState({
@@ -102,6 +101,14 @@ let FeedBox = React.createClass({
 		filter: purl.query.filter
 	    }, this.handle_feedForm_submit)
 	}
+    },
+
+    componentDidMount: function() {
+	console.info("FeedBox.componentDidMount()")
+	// we don't need any "router" here, as we just can invoke
+	// handle_feedForm_submit() if there is anything useful in
+	// query params
+	this.submit_invoke()
     },
 
     render: function() {
@@ -154,6 +161,8 @@ let FeedForm = React.createClass({
 			 value={this.props.url}
 			 placeholder="http://example.com/rss.xml"
 			 onChange={this.on_change_url}
+			 disabled={this.props.is_busy}
+			 required
 			 />
 		</label>
 	      </p>
@@ -165,6 +174,7 @@ let FeedForm = React.createClass({
 		  <input type="text" spellCheck="false"
 			 value={this.props.filter}
 			 onChange={this.on_change_filter}
+			 disabled={this.props.is_busy}
 			 />
 		</label>
 	      </p>
