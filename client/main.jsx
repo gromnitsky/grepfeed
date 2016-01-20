@@ -77,15 +77,16 @@ let FeedBox = React.createClass({
 	    req_state = "OK"
 	}).catch( (err) => {
 	    req_state = dom.jqxhr2error(err)
+	    this.setState({ feed: null })
 	}).progress( (event) => {
 	    let bytes = event.loaded.toString().commas()
 	    this.setState({ last_req: `Loading... ${bytes} B` })
 	}).finally( ()=> {
+	    NProgress.done()
 	    this.setState({
 		request: null,
 		last_req: req_state
 	    })
-	    NProgress.done()
 	}).done()
     },
 
