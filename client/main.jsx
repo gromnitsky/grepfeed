@@ -226,6 +226,15 @@ let FeedReq = React.createClass({
 })
 
 let FeedTable = React.createClass({
+    componentWillReceiveProps: function(nextProps) {
+	this.redraw = !(this.props.feed && this.props.xmlurl === nextProps.xmlurl)
+    },
+
+    shouldComponentUpdate: function(nextProps, nextState) {
+	if (this.redraw === undefined) return true
+	return this.redraw
+    },
+
     render: function() {
 	if (!this.props.feed) return null
 
