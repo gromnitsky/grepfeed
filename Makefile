@@ -23,14 +23,11 @@ test: node_modules
 export NODE_PATH = $(realpath node_modules)
 
 node_modules: package.json
-	npm install --ignore-scripts
+	npm install --loglevel=error --depth=0 $(NPM_OPT)
 	touch $@
 
 package.json: $(src)/package.json
 	cp -a $< $@
-
-.PHONY: npm
-npm: node_modules
 
 
 

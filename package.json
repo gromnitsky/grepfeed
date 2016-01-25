@@ -15,7 +15,7 @@
     },
 
     "scripts": {
-	"postinstall": "make -o node_modules out=_out/${NODE_ENV:-development} compile",
+	"postinstall": "[ -z $DYNO ] || make -o node_modules out=_out/${NODE_ENV:-development} compile",
 	"start": "node server/index.js _out/${NODE_ENV:-development}/client"
     },
 

@@ -21,8 +21,8 @@ A live example: https://limitless-retreat-4049.herokuapp.com/
 
 ### cli/server
 
-Run `npm install --ignore-scripts` to get all the deps. A separate
-build step isn't required.
+Run `npm install` to get all the deps. A separate build step isn't
+required.
 
 ### web client
 
