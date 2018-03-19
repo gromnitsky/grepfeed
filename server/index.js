@@ -56,7 +56,7 @@ let serve_static = function(req, res, purl) {
 	}
 	res.setHeader('Content-Length', stats.size)
 	set_cache_headers(res)
-	res.setHeader('Content-Type', mime.lookup(fname))
+	res.setHeader('Content-Type', mime.getType(fname))
 
 	let stream = fs.createReadStream(fname)
 	stream.on('error', (err) => {
