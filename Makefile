@@ -113,8 +113,11 @@ kill:
 
 
 
-deploy: compile
-	[ '$(NODE_ENV)' = 'production' ] || exit 1
+deploy:
 	git checkout heroku
-	git commit -am build
+	git merge master
+	rm -rf _out
+	$(MAKE) NODE_ENV=production
+	git add -f _out/production/client
+	-git commit -am build
 	git push heroku heroku:master
