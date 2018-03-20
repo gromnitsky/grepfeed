@@ -79,17 +79,19 @@ compile.all += $(jsx.dest)
 
 
 
+bundle.target := $(cache)/client/%.jsx.es5
 ifeq ($(NODE_ENV), development)
 browserify.opt := -d
+bundle.target := $(out)/client/%.js
 endif
 
-$(out)/client/%.js: $(cache)/client/%.jsx $(js.dest)
+$(bundle.target): $(cache)/client/%.jsx $(js.dest)
 	$(mkdir)
 	browserify $(browserify.opt) $< -o $@
-ifneq ($(NODE_ENV), development)
-	uglifyjs $@ -o $@.es5 -mc --screw-ie8
-	mv $@.es5 $@
-endif
+
+# production
+$(out)/client/%.js: $(cache)/client/%.jsx.es5 $(js.dest)
+	uglifyjs $< -o $@ -mc --screw-ie8
 
 compile.all += $(out)/client/main.js
 
