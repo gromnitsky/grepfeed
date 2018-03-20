@@ -8,8 +8,7 @@
         "node": "8.10.0"
     },
     "scripts": {
-        "postinstall": "[ -z $DYNO ] || make -o node_modules out=_out/${NODE_ENV:-development} compile",
-        "start": "node server/index.js _out/${NODE_ENV:-development}/client"
+        "start": "node server/index.js _out/production/client"
     },
     "dependencies": {
         "babel-polyfill": "~6.26.0",
