@@ -18,6 +18,7 @@
 let path = require('path')
 
 let feed = require('../lib/feed')
+let XMLGrep = require('../lib/xmlgrep')
 let u = require('../lib/u')
 
 let errx = function(msg) {
@@ -26,39 +27,33 @@ let errx = function(msg) {
 }
 
 class MyGrep extends feed.Grep {
-
-    constructor(opts) {
-	super(opts)
-
-	this.to_s_rules = {
+    to_s_rules(klass) {
+	return {
 	    "Array": function() { return this.join(", ") }
-	}
+	}[klass]
     }
 
-    event_fp_error(err) {
+    handle_error(err) {
 	let msg = err.message
 	if (this.opts.debug) msg += "\n" + err.stack
 	errx(msg)
     }
 
-    print_meta(data) {
+    meta(data) {
 	let r = []
 	for (let key in data) {
 	    if (!this.is_printable(data[key])) continue
 	    this.to_s_set_rules(data[key])
 	    r.push(`${key}: ${data[key]}`)
 	}
-	let encl = this.encl_stat()
-	if (encl.total)
-	    r.push(`enclosures: ${encl.total}/${encl.articles}/${this.articles.length}`)
 	r.push("")
-	this.push(r.join("\n"))
+	return r.join("\n")
     }
 
-    print_article(article) {
+    article(article) {
 	let r = []
 	let _article_text_prop = {}
-	if (this._articles_matched > 1) r.push("")
+	r.push("")
 
 	for (let key in article) {
 	    if (!this.is_printable(article[key])) continue
@@ -71,7 +66,7 @@ class MyGrep extends feed.Grep {
 	    r.push(`${key}: ${article[key]}`)
 	}
 	r.push("")
-	this.push(r.join("\n"))
+	return r.join("\n")
     }
 }
 
@@ -81,19 +76,15 @@ class MyGrep extends feed.Grep {
 let argv = u.opts_parse(process.argv.slice(2))
 if (argv.debug) console.error(argv)
 
-let mfp = argv.x ? new feed.MyGrepXML(argv) : new MyGrep(argv)
+let mfp = argv.x ? new XMLGrep(argv) : new MyGrep(argv)
 
-process.stdin.once("end", () => {
-    mfp.fp.end()
-    // w/o this stdout closes too early
-    mfp.fp.emit("end")
-})
+// override Grep#footer() to check if anything was matched
+let orig_footer = mfp.footer.bind(mfp)
+mfp.footer = function() {
+    if (orig_footer) orig_footer()
+    if (!argv.m && this.articles_matched === 0) process.exitCode = 1
+}
 
 process.stdin
     .pipe(mfp)
     .pipe(process.stdout)
-
-mfp.event.once("end", () => {
-    if (!argv.m && mfp._articles_matched === 0) process.exit(1)
-    process.exit(0)
-})

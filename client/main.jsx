@@ -70,10 +70,12 @@ let FeedBox = React.createClass({
 	let req_state = null
 
 	request.promise.then( (body, status, res) => {
-	    if (body.length === 0) throw new Error("no matched articles")
 	    dom.nprogress("yellow")
 	    // parse xml
-	    this.setState({ feed: xmlToJSON.parseString(body) })
+	    let feed = xmlToJSON.parseString(body)
+	    if (!feed.rss[0].channel[0].item)
+		throw new Error("no matched articles")
+	    this.setState({ feed })
 	    req_state = "OK"
 	}).catch( (err) => {
 	    req_state = dom.jqxhr2error(err)

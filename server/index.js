@@ -10,7 +10,7 @@ let path = require('path')
 let request = require('request')
 let mime = require('mime')
 
-let feed = require('../lib/feed')
+let XMLGrep = require('../lib/xmlgrep')
 let meta = require('../package.json')
 
 
@@ -32,8 +32,8 @@ let errx = function(res, code, msg) {
     request_had_error = true
 }
 
-class MyGrepHTTP extends feed.MyGrepXML {
-    event_fp_error(err) {
+class MyGrepHTTP extends XMLGrep {
+    handle_error(err) {
 	if (this.first_bytes_are_here) request_had_error = true
 	let msg = err.message
 	if (this.opts.debug) msg += "\n" + err.stack
@@ -134,11 +134,6 @@ let server = http.createServer(function (req, res) {
 	    xmlurl: xmlurl
 	}
 	let mfp = new MyGrepHTTP(argv)
-	cur.once("end", () => {
-	    mfp.fp.end()
-	    mfp.fp.emit("end")
-	})
-
 	cur.pipe(mfp).pipe(res)
     })
 
