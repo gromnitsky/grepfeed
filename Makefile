@@ -2,117 +2,99 @@
 
 NODE_ENV ?= development
 out := _out/$(NODE_ENV)
-src.mkf := $(realpath $(lastword $(MAKEFILE_LIST)))
-src := $(dir $(src.mkf))
+cache := $(out)/.ccache
 
-src2dest = $(subst $(src),$(out),$($1.src))
 mkdir = @mkdir -p $(dir $@)
 copy = cp $< $@
+
+compile:
+compile.all :=
 
 
 
 .PHONY: test
 test: node_modules
-	mocha -u tdd $(opt) $(src)/test/test_*.js
+	mocha -u tdd $(t) $(src)/test/test_*.js
 
 
 
-node_modules: package.json
+include $(out)/.npm
+$(out)/.npm: package.json
 	npm i
+	$(mkdir)
 	touch $@
+	@echo Restarting Make...
 
 
 
-static.src := $(wildcard $(src)/client/*.html $(src)/client/*.svg)
-static.dest :=  $(call src2dest,static)
-
-$(static.dest): $(out)/%: $(src)/%
+static.dest := $(addprefix $(out)/, $(wildcard client/*.html client/*.svg))
+$(static.dest): $(out)/%: %
 	$(mkdir)
 	$(copy)
 
-.PHONY: static
-static: $(static.dest)
-
-
-
-SASS_OPT := -q --output-style compressed
-ifeq ($(NODE_ENV), development)
-SASS_OPT := -q --source-map true
-endif
-sass.src := $(wildcard $(src)/client/*.sass)
-sass.dest := $(patsubst $(src)/%.sass, $(out)/%.css, $(sass.src))
-
-$(out)/client/%.css: $(src)/client/%.sass
+npm.src := babel-polyfill/dist/polyfill.min.js
+npm.dest := $(addprefix $(out)/client/vendor/, $(npm.src))
+$(out)/client/vendor/%: node_modules/%
 	$(mkdir)
-	node-sass $(SASS_OPT) --include-path node_modules -o $(dir $@) $<
+	$(copy)
 
-$(sass.dest): node_modules
+compile.all += $(static.dest) $(npm.dest)
 
-.PHONY: sass
-sass: $(sass.dest)
+
+
+sass.opt := -q --output-style compressed
+ifeq ($(NODE_ENV), development)
+sass.opt := -q --source-map true
+endif
+sass.dest := $(patsubst %.sass, $(out)/%.css, $(wildcard client/*.sass))
+
+$(out)/%.css: %.sass
+	$(mkdir)
+	node-sass $(sass.opt) --include-path node_modules -o $(dir $@) $<
+
+compile.all += $(sass.dest)
 
 
 
 ifeq ($(NODE_ENV), development)
-BABEL_OPT := -s inline
+babel.opt := -s inline
 endif
-js.src := $(wildcard $(src)/lib/*.js)
-js.dest := $(patsubst $(src)/%.js, $(out)/%.js, $(js.src))
 bp := $(shell npm -g root)/babel-preset
 
-$(js.dest): node_modules
-
-$(out)/%.js: $(src)/%.js
+js.dest := $(addprefix $(cache)/, $(wildcard lib/*.js))
+$(js.dest): $(cache)/%: %
 	$(mkdir)
-	babel --presets $(bp)-es2015 $(BABEL_OPT) $< -o $@
+	babel --presets $(bp)-es2015 $(babel.opt) $< -o $@
+
+compile.all += $(js.dest)
 
 
 
-jsx.src := $(wildcard $(src)/client/*.jsx)
-jsx.dest := $(patsubst $(src)/%.jsx, $(out)/%.js, $(jsx.src))
-
-$(jsx.dest): node_modules
-# we use .jsx files only as input for browserify
-.INTERMEDIATE: $(jsx.dest)
-
-$(out)/client/%.js: $(src)/client/%.jsx
+jsx.dest := $(addprefix $(cache)/, $(wildcard client/*.jsx))
+$(jsx.dest): $(cache)/%: %
 	$(mkdir)
-	babel --presets $(bp)-es2015,$(bp)-react $(BABEL_OPT) $< -o $@
+	babel --presets $(bp)-es2015,$(bp)-react $(babel.opt) $< -o $@
+
+compile.all += $(jsx.dest)
 
 
 
-browserify.dest.sfx := .es5
+bundle.src.ext := jsx.es5
 ifeq ($(NODE_ENV), development)
-browserify.dest.sfx := .js
-BROWSERIFY_OPT := -d
+browserify.opt := -d
+bundle.src.ext := jsx
 endif
 
-bundle1 := $(out)/client/main.browserify$(browserify.dest.sfx)
-$(bundle1): $(out)/client/main.js $(js.dest)
+$(cache)/client/%.jsx.es5: $(cache)/client/%.jsx
+	uglifyjs $< -o $@ -mc --screw-ie8
+
+$(out)/client/%.js: $(cache)/client/%.$(bundle.src.ext)
 	$(mkdir)
-	browserify $(BROWSERIFY_OPT) $< -o $@
+	browserify $(browserify.opt) $< -o $@
 
-.PHONY: js
-js:
-
-
-
-# will be empty in development mode
-es5.dest := $(patsubst %.es5, %.js, $(bundle1))
-
-UGLIFYJS_OPT := --screw-ie8 -m -c
-%.js: %.es5
-	uglifyjs $(UGLIFYJS_OPT) -o $@ -- $<
-
-ifneq ($(browserify.dest.sfx), .js)
-js: $(es5.dest)
-# we don't need .es5 files around
-.INTERMEDIATE: $(bundle1)
-else
-js: $(bundle1)
-endif
+compile.all += $(out)/client/main.js
 
 
 
-.PHONY: compile
-compile: static sass js
+$(compile.all): $(out)/.npm
+compile: $(compile.all)

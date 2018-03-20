@@ -1,7 +1,5 @@
 'use strict';
 
-require("babel-polyfill")
-
 let util = require('util')
 let nodeurl = require('url')
 

@@ -15,9 +15,7 @@
 
     <div id="content">
       Loading...
-      <noscript>
-	But all in vain. Dude, <b>turn your JavaScript on</b>.
-      </noscript>
+      <noscript>JavaScript is required.</noscript>
     </div>
 
     <footer>
@@ -30,7 +28,8 @@
       </div>
     </footer>
 
-    <script src="main.browserify.js"></script>
+    <script src="vendor/babel-polyfill/dist/polyfill.min.js"></script>
+    <script src="main.js"></script>
 
   </body>
 </html>
