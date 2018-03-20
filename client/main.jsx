@@ -8,7 +8,7 @@ let nodeurl = require('url')
 let React = require('react')
 let ReactDOM = require('react-dom')
 let shellquote = require('shell-quote')
-let xmlToJSON = require('xmlToJSON')
+let xmlToJSON = require('xmltojson')
 let NProgress = require('nprogress')
 
 let u = require('../lib/u')
