@@ -4,23 +4,28 @@
 
 $body-width: 700px;
 $my-margin: 10px;
+$fg: #191919;
 
-@media (min-width: $body-width + 1px)
-  body
-    width: $body-width;
-    margin: 0 auto;
+body
+  max-width: $body-width;
+  margin: 0 auto;
+  color: $fg;
 
+code,
+pre
+  white-space: pre-wrap;
+  word-wrap: break-word;
 
 input[type="url"], input[type="text"]
-    width: 100%
-    margin-top: $my-margin / 2
+  width: 100%
+  margin-top: $my-margin / 2
 
 
 // Footer
 
 footer
   margin-top: $my-margin
-  border-top: 1px solid black
+  border-top: 1px solid $fg
   display: flex
 
 .footer-item:first-child
@@ -93,6 +98,10 @@ $flag_yellow: #ffd500
   a
     text-decoration: none
 
-  img
-    width: 100%
-    height: 100%
+  img,
+  object,
+  video,
+  embed
+    max-width: 100%;
+    width: auto;
+    height: auto;
