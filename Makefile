@@ -110,3 +110,11 @@ server: kill compile
 .PHONY: kill
 kill:
 	-pkill -f 'node server/index.js'
+
+
+
+deploy: compile
+	[ '$(NODE_ENV)' = 'production' ] || exit 1
+	git checkout heroku
+	git commit -am build
+	git push heroku heroku:master
