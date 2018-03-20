@@ -14,7 +14,8 @@ A live example: https://limitless-retreat-4049.herokuapp.com/
 
 ## Requirements
 
-* node 5.4.1
+* `npm -g i browserify babel-cli babel-preset-es2015 babel-preset-react node-sass uglifyjs`
+* node 8.10.0
 * GNU make
 
 ## Compilation
@@ -28,11 +29,9 @@ required.
 
 0. Clone the repo, don't run any `npm ...` commands by yourself.
 
-1. chdir to some tmp location
+1. Run
 
-2. Run
-
-		$ NODE_ENV=production make -f ../path/to/the/repo compile
+		$ make NODE_ENV=production
 
 ## How it works
 
@@ -44,17 +43,18 @@ used as:
 
 ### cli
 
-`cli/grepfeed` extends Grep to override 2 methods: `print_meta()` &
-`print_atricle()` where it's convenient to write the output in any
-format one wants. 2 interfaces are included: the default text-only &
-an xml one. The latter produces a valid rss 2.0 feed. E.g.
+`cli/grepfeed` extends Grep to override several methods where it's
+convenient to write the output in any format one wants. 2 interfaces
+are included: the default text-only & an xml one. The latter produces
+a valid rss 2.0 feed. E.g.
 
 	$ curl http://example.com/rss | cli/grepfeed apple -d=2016 -x
 
 parses the input feed, selects only articles written in 2016 or newer
 that match the regexp pattern /apple/. `-x` means xml output.
 
-Look in the beginning of `cli/grepfeed` file for additional options.
+Look at the beginning of `cli/grepfeed` file for the additional
+options.
 
 ### server
 
@@ -62,7 +62,7 @@ Acts as a proxy: downloads a requested feed & returns the filtered
 xml. Query params match `cli/grepfeed` command line interface. To
 start a server, run
 
-	$ server/index .
+	$ server/index _out/production/client
 
 (To select a diff port, use `PORT` env vars.)
 
@@ -80,12 +80,8 @@ the behavior.
 ### web client
 
 A web client is a simple React SPA that internally talks to the above
-server. If you indeed had build the web client, run the server w/ the
-compiled files directory, as:
-
-	$ NODE_PATH=node_modules ../grepfeed/server/index.js production/client
-
-Then open http://127.0.0.1:3000 in your browser.
+server. If you have started the server, open http://127.0.0.1:3000 in
+your browser.
 
 # License
 
