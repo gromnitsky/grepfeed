@@ -88,7 +88,7 @@ endif
 $(cache)/client/%.jsx.es5: $(cache)/client/%.jsx
 	uglifyjs $< -o $@ -mc --screw-ie8
 
-$(out)/client/%.js: $(cache)/client/%.$(bundle.src.ext)
+$(out)/client/%.js: $(cache)/client/%.$(bundle.src.ext) $(js.dest)
 	$(mkdir)
 	browserify $(browserify.opt) $< -o $@
 
@@ -98,3 +98,15 @@ compile.all += $(out)/client/main.js
 
 $(compile.all): $(out)/.npm
 compile: $(compile.all)
+
+
+
+# $ watchthis.sound -e _out -- make server
+
+.PHONY: server
+server: kill compile
+	server/index.js $(out)/client &
+
+.PHONY: kill
+kill:
+	-pkill -f 'node server/index.js'
