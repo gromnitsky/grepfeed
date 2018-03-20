@@ -52,18 +52,16 @@ class MyGrep extends feed.Grep {
 
     article(article) {
 	let r = []
-	let _article_text_prop = {}
 	r.push("")
 
 	for (let key in article) {
 	    if (!this.is_printable(article[key])) continue
-	    if (_article_text_prop[key]) continue
-
-	    if (key.match(/\.__text$/))
-		_article_text_prop[key.split(".")[0]] = true
 
 	    this.to_s_set_rules(article[key])
-	    r.push(`${key}: ${article[key]}`)
+	    let val = article[key]
+
+	    if (/^(summary|description)$/.test(key)) val = feed.html2text(val)
+	    r.push(`${key}: ${val}`)
 	}
 	r.push("")
 	return r.join("\n")
