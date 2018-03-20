@@ -14,7 +14,7 @@ compile.all :=
 
 .PHONY: test
 test: node_modules
-	mocha -u tdd $(t) $(src)/test/test_*.js
+	mocha -u tdd $(t) test/test_*.js
 
 
 
