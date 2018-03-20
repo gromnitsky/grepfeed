@@ -3,7 +3,7 @@
 Filters out rss/atom feeds. Returns all articles in a feed that match
 any of input patterns. The output is another valid xml feed.
 
-A live example: https://limitless-retreat-4049.herokuapp.com/
+A live example: https://serene-river-17732.herokuapp.com/
 
 ## What is included
 
