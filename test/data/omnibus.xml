@@ -1,0 +1,558 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss xmlns:content='http://purl.org/rss/1.0/modules/content/' xmlns:taxo='http://purl.org/rss/1.0/modules/taxonomy/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:itunes='http://www.itunes.com/dtds/podcast-1.0.dtd' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:atom='http://www.w3.org/2005/Atom' version='2.0'>
+    <channel>
+        <atom:link href='' rel='self' type='application/rss+xml' />
+        <title>Omnibus</title>
+        <link>https://www.omnibusproject.com/podcasts/omnibus.rss</link>
+        <description>Twice a week, Ken Jennings and John Roderick add a new entry to the OMNIBUS, an encyclopedic reference work of strange-but-true stories that they are compiling as a time capsule for future generations.</description>
+        <language>en-us</language>
+        <copyright>Copyright 2017 HowStuffWorks.com</copyright>
+        <lastBuildDate>Tue, 20 Mar 2018 08:08:56 -0400</lastBuildDate>
+        <managingEditor>applepodcast@howstuffworks.com (HowStuffWorks)</managingEditor>
+        <webMaster>applepodcast@howstuffworks.com (HowStuffWorks)</webMaster>
+        <ttl>60</ttl>
+        <category>History</category>
+        <image>
+            <title>Omnibus</title>
+            <url>https://s.hswstatic.com/gif/omnibus-hero-logo.png</url>
+            <link>https://www.omnibusproject.com/podcasts/omnibus.rss</link>
+        </image>
+        <itunes:owner>
+            <itunes:email>applepodcast@howstuffworks.com</itunes:email>
+            <itunes:name>HowStuffWorks</itunes:name>
+        </itunes:owner>
+        <itunes:image href='https://s.hswstatic.com/gif/omnibus-hero-logo.png' />
+        <itunes:category text='History' />
+        <itunes:category text='Society &amp; Culture' />
+        <itunes:author>HowStuffWorks</itunes:author>
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:keywords>podcast, Omnibus, Omnibus Project, history, time capsule, Ken Jennings, John Roderick, Jeopardy, The Long Winters</itunes:keywords>
+        <itunes:subtitle>The Omnibus Time Capsule Project with Jennings and Roderick</itunes:subtitle>
+        <itunes:summary>Twice a week, Ken Jennings and John Roderick add a new entry to the OMNIBUS, an encyclopedic reference work of strange-but-true stories that they are compiling as a time capsule for future generations.</itunes:summary>
+        <item>
+            <title>Mary Anning (Entry 050.PS3420)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-20-omnibus-episode-33-mary-anning.mp3?awCollectionId=1019&amp;awEpisodeId=930567</link>
+            <description>In which a working-class woman becomes one of the greatest scientists of her age, discovers dinosaur poop, and sells seashells by the seashore. Certificate #36073.</description>
+            <pubDate>Tue, 20 Mar 2018 08:08:39 -0400</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-03-20-omnibus-episode-33-mary-anning.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-20-omnibus-episode-33-mary-anning.mp3?awCollectionId=1019&amp;awEpisodeId=930567' length='40091129' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:44:39</itunes:duration>
+            <itunes:subtitle>In which a working-class woman becomes one of the greatest scientists of her age, discovers dinosaur poop, and sells seashells by the seashore. Certificate #36073.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>S.S. United States (Entry 1213.JB0926)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-15-omnibus-episode-32-SS-United-States.mp3?awCollectionId=1019&amp;awEpisodeId=930508</link>
+            <description>In which an aluminum-heavy cruise liner falls on hard times, and John and Ken can't decide if 'Blue Riband' is actually French or not. Certificate #39390.</description>
+            <pubDate>Thu, 15 Mar 2018 10:33:53 -0400</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-03-15-omnibus-episode-32-SS-United-States.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-15-omnibus-episode-32-SS-United-States.mp3?awCollectionId=1019&amp;awEpisodeId=930508' length='45766941' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:50:34</itunes:duration>
+            <itunes:subtitle>In which an aluminum-heavy cruise liner falls on hard times, and John and Ken can't decide if 'Blue Riband' is actually French or not. Certificate #39390.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Rubber Barons (Entry 1087.EZ1613)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-13-omnibus-episode-31-rubber-barons.mp3?awCollectionId=1019&amp;awEpisodeId=930460</link>
+            <description>In which Ken describes the nouveau riche of the Amazon rainforest, and John has a conspiracy theory about scarecrows. Certificate #25284.</description>
+            <pubDate>Tue, 13 Mar 2018 11:49:53 -0400</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-03-13-omnibus-episode-31-rubber-barons.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-13-omnibus-episode-31-rubber-barons.mp3?awCollectionId=1019&amp;awEpisodeId=930460' length='42060497' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:46:42</itunes:duration>
+            <itunes:subtitle>In which Ken describes the nouveau riche of the Amazon rainforest, and John has a conspiracy theory about scarecrows. Certificate #25284.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Father Coughlin (Entry 284.MT2309)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-08-omnibus-episode-30-father-coughlin.mp3?awCollectionId=1019&amp;awEpisodeId=930296</link>
+            <description>In which a fiery Canadian gets 30 million Depression-era listeners for his little fascist radio show, and Ken and John pledge fealty to Martian invaders. Certificate #29423</description>
+            <pubDate>Thu, 08 Mar 2018 07:00:04 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-03-08-omnibus-episode-30-father-coughlin.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-08-omnibus-episode-30-father-coughlin.mp3?awCollectionId=1019&amp;awEpisodeId=930296' length='47030131' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:51:53</itunes:duration>
+            <itunes:subtitle>In which a fiery Canadian gets 30 million Depression-era listeners for his little fascist radio show, and Ken and John pledge fealty to Martian invaders. Certificate #29423</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Noid (Entry 840.PR0415)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-06-omnibus-episode-29-the-noid.mp3?awCollectionId=1019&amp;awEpisodeId=930295</link>
+            <description>In which a claymation terrorist with inexplicable bunny ears disrupts pizza, takes hostages, and wins America's heart. Certificate #29250</description>
+            <pubDate>Tue, 06 Mar 2018 11:28:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-03-06-omnibus-episode-29-the-noid.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-06-omnibus-episode-29-the-noid.mp3?awCollectionId=1019&amp;awEpisodeId=930295' length='47511014' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:52:23</itunes:duration>
+            <itunes:subtitle>In which a claymation terrorist with inexplicable bunny ears disrupts pizza, takes hostages, and wins America's heart. Certificate #29250</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Zuider Zee (Entry 1458.NA0104)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-01-omnibus-episode-28-the-zuider-zee.mp3?awCollectionId=1019&amp;awEpisodeId=930294</link>
+            <description>In which the Dutch battle their oldest enemy: the Waterwolf.  Almost certainly the Omnibus's last entry (alphabetically). Certificate #31078.</description>
+            <pubDate>Thu, 01 Mar 2018 16:31:54 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-03-01-omnibus-episode-28-the-zuider-zee.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-03-01-omnibus-episode-28-the-zuider-zee.mp3?awCollectionId=1019&amp;awEpisodeId=930294' length='44361077' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:49:07</itunes:duration>
+            <itunes:subtitle>In which the Dutch battle their oldest enemy: the Waterwolf.  Almost certainly the Omnibus's last entry (alphabetically). Certificate #31078.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>London Bridge Is Down (Entry 733.2K0934)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-27-omnibus-episode-27-london-bridge-is-down.mp3?awCollectionId=1019&amp;awEpisodeId=930293</link>
+            <description>In which we make plans for the longest-awaited death in human history, and wonder how many Welsh corgis it takes to pull a gun carriage. Certificate #34884.</description>
+            <pubDate>Tue, 27 Feb 2018 07:00:01 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-02-27-omnibus-episode-27-london-bridge-is-down.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-27-omnibus-episode-27-london-bridge-is-down.mp3?awCollectionId=1019&amp;awEpisodeId=930293' length='49252630' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:54:12</itunes:duration>
+            <itunes:subtitle>In which we make plans for the longest-awaited death in human history, and wonder how many Welsh corgis it takes to pull a gun carriage. Certificate #34884.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Back Masking (Entry 091.EP0427)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-22-omnibus-episode-26-back-masking.mp3?awCollectionId=1019&amp;awEpisodeId=930232</link>
+            <description>In which John investigates whether or not segassem terces naitnoc sgnos kcor, and Ken wonders why Satan would own a toolshed.  Certificate #47448</description>
+            <pubDate>Thu, 22 Feb 2018 06:30:01 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-02-22-omnibus-episode-26-back-masking.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-22-omnibus-episode-26-back-masking.mp3?awCollectionId=1019&amp;awEpisodeId=930232' length='42869354' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:47:33</itunes:duration>
+            <itunes:subtitle>In which John investigates whether or not segassem terces naitnoc sgnos kcor, and Ken wonders why Satan would own a toolshed.  Certificate #47448</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Megafauna (Entry 772.JB4015)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-20-omnibus-episode-25-megafauna.mp3?awCollectionId=1019&amp;awEpisodeId=930209</link>
+            <description>In which we learn which Ice Age animal is named after the human nipple, and which modern animal fills John's soul with bloodlust. Certificate #30148</description>
+            <pubDate>Tue, 20 Feb 2018 07:30:01 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-02-20-omnibus-episode-25-megafauna.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-20-omnibus-episode-25-megafauna.mp3?awCollectionId=1019&amp;awEpisodeId=930209' length='41475851' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:46:06</itunes:duration>
+            <itunes:subtitle>In which we learn which Ice Age animal is named after the human nipple, and which modern animal fills John's soul with bloodlust. Certificate #30148</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Oneida (Entry 866.MT2230)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-15-omnibus-episode-24-oneida-2.mp3?awCollectionId=1019&amp;awEpisodeId=930125</link>
+            <description>In which a socialist preacher invents a tricky birth control technique he calls 'male continence,' leading directly to the lazy Susan and the assassination of an American president. Certificate #34322.</description>
+            <pubDate>Thu, 15 Feb 2018 06:30:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-02-15-omnibus-episode-24-oneida.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-15-omnibus-episode-24-oneida-2.mp3?awCollectionId=1019&amp;awEpisodeId=930125' length='41227723' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:45:51</itunes:duration>
+            <itunes:subtitle>In which a socialist preacher invents a tricky birth control technique he calls 'male continence,' leading directly to the lazy Susan and the assassination of an American president. Certificate #34322.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Bellamy Salute (Entry 112.HE0616)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-13-omnibus-episode-23-the-bellamy-salute.mp3?awCollectionId=1019&amp;awEpisodeId=930105</link>
+            <description>In which Ken blames a crucial bit of fascist iconography on the most successful magazine premium in American history, and John knows the lyrics to 'Alaska's Flag' but refuses to sing it. Certificate #37863.</description>
+            <pubDate>Tue, 13 Feb 2018 06:30:01 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-02-13-omnibus-episode-23-the-bellamy-salute.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-13-omnibus-episode-23-the-bellamy-salute.mp3?awCollectionId=1019&amp;awEpisodeId=930105' length='38015133' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:42:31</itunes:duration>
+            <itunes:subtitle>In which Ken blames a crucial bit of fascist iconography on the most successful magazine premium in American history, and John knows the lyrics to 'Alaska's Flag' but refuses to sing it. Certificate #37863.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Hat Etiquette (Entry 571.1C1104)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-08-omnibus-episode-22-hat-etiquette.mp3?awCollectionId=1019&amp;awEpisodeId=930049</link>
+            <description>In which John strongly admonishes future listeners not to get sloppy with their headwear, if they have heads.  Certificate #25200.</description>
+            <pubDate>Thu, 08 Feb 2018 08:00:05 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-02-08-omnibus-episode-22-hat-etiquette.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-08-omnibus-episode-22-hat-etiquette.mp3?awCollectionId=1019&amp;awEpisodeId=930049' length='36322960' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:40:45</itunes:duration>
+            <itunes:subtitle>In which John strongly admonishes future listeners not to get sloppy with their headwear, if they have heads.  Certificate #25200.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Death Discs (Entry 319.MK1610)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-06-omnibus-episode-21-death-discs.mp3?awCollectionId=1019&amp;awEpisodeId=930008</link>
+            <description>In which the gruesome deaths in early 1960s teen ballads are variously blamed on capitalism, Marlon Brando, chastity, and giant clams. Certificate #34312.</description>
+            <pubDate>Tue, 06 Feb 2018 06:30:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-02-06-omnibus-episode-21-death-discs.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-06-omnibus-episode-21-death-discs.mp3?awCollectionId=1019&amp;awEpisodeId=930008' length='48123067' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:53:03</itunes:duration>
+            <itunes:subtitle>In which the gruesome deaths in early 1960s teen ballads are variously blamed on capitalism, Marlon Brando, chastity, and giant clams. Certificate #34312.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Mutual Assured Destruction (Entry 820.JE5022)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-01-omnibus-episode-20-mutual-assured-destruction.mp3?awCollectionId=1019&amp;awEpisodeId=929869</link>
+            <description>In which the human race barely survives the 20th century.  (Well, not all of it, obviously. Picasso didn't, for example.)  Certificate #27008</description>
+            <pubDate>Thu, 01 Feb 2018 08:00:02 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-02-01-omnibus-episode-20-mutual-assured-destruction.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-02-01-omnibus-episode-20-mutual-assured-destruction.mp3?awCollectionId=1019&amp;awEpisodeId=929869' length='43966770' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:48:43</itunes:duration>
+            <itunes:subtitle>In which the human race barely survives the 20th century.  (Well, not all of it, obviously. Picasso didn't, for example.)  Certificate #27008</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Mummy Brown (Entry 817.PR0716)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-30-omnibus-episode-19-mummy-brown.mp3?awCollectionId=1019&amp;awEpisodeId=929786</link>
+            <description>In which the bodies of ancient kings are ground up to fertilize lawns, power locomotives, and paint portraits. Certificate #37891</description>
+            <pubDate>Tue, 30 Jan 2018 00:15:03 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-01-30-omnibus-episode-19-mummy-brown.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-30-omnibus-episode-19-mummy-brown.mp3?awCollectionId=1019&amp;awEpisodeId=929786' length='41892360' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:46:34</itunes:duration>
+            <itunes:subtitle>In which the bodies of ancient kings are ground up to fertilize lawns, power locomotives, and paint portraits. Certificate #37891</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Thomas Midgley (Entry 786.ZC0508)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-25-omnibus-episode-18-thomas-midgley.mp3?awCollectionId=1019&amp;awEpisodeId=929777</link>
+            <description>In which the world's worst chemist gives everyone lead poisoning, and then puts a hole in the ozone layer as an encore. Certificate #25185</description>
+            <pubDate>Thu, 25 Jan 2018 00:15:03 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-01-25-omnibus-episode-18-thomas-midgley.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-25-omnibus-episode-18-thomas-midgley.mp3?awCollectionId=1019&amp;awEpisodeId=929777' length='44144406' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:48:55</itunes:duration>
+            <itunes:subtitle>In which the world's worst chemist gives everyone lead poisoning, and then puts a hole in the ozone layer as an encore. Certificate #25185</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Paris Syndrome (Entry 901.JS1002)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-23-omnibus-episode-17-paris-syndrome.mp3?awCollectionId=1019&amp;awEpisodeId=929776</link>
+            <description>In which twenty tourists a year have a psychological breakdown because the most magical city in the world is a little disappointing. Certificate #507</description>
+            <pubDate>Tue, 23 Jan 2018 00:15:02 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-01-23-omnibus-episode-17-paris-syndrome.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-23-omnibus-episode-17-paris-syndrome.mp3?awCollectionId=1019&amp;awEpisodeId=929776' length='43339002' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:48:04</itunes:duration>
+            <itunes:subtitle>In which twenty tourists a year have a psychological breakdown because the most magical city in the world is a little disappointing. Certificate #507</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Sentinelese (Entry 1134.LV2024)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-18-omnibus-episode-16-the-sentinelese.mp3?awCollectionId=1019&amp;awEpisodeId=929734</link>
+            <description>In which John introduces us to the world's last uncontacted tribe—but not literally, because that would be illegal. Certificate #13568</description>
+            <pubDate>Thu, 18 Jan 2018 12:31:39 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-01-18-omnibus-episode-16-the-sentinelese.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-18-omnibus-episode-16-the-sentinelese.mp3?awCollectionId=1019&amp;awEpisodeId=929734' length='37693900' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:42:12</itunes:duration>
+            <itunes:subtitle>In which John introduces us to the world's last uncontacted tribe—but not literally, because that would be illegal. Certificate #13568</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Kohoutek (Entry 692.JU0113)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-16-omnibus-episode-15-kohoutek.mp3?awCollectionId=1019&amp;awEpisodeId=929691</link>
+            <description>In which a Czech astronomer is hailed as the hero of 1973, only to have his discovery flame out by not flaming out. Then he gets very seasick on a cruise. Certificate #31644</description>
+            <pubDate>Tue, 16 Jan 2018 09:47:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-01-16-omnibus-episode-15-kohoutek.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-16-omnibus-episode-15-kohoutek.mp3?awCollectionId=1019&amp;awEpisodeId=929691' length='37494719' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:42:00</itunes:duration>
+            <itunes:subtitle>In which a Czech astronomer is hailed as the hero of 1973, only to have his discovery flame out by not flaming out. Then he gets very seasick on a cruise. Certificate #31644</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Monrovia, Moravia, Moldova, Moldavia (Entry 805.GN1032)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-11-omnibus-episode-14-Monrovia-Moravia-Moldova-Moldavia.mp3?awCollectionId=1019&amp;awEpisodeId=929657</link>
+            <description>In which John shares the soothing geographic mantra that has got him where he is today: sitting in a bunker teaching 30th-century cockroach-people how to tell medieval Central European principalities apart. Certificate #18088.</description>
+            <pubDate>Thu, 11 Jan 2018 11:46:04 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-01-11-omnibus-episode-14-Monrovia-Moravia-Moldova-Moldavia.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-11-omnibus-episode-14-Monrovia-Moravia-Moldova-Moldavia.mp3?awCollectionId=1019&amp;awEpisodeId=929657' length='52531007' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:57:39</itunes:duration>
+            <itunes:subtitle>In which John shares the soothing geographic mantra that has got him where he is today: sitting in a bunker teaching 30th-century cockroach-people how to tell medieval Central European principalities apart. Certificate #18088.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Heil Honey I'm Home! (Entry 577.PR1413)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-09-omnibus-episode-13-heil-honey-im-home-v2.mp3?awCollectionId=1019&amp;awEpisodeId=929622</link>
+            <description>In which an upstart British television producer finally answers that age-old question: why don't more classic sitcoms star Adolf Hitler? Certificate #42615.</description>
+            <pubDate>Tue, 09 Jan 2018 14:14:26 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-01-09-omnibus-episode-13-heil-honey-im-home.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-09-omnibus-episode-13-heil-honey-im-home-v2.mp3?awCollectionId=1019&amp;awEpisodeId=929622' length='37307155' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:41:49</itunes:duration>
+            <itunes:subtitle>In which an upstart British television producer finally answers that age-old question: why don't more classic sitcoms star Adolf Hitler? Certificate #42615.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Darien Gap (Entry 315.EZ3328)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-04-omnibus-episode-12-the-darien-gap.mp3?awCollectionId=1019&amp;awEpisodeId=929582</link>
+            <description>In which a single highway is paved all the way from Alaska to Argentina--except for one pesky 66-mile gap right in the middle. Certificate #11458.</description>
+            <pubDate>Thu, 04 Jan 2018 09:58:50 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-01-04-omnibus-episode-12-the-darien-gap.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-04-omnibus-episode-12-the-darien-gap.mp3?awCollectionId=1019&amp;awEpisodeId=929582' length='31045728' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:35:17</itunes:duration>
+            <itunes:subtitle>In which a single highway is paved all the way from Alaska to Argentina--except for one pesky 66-mile gap right in the middle. Certificate #11458.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Secret Order of the Double Sunrise (Entry 1122.EC0105)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-02-omnibus-episode-11-the-secret-order-of-the-double-sunrise.mp3?awCollectionId=1019&amp;awEpisodeId=929552</link>
+            <description>In which QANTAS begins a top-secret 33-hour nonstop flight between Australia and Ceylon at the height of World War II, right under the noses of the Empire of Japan. Certificate #12248.</description>
+            <pubDate>Tue, 02 Jan 2018 10:01:18 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2018-01-02-omnibus-episode-11-the-secret-order-of-the-double-sunrise.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2018-01-02-omnibus-episode-11-the-secret-order-of-the-double-sunrise.mp3?awCollectionId=1019&amp;awEpisodeId=929552' length='38983968' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:43:33</itunes:duration>
+            <itunes:subtitle>In which QANTAS begins a top-secret 33-hour nonstop flight between Australia and Ceylon at the height of World War II, right under the noses of the Empire of Japan. Certificate #12248.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Newton's Cradle (Entry 835.1C1311)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-28-omnibus-episode-10-newtons-cradle.mp3?awCollectionId=1019&amp;awEpisodeId=929540</link>
+            <description>In which thousands of soulless corporate executives put little steel toys on their desks but still feel dead inside, and Ken finally learns how those little drinking birds work. Certificate #31932.</description>
+            <pubDate>Thu, 28 Dec 2017 05:00:04 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-28-omnibus-episode-10-newtons-cradle.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-28-omnibus-episode-10-newtons-cradle.mp3?awCollectionId=1019&amp;awEpisodeId=929540' length='40420385' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:45:04</itunes:duration>
+            <itunes:subtitle>In which thousands of soulless corporate executives put little steel toys on their desks but still feel dead inside, and Ken finally learns how those little drinking birds work. Certificate #31932.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Gadsby (Entry 511.PS6928)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-26-omnibus-episode-9-gadsby.mp3?awCollectionId=1019&amp;awEpisodeId=929532</link>
+            <description>In which our two hosts study a book that runs fifty thousand words without a solitary display of our writing plan's fifth symbol. Certificate #6442.</description>
+            <pubDate>Tue, 26 Dec 2017 06:00:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-26-omnibus-episode-9-gadsby.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-26-omnibus-episode-9-gadsby.mp3?awCollectionId=1019&amp;awEpisodeId=929532' length='49201010' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:54:12</itunes:duration>
+            <itunes:subtitle>In which our two hosts study a book that runs fifty thousand words without a solitary display of our writing plan's fifth symbol. Certificate #6442.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Water Wars (Entry 1414.PS6301)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-21-omnibus-episode-8-water-wars.mp3?awCollectionId=1019&amp;awEpisodeId=929454</link>
+            <description>In which Los Angeles stands revealed in all its unquenchable thirst, and is pronounced by John and Ken several times the fun, old-timey way, with a hard 'g'.  Certificate #33935.</description>
+            <pubDate>Thu, 21 Dec 2017 09:25:22 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-21-omnibus-episode-8-water-wars.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-21-omnibus-episode-8-water-wars.mp3?awCollectionId=1019&amp;awEpisodeId=929454' length='57004572' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>01:02:20</itunes:duration>
+            <itunes:subtitle>In which Los Angeles stands revealed in all its unquenchable thirst, and is pronounced by John and Ken several times the fun, old-timey way, with a hard 'g'.  Certificate #33935.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Tesseract (Entry 1291.EP0318)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-19-omnibus-episode-7-the-tesseract.mp3?awCollectionId=1019&amp;awEpisodeId=929417</link>
+            <description>In which Ken and John struggle to imagine four-dimensional space with the same ease that the inventor of the pitching machine once could. Certificate #28910.</description>
+            <pubDate>Tue, 19 Dec 2017 08:00:04 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-19-omnibus-episode-7-the-tesseract.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-19-omnibus-episode-7-the-tesseract.mp3?awCollectionId=1019&amp;awEpisodeId=929417' length='46645893' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:51:33</itunes:duration>
+            <itunes:subtitle>In which Ken and John struggle to imagine four-dimensional space with the same ease that the inventor of the pitching machine once could. Certificate #28910.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Rachel (Entry 1024.GN2917)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-14-omnibus-episode-6-the-rachel.mp3?awCollectionId=1019&amp;awEpisodeId=929335</link>
+            <description>In which John opines that Jennifer Aniston's ubiquitous 1990s-era cut was America's 'last hairstyle.' Certificate #24193.</description>
+            <pubDate>Thu, 14 Dec 2017 06:00:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-14-omnibus-episode-6-the-rachel.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-14-omnibus-episode-6-the-rachel.mp3?awCollectionId=1019&amp;awEpisodeId=929335' length='53420772' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:59:07</itunes:duration>
+            <itunes:subtitle>In which John opines that Jennifer Aniston's ubiquitous 1990s-era cut was America's 'last hairstyle.' Certificate #24193.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Smell-O-Vision (Entry 1177.AM0521)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-12-omnibus-episode-5-smell-o-vision.mp3?awCollectionId=1019&amp;awEpisodeId=929333</link>
+            <description>In which the aromas of tobacco, coffee, and lavender, meant to revolutionize the motion picture industry, end up nauseating audiences instead, and Ken spoils a 57-year-old surprise cameo. Certificate #18585.</description>
+            <pubDate>Tue, 12 Dec 2017 06:00:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-12-omnibus-episode-5-smell-o-vision.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-12-omnibus-episode-5-smell-o-vision.mp3?awCollectionId=1019&amp;awEpisodeId=929333' length='56208058' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>01:02:02</itunes:duration>
+            <itunes:subtitle>In which the aromas of tobacco, coffee, and lavender, meant to revolutionize the motion picture industry, end up nauseating audiences instead, and Ken spoils a 57-year-old surprise cameo. Certificate #18585.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Pig War (Entry 939.MK0511)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-07-omnibus-episode-4-pig-war-001.mp3?awCollectionId=1019&amp;awEpisodeId=929289</link>
+            <description>In which the United States and Britain take up arms over one potato-hungry pig. Certificate #43259.</description>
+            <pubDate>Thu, 07 Dec 2017 17:07:46 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-07-omnibus-episode-4-pig-war.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-07-omnibus-episode-4-pig-war-001.mp3?awCollectionId=1019&amp;awEpisodeId=929289' length='56711080' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:56:24</itunes:duration>
+            <itunes:subtitle>In which the United States and Britain take up arms over one potato-hungry pig. Certificate #43259.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Olympic Marathon of 1904 (Entry 865.1C0924)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-07-omnibus-episode-3-1904-olympic-marathon-001.mp3?awCollectionId=1019&amp;awEpisodeId=929287</link>
+            <description>In which the world's most prestigious sporting event goes disastrously wrong, and a Cuban mailman takes a nap.  Certificate #28924.</description>
+            <pubDate>Thu, 07 Dec 2017 17:04:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-07-omnibus-episode-3-1904-olympic-marathon.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-07-omnibus-episode-3-1904-olympic-marathon-001.mp3?awCollectionId=1019&amp;awEpisodeId=929287' length='60951923' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>01:00:49</itunes:duration>
+            <itunes:subtitle>In which the world's most prestigious sporting event goes disastrously wrong, and a Cuban mailman takes a nap.  Certificate #28924.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Defenestration (Entry 326.2K0933)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-07-omnibus-episode-2-defenestration-001.mp3?awCollectionId=1019&amp;awEpisodeId=929286</link>
+            <description>In which throwing people out of windows is strongly endorsed by many hot-headed Czechs, but opposed in no uncertain terms by Ken's great-great-great-great-grandfather. Certificate #32146.</description>
+            <pubDate>Thu, 07 Dec 2017 16:59:58 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-07-omnibus-episode-2-defenestration.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-07-omnibus-episode-2-defenestration-001.mp3?awCollectionId=1019&amp;awEpisodeId=929286' length='40643601' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:39:38</itunes:duration>
+            <itunes:subtitle>In which throwing people out of windows is strongly endorsed by many hot-headed Czechs, but opposed in no uncertain terms by Ken's great-great-great-great-grandfather. Certificate #32146.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The European Starling (Entry 431.PS8403)</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-07-omnibus-episode-1-starlings-001.mp3?awCollectionId=1019&amp;awEpisodeId=929284</link>
+            <description>In which an eccentric Shakespeare buff releases two birds in Central Park, and thereby screws up an entire continent's ecosystem. Certificate #27603.</description>
+            <pubDate>Thu, 07 Dec 2017 16:55:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-07-omnibus-episode-1-starlings.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-07-omnibus-episode-1-starlings-001.mp3?awCollectionId=1019&amp;awEpisodeId=929284' length='45990106' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:45:11</itunes:duration>
+            <itunes:subtitle>In which an eccentric Shakespeare buff releases two birds in Central Park, and thereby screws up an entire continent's ecosystem. Certificate #27603.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>The Omnibus Project</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-05-omnibus-episode-zero.mp3?awCollectionId=1019&amp;awEpisodeId=929249</link>
+            <description>Ken and John provide a time capsule of whimsical recordings for future generations, commemorating the human race's triumphant achievements and its beautiful mundanities.</description>
+            <pubDate>Tue, 05 Dec 2017 14:58:00 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-12-05-omnibus-episode-zero.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/streaming.omnibusproject.com/omnibusproject/2017-12-05-omnibus-episode-zero.mp3?awCollectionId=1019&amp;awEpisodeId=929249' length='16238051' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:14:12</itunes:duration>
+            <itunes:subtitle>Ken and John provide a time capsule of whimsical recordings for future generations, commemorating the human race's triumphant achievements and its beautiful mundanities.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Full</itunes:episodeType>
+        </item>
+        <item>
+            <title>Omnibus: Trailer</title>
+            <link>https://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-11-28-omnibus-trailer.mp3</link>
+            <description>Twice a week, Ken and John add a new entry to the OMNIBUS, an encyclopedic reference work of strange-but-true stories that they are compiling as a time capsule for future generations.</description>
+            <pubDate>Tue, 28 Nov 2017 11:28:32 -0500</pubDate>
+            <guid>http://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-11-28-omnibus-trailer.mp3</guid>
+            <author>applepodcast@howstuffworks.com (HowStuffWorks)</author>
+            <enclosure url='https://www.podtrac.com/pts/redirect.mp3/podcasts.howstuffworks.com/hsw/podcasts/omnibusproject/2017-11-28-omnibus-trailer.mp3' length='8024069' type='audio/mpeg' />
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:keywords></itunes:keywords>
+            <itunes:duration>00:02:08</itunes:duration>
+            <itunes:subtitle>Twice a week, Ken and John add a new entry to the OMNIBUS, an encyclopedic reference work of strange-but-true stories that they are compiling as a time capsule for future generations.</itunes:subtitle>
+            <itunes:author>HowStuffWorks</itunes:author>
+            <itunes:episodeType>Trailer</itunes:episodeType>
+        </item>
+    </channel>
+</rss>
