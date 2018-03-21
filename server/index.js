@@ -135,9 +135,6 @@ let server = http.createServer(function (req, res) {
 	}
 	let mfp = new MyGrepHTTP(argv)
 	cur.pipe(mfp).pipe(res)
-	cur.once("end", () => {
-	    mfp.fp.end()
-	})
     })
 
 })

@@ -83,10 +83,6 @@ mfp.footer = function() {
     if (!argv.m && this.articles_matched === 0) process.exitCode = 1
 }
 
-process.stdin.once("end", () => {
-    mfp.fp.end()
-})
-
 process.stdin
     .pipe(mfp)
     .pipe(process.stdout)
