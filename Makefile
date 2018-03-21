@@ -122,7 +122,7 @@ deploy:
 	git merge master
 	rm -rf $(out) package.json
 	$(MAKE)
-	git add -f $(out)/client
+	git add -f $(out)/client package.json
 	-git commit -am build
 	git push heroku heroku:master
 	git checkout master
