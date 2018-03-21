@@ -23,7 +23,7 @@ package.json: package.cpp
 
 include $(out)/.npm
 $(out)/.npm: package.json
-	npm i
+	npm i $(npm)
 	$(mkdir)
 	touch $@
 	@echo Restarting Make...
@@ -137,7 +137,8 @@ npm-test: npm-package.json
 	npm pack
 	@echo
 	@tar tf $(pkg)
-	@rm $(pkg) package.json
+	@rm package.json
+	$(if $(keep-tar),,@rm $(pkg))
 
 npm-package.json:
 	-rm package.json
