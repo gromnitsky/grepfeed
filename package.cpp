@@ -5,6 +5,7 @@
   2) npm publish
 */
 {
+    "//": "DON'T EDIT! See package.cpp instead",
     "name": "grepfeed",
     "version": "0.0.1",
     "description": "Filters out rss/atom feeds. Returns articles matching a pattern. The output can be another valid xml feed.",
@@ -47,7 +48,11 @@
     "files": [
         "cli/",
         "lib/",
-        "!lib/dom.js"
+        "!lib/dom.js",
+        "server/"
     ],
-    "bin": "cli/grepfeed"
+    "bin": {
+        "grepfeed": "cli/grepfeed",
+        "grepfeed-server": "server/index.js"
+    }
 }
