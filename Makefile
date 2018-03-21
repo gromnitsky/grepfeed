@@ -1,7 +1,7 @@
 .DELETE_ON_ERROR:
 
 NODE_ENV ?= development
-out := _out/$(NODE_ENV)
+out = _out/$(NODE_ENV)
 cache := $(out)/.ccache
 
 mkdir = @mkdir -p $(dir $@)
@@ -27,7 +27,7 @@ $(out)/.npm: package.json
 
 
 
-static.dest := $(addprefix $(out)/, $(wildcard client/*.html client/*.svg))
+static.dest := $(addprefix $(out)/, $(wildcard $(addprefix client/, *.html *.svg *.png)))
 $(static.dest): $(out)/%: %
 	$(mkdir)
 	$(copy)
@@ -117,8 +117,11 @@ kill:
 deploy:
 	git checkout heroku
 	git merge master
-	rm -rf _out
-	$(MAKE) NODE_ENV=production
-	git add -f _out/production/client
+	rm -rf $(out)
+	$(MAKE)
+	git add -f $(out)/client
 	-git commit -am build
 	git push heroku heroku:master
+	git checkout master
+
+deploy: export NODE_ENV := production
