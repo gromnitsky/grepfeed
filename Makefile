@@ -18,6 +18,9 @@ test: node_modules
 
 
 
+package.json: package.cpp
+	cpp -P $(if $(NPM),-D NPM) $< -o $@
+
 include $(out)/.npm
 $(out)/.npm: package.json
 	npm i
@@ -117,7 +120,7 @@ kill:
 deploy:
 	git checkout heroku
 	git merge master
-	rm -rf $(out)
+	rm -rf $(out) package.json
 	$(MAKE)
 	git add -f $(out)/client
 	-git commit -am build
@@ -125,3 +128,24 @@ deploy:
 	git checkout master
 
 deploy: export NODE_ENV := production
+
+# Before publishing to the npm reg, run `make npm-test`;
+# if you agree w/ the output, run `make npm`.
+
+pkg = $(shell json < package.json name version -a -d-).tgz
+npm-test: npm-package.json
+	npm pack
+	@echo
+	@tar tf $(pkg)
+	@rm $(pkg) package.json
+
+npm-package.json:
+	-rm package.json
+	$(MAKE) NPM=1 package.json -o $(out)/.npm
+
+npm: npm-package.json
+	@echo
+	@echo Upload $(pkg) to the registry? Ctrl-C to abort, RET to continue.
+	@read
+	npm publish
+	rm package.json

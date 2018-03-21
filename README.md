@@ -15,15 +15,15 @@ A live example: https://serene-river-17732.herokuapp.com/
 ## Requirements
 
 * node 8.10.0
-* GNU make (for a web client only)
+* GNU make
 
 ## Setup
 
 * cli/server
 
-        $ npm i
-
-    No separate build step is required.
+    ~~~
+    $ make package.json
+    ~~~
 
 * web client
 

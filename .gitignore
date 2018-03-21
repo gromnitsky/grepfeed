@@ -1,3 +1,4 @@
 .ph
 node_modules
 /_out/
+package.json
