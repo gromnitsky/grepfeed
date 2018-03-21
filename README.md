@@ -1,11 +1,11 @@
 # Grepfeed
 
-Filters out rss/atom feeds. Returns all articles in a feed that match
-any of input patterns. The output is another valid xml feed.
+Filters out rss/atom feeds. Returns articles matching a pattern. The
+output is another valid xml feed.
 
 A live example: https://serene-river-17732.herokuapp.com/
 
-## What is included
+## What's included
 
 * a cli util `grepfeed`;
 * a standalone http server that shares the same engine w/ the cli util.
@@ -14,44 +14,42 @@ A live example: https://serene-river-17732.herokuapp.com/
 
 ## Requirements
 
-* `npm -g i browserify babel-cli babel-preset-es2015 babel-preset-react node-sass uglifyjs`
 * node 8.10.0
-* GNU make
+* GNU make (for a web client only)
 
-## Compilation
+## Setup
 
-### cli/server
+* cli/server
 
-Run `npm install` to get all the deps. A separate build step isn't
-required.
+        $ npm i
 
-### web client
+    No separate build step is required.
 
-0. Clone the repo, don't run any `npm ...` commands by yourself.
+* web client
 
-1. Run
-
-		$ make NODE_ENV=production
+    ~~~
+    $ npm -g i browserify babel-cli babel-preset-es2015 babel-preset-react node-sass uglifyjs
+    $ make NODE_ENV=production
+    ~~~
 
 ## How it works
 
 `lib/feed.js` contains all the code that parses & transforms xml
-feeds. Its core is `Grep` class--a Transform stream that allows to be
-used as:
+feeds. Its core is `Grep` class--a Transform stream:
 
-	readable_stream.pipe(<our filter>).pipe(writable_stream)
+    readable_stream.pipe(<our filter>).pipe(writable_stream)
 
 ### cli
 
-`cli/grepfeed` extends Grep to override several methods where it's
+`cli/grepfeed` extends `Grep` to override several methods where it's
 convenient to write the output in any format one wants. 2 interfaces
-are included: the default text-only & an xml one. The latter produces
-a valid rss 2.0 feed. E.g.
+are included: a text-only (the default) & an xml one. The latter
+produces a valid rss 2.0 feed. E.g.
 
-	$ curl http://example.com/rss | cli/grepfeed apple -d=2016 -x
+    $ curl http://example.com/rss | cli/grepfeed apple -d=2016 -x
 
 parses the input feed, selects only articles written in 2016 or newer
-that match the regexp pattern /apple/. `-x` means xml output.
+that match the regexp pattern `/apple/`. `-x` means xml output.
 
 Look at the beginning of `cli/grepfeed` file for the additional
 options.
@@ -62,26 +60,30 @@ Acts as a proxy: downloads a requested feed & returns the filtered
 xml. Query params match `cli/grepfeed` command line interface. To
 start a server, run
 
-	$ server/index _out/production/client
+    $ server/index .
 
-(To select a diff port, use `PORT` env vars.)
+(To select a diff port, use `PORT` env var.)
 
-This returns the same xml as in the `cli/grepfeed` example, only does
-it through http:
+This following example yields the same xml as in the `cli/grepfeed`
+case, only does it through http:
 
-	$ curl '192.168.8.128:3000/api/?_=apple&d=2016&url=http%3A%2F%2Fexample.com%2Frss'
+    $ curl '127.0.0.1:3000/api/?_=apple&d=2016&url=http%3A%2F%2Fexample.com%2Frss'
 
-Notice `d` means `-d` in the `cli/grepfeed` example, `-x` doesn't
-apply here & `_` means the 1st command line arg, `apple` in this
+Notice `d` means `-d` in the `cli/grepfeed` example, `-x` doesn't make
+sense here, `_` means the 1st command line arg, `apple` in this
 case. The server doesn't invoke `cli/grepfeed` program; they both use
-minimist to parse option arguments, thus the perceived similarity in
-the behavior.
+minimist to parse command options, thus the perceived similarity in
+the behaviour.
 
 ### web client
 
-A web client is a simple React SPA that internally talks to the above
-server. If you have started the server, open http://127.0.0.1:3000 in
-your browser.
+A web client is a simple React app that internally talks to the above
+server. If you have indeed built the web client, pass to the server
+the dir w/ the compiled client files:
+
+    $ server/index.js _out/production/client
+
+& open http://127.0.0.1:3000 in a browser.
 
 # License
 
