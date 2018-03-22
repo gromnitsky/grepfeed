@@ -21,11 +21,15 @@ A live example: https://serene-river-17732.herokuapp.com/
 
 * cli/server
 
+        $ npm i grepfeed
+
+    or manually after cloning the repo:
+
     ~~~
     $ make package.json
     ~~~
 
-* web client
+* web client, that isn't included in the npm pkg
 
     ~~~
     $ npm -g i browserify babel-cli babel-preset-es2015 babel-preset-react node-sass uglifyjs
@@ -51,8 +55,26 @@ produces a valid rss 2.0 feed. E.g.
 parses the input feed, selects only articles written in 2016 or newer
 that match the regexp pattern `/apple/`. `-x` means xml output.
 
-Look at the beginning of `cli/grepfeed` file for the additional
-options.
+~~~
+Usage: grepfeed [opt] [PATTERN] < xml
+
+  -e      print only articles w/ enclosures
+  -n NUM  number of articles to print
+  -x      xml output
+  -m      print only meta
+  -V      program version
+
+Filter by:
+
+  -d      [-]date[,date]
+  -c      categories
+
+Or/and search for a regexp PATTERN in each rss article & print the
+matching ones. The internal order of the search: title, summary,
+description, author.
+
+  -v      invert match
+~~~
 
 ### server
 

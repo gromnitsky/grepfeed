@@ -1,0 +1,18 @@
+Usage: grepfeed [opt] [PATTERN] < xml
+
+  -e      print only articles w/ enclosures
+  -n NUM  number of articles to print
+  -x      xml output
+  -m      print only meta
+  -V      program version
+
+Filter by:
+
+  -d      [-]date[,date]
+  -c      categories
+
+Or/and search for a regexp PATTERN in each rss article & print the
+matching ones. The internal order of the search: title, summary,
+description, author.
+
+  -v      invert match

@@ -1,20 +1,8 @@
 #!/usr/bin/env node
-/*
-  filter by:
-
-  -d [-]date[,date]
-  -c categories
-
-  by default (in this order): title, summary, description, author
-
-  -e: print only articles w/ enclosures
-  -n digit: number of articles to print
-  -x: print xml
-  -m: print only meta
-*/
 
 'use strict';
 
+let fs = require('fs')
 let path = require('path')
 
 let FeedParser = require('feedparser')
@@ -23,6 +11,7 @@ let pump = require('pump')
 let feed = require('../lib/feed')
 let XMLGrep = require('../lib/xmlgrep')
 let u = require('../lib/u')
+let meta = require('../package.json')
 
 let errx = function(msg) {
     console.error(path.basename(process.argv[1]) + " error: " + msg)
@@ -70,6 +59,14 @@ class MyGrep extends feed.Grep {
 
 let argv = u.opts_parse(process.argv.slice(2))
 if (argv.debug) console.error(argv)
+if (argv.h || argv.help) {
+    process.stdout.write(fs.readFileSync(__dirname + '/usage.txt').toString())
+    process.exit(0)
+}
+if (argv.V) {
+    console.log(meta.version)
+    process.exit(0)
+}
 
 let feedparser = new FeedParser()
 let grep = argv.x ? new XMLGrep(argv) : new MyGrep(argv)
@@ -79,5 +76,6 @@ grep.on('finish', function() {
 })
 
 pump(process.stdin, feedparser, grep, process.stdout, err => {
-    if (err) errx(argv.debug ? err.stack : err.message)
+    if (err && err.code !== 'EPIPE')
+	errx(argv.debug ? err.stack : err.message)
 })
