@@ -9,6 +9,8 @@ let path = require('path')
 
 let request = require('request')
 let mime = require('mime')
+let FeedParser = require('feedparser')
+let pump = require('pump')
 
 let XMLGrep = require('../lib/xmlgrep')
 let meta = require('../package.json')
@@ -25,20 +27,11 @@ let errx = function(res, code, msg) {
     if (!request_had_error) {
 	res.setHeader('Access-Control-Allow-Origin', '*')
 	res.statusCode = code
-	res.statusMessage = msg
+	res.statusMessage = msg.replace(/\s+/g, ' ')
 	res.end()
     }
     console.error(`ERROR: ${msg}`)
     request_had_error = true
-}
-
-class MyGrepHTTP extends XMLGrep {
-    handle_error(err) {
-	if (this.first_bytes_are_here) request_had_error = true
-	let msg = err.message
-	if (this.opts.debug) msg += "\n" + err.stack
-	errx(this.opts.__http.res, 400, `${this.opts.__http.xmlurl}: ${msg}`)
-    }
 }
 
 let set_cache_headers = function(res) {
@@ -121,7 +114,7 @@ let server = http.createServer(function (req, res) {
 	}
     }).on('response', (xmlres) => {
 	if (xmlres.statusCode !== 200) {
-	    errx(res, xmlres.statusCode, `error retrieving url: ${xmlurl}`)
+	    errx(res, xmlres.statusCode, `${xmlurl}: failed to fetch`)
 	    return
 	}
 	// copy the content-type value from the orig url
@@ -129,12 +122,21 @@ let server = http.createServer(function (req, res) {
 	res.setHeader('Access-Control-Allow-Origin', '*')
 	set_cache_headers(res)
 
-	argv.__http = {
-	    res: res,
-	    xmlurl: xmlurl
-	}
-	let mfp = new MyGrepHTTP(argv)
-	cur.pipe(mfp).pipe(res)
+	let feedparser = new FeedParser()
+	feedparser.on('error', err => {
+	    // to be able to return http/400 we should catch
+	    // FeedParser errors as soon as possible
+	    errx(res, 400, `${xmlurl}: ${err.message}`)
+	})
+
+	let grep = new XMLGrep(argv)
+	pump(cur, feedparser, grep, res, err => {
+	    if (!err) return
+
+	    if (grep.got_first_item) request_had_error = true
+	    if (argv.debug) console.error(err.stack)
+	    errx(res, 400, `${xmlurl}: ${err.message}`)
+	})
     })
 
 })

@@ -28,6 +28,7 @@
     "dependencies": {
         "feedparser": "~2.2.9",
         "ent": "~2.2.0",
+        "pump": "~3.0.0",
         "mime": "~2.2.0",
         "minimist": "~1.2.0",
         "request": "~2.85.0"

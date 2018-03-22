@@ -17,6 +17,9 @@
 
 let path = require('path')
 
+let FeedParser = require('feedparser')
+let pump = require('pump')
+
 let feed = require('../lib/feed')
 let XMLGrep = require('../lib/xmlgrep')
 let u = require('../lib/u')
@@ -31,12 +34,6 @@ class MyGrep extends feed.Grep {
 	return {
 	    "Array": function() { return this.join(", ") }
 	}[klass]
-    }
-
-    handle_error(err) {
-	let msg = err.message
-	if (this.opts.debug) msg += "\n" + err.stack
-	errx(msg)
     }
 
     meta(data) {
@@ -74,15 +71,13 @@ class MyGrep extends feed.Grep {
 let argv = u.opts_parse(process.argv.slice(2))
 if (argv.debug) console.error(argv)
 
-let mfp = argv.x ? new XMLGrep(argv) : new MyGrep(argv)
+let feedparser = new FeedParser()
+let grep = argv.x ? new XMLGrep(argv) : new MyGrep(argv)
 
-// override Grep#footer() to check if anything was matched
-let orig_footer = mfp.footer.bind(mfp)
-mfp.footer = function() {
-    if (orig_footer) orig_footer()
+grep.on('finish', function() {
     if (!argv.m && this.articles_matched === 0) process.exitCode = 1
-}
+})
 
-process.stdin
-    .pipe(mfp)
-    .pipe(process.stdout)
+pump(process.stdin, feedparser, grep, process.stdout, err => {
+    if (err) errx(argv.debug ? err.stack : err.message)
+})
