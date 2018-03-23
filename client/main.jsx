@@ -79,7 +79,7 @@ let FeedBox = React.createClass({
 	    req_state = dom.jqxhr2error(err)
 	    this.setState({ feed: null })
 	}).progress( (event) => {
-	    let bytes = event.loaded.toString().commas()
+	    let bytes = u.commas(event.loaded)
 	    this.setState({ last_req: `Loading... ${bytes} B` })
 	}).finally( ()=> {
 	    NProgress.done()
@@ -299,7 +299,7 @@ let FeedTableArticle = React.createClass({
 	let transform = function(key, arr) {
 	    if (key === "enclosure") {
 		return arr.map( (idx) => {
-		    return `<a href="${idx._attr.url._value}">${idx._attr.url._value}</a> (${idx._attr.type._value} ${idx._attr.length._value})`
+		    return `<a href="${idx._attr.url._value}">${idx._attr.url._value}</a> (${idx._attr.type._value} ${u.commas(idx._attr.length._value)})`
 		})
 	    }
 	    return arr.map( (idx) => idx._text )
