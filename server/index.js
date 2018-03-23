@@ -20,18 +20,18 @@ let user_agent = function() {
     return `${meta.name}/${meta.version} (${process.platform}; ${process.arch}) node/${process.versions.node}`
 }
 
-// a flag to prevent a double erroring during a request
-let request_had_error = false
+// a flag to prevent accidental sending headers twice
+let headers_are_sent = false
 
 let errx = function(res, code, msg) {
-    if (!request_had_error) {
+    if (!headers_are_sent) {
 	res.setHeader('Access-Control-Allow-Origin', '*')
 	res.statusCode = code
 	res.statusMessage = msg.replace(/\s+/g, ' ')
 	res.end()
     }
     console.error(`ERROR: ${msg}`)
-    request_had_error = true
+    headers_are_sent = true
 }
 
 let set_cache_headers = function(res) {
@@ -69,7 +69,7 @@ process.chdir(process.argv[2])
 let public_root = fs.realpathSync(process.cwd())
 
 let server = http.createServer(function (req, res) {
-    request_had_error = false
+    headers_are_sent = false
     if (req.method !== "GET") {
 	errx(res, 501, "not implemented")
 	return
@@ -130,10 +130,11 @@ let server = http.createServer(function (req, res) {
 	})
 
 	let grep = new XMLGrep(argv)
+	grep.on('data', () => {
+	    headers_are_sent = true
+	})
 	pump(cur, feedparser, grep, res, err => {
 	    if (!err) return
-
-	    if (grep.got_first_item) request_had_error = true
 	    if (argv.debug) console.error(err.stack)
 	    errx(res, 400, `${xmlurl}: ${err.message}`)
 	})
