@@ -40,6 +40,7 @@ suite('Feed', function() {
 
 	assert.equal(false, feed.category_match("foo", []))
 	assert.equal(true, feed.category_match("bar", ["foo", "bar"]))
+	assert.equal(false, feed.category_match("foo", ["bar", "baz"]))
     })
 
     test('article_match', function() {
