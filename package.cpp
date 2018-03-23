@@ -7,7 +7,7 @@
 {
     "//": "DON'T EDIT! See package.cpp instead",
     "name": "grepfeed",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Filters out rss/atom feeds. Returns articles matching a pattern. The output can be another valid xml feed.",
     "keywords": [
         "grep",
