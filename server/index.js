@@ -130,7 +130,7 @@ let server = http.createServer(function (req, res) {
 	})
 
 	let grep = new XMLGrep(argv)
-	grep.on('data', () => {
+	grep.once('data', () => {
 	    headers_are_sent = true
 	})
 	pump(cur, feedparser, grep, res, err => {
