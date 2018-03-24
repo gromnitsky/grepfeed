@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:access="http://www.bloglines.com/about/specs/fac-1.0">
+  <access:restriction relationship="deny"/>
+  <channel>
+    <atom:link href="https://pragprog.com/feed/global" rel="self" type="application/rss+xml"/>
+    <title>Pragmatic Bookshelf</title>
+    <link>https://pragprog.com/</link>
+    <description>Up-to-date information about the Pragmatic Bookshelf</description>
+    <language>en-us</language>
+    <pubDate>Fri, 23 Mar 2018 10:04:55 +0000</pubDate>
+    <item>
+      <title>Adopting Elixir: From Concept to Production, in print</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Tue, 13 Mar 2018 19:40:30 +0000</pubDate>
+      <guid>http://pragprog.com/news/adopting-elixir-from-concept-to-production-in-print?3840754</guid>
+      <link>http://pragprog.com/news/adopting-elixir-from-concept-to-production-in-print</link>
+      <category>news</category>
+    </item>
+    <item>
+      <title>Programming Clojure, Third Edition, in print; Free iOS course</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Wed, 21 Feb 2018 13:16:30 +0000</pubDate>
+      <guid>http://pragprog.com/news/programming-clojure-third-edition-in-print-free-ios-course?3826826</guid>
+      <link>http://pragprog.com/news/programming-clojure-third-edition-in-print-free-ios-course</link>
+      <category>news</category>
+    </item>
+    <item>
+      <title>Forge Your Future with Open Source; Domain Modeling Made Functional in print</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Tue, 30 Jan 2018 17:40:36 +0000</pubDate>
+      <guid>http://pragprog.com/news/forge-your-future-with-open-source-domain-modeling-made-functional-in-print?3805589</guid>
+      <link>http://pragprog.com/news/forge-your-future-with-open-source-domain-modeling-made-functional-in-print</link>
+      <category>news</category>
+    </item>
+    <item>
+      <title>Simplifying JavaScript in beta; Complex Network Analysis in Python in print</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Wed, 17 Jan 2018 12:58:36 +0000</pubDate>
+      <guid>http://pragprog.com/news/simplifying-javascript-in-beta-complex-network-analysis-in-python-in-print?3793474</guid>
+      <link>http://pragprog.com/news/simplifying-javascript-in-beta-complex-network-analysis-in-python-in-print</link>
+      <category>news</category>
+    </item>
+    <item>
+      <title>Release It! now in print and shipping</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Wed, 10 Jan 2018 13:24:30 +0000</pubDate>
+      <guid>http://pragprog.com/news/release-it-now-in-print-and-shipping?3783603</guid>
+      <link>http://pragprog.com/news/release-it-now-in-print-and-shipping</link>
+      <category>news</category>
+    </item>
+    <item>
+      <title>Node.js 8 the Right Way: Practical, Server-Side JavaScript That Scales in print; January PragPub</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Wed, 03 Jan 2018 15:37:35 +0000</pubDate>
+      <guid>http://pragprog.com/news/node-js-8-the-right-way-practical-server-side-javascript-that-scales-in-print-january-pragpub?3768839</guid>
+      <link>http://pragprog.com/news/node-js-8-the-right-way-practical-server-side-javascript-that-scales-in-print-january-pragpub</link>
+      <category>news</category>
+    </item>
+    <item>
+      <title>Programming Elm: Build Safe and Maintainable Front-End Applications; Practical Programming in print</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Wed, 20 Dec 2017 00:40:03 +0000</pubDate>
+      <guid>http://pragprog.com/news/programming-elm-build-safe-and-maintainable-front-end-applications-practical-programming-in-print?3763574</guid>
+      <link>http://pragprog.com/news/programming-elm-build-safe-and-maintainable-front-end-applications-practical-programming-in-print</link>
+      <category>news</category>
+    </item>
+    <item>
+      <title>Java By Comparison: Become a Java Craftsman in 80 Examples / December PragPub Magazine</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Wed, 06 Dec 2017 14:16:39 +0000</pubDate>
+      <guid>http://pragprog.com/news/java-by-comparison-become-a-java-craftsman-in-80-examples-december-pragpub-magazine?3759022</guid>
+      <link>http://pragprog.com/news/java-by-comparison-become-a-java-craftsman-in-80-examples-december-pragpub-magazine</link>
+      <category>news</category>
+    </item>
+    <item>
+      <title>Black Friday/Cyber Monday Annual Sale. 40% off now!</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Wed, 22 Nov 2017 12:24:25 +0000</pubDate>
+      <guid>http://pragprog.com/news/black-fridaycyber-monday-annual-sale-40-off-now?3738141</guid>
+      <link>http://pragprog.com/news/black-fridaycyber-monday-annual-sale-40-off-now</link>
+      <category>news</category>
+    </item>
+    <item>
+      <title>NEW: Rails 5 Test Prescriptions; Agile Web Development with Rails 5.1 in print</title>
+      <description>&lt;div id="cms-content"&gt;
+         
+      &lt;/div&gt;
+     </description>
+      <pubDate>Wed, 15 Nov 2017 19:38:41 +0000</pubDate>
+      <guid>http://pragprog.com/news/new-rails-5-test-prescriptions-agile-web-development-with-rails-5-1-in-print?3731901</guid>
+      <link>http://pragprog.com/news/new-rails-5-test-prescriptions-agile-web-development-with-rails-5-1-in-print</link>
+      <category>news</category>
+    </item>
+  </channel>
+</rss>

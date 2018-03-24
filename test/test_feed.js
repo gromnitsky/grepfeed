@@ -5,6 +5,9 @@ let execSync = require('child_process').execSync
 
 let feed = require('../lib/feed')
 
+let cli = `${__dirname}/../cli/grepfeed`
+let datadir = `${__dirname}/data`
+
 suite('Feed', function() {
 
     setup(function() {
@@ -62,19 +65,36 @@ suite('Feed', function() {
 	assert.equal(false, feed.article_match(a2, {d: "2000", _: ["a2"]}))
     })
 
-    test('smoke', function() {
+    test('cli', function() {
 	this.timeout(20000)
-	let r = execSync(`${__dirname}/../cli/grepfeed -x < ${__dirname}/data/back2work.xml | ${__dirname}/../cli/grepfeed -x | ${__dirname}/../cli/grepfeed -x | xmllint - | grep '^<!-- #' | wc -l`)
+	let r = execSync(`${cli} -x < ${datadir}/back2work.xml | ${cli} -x | ${cli} -x | xmllint - | grep '^<!-- #' | wc -l`)
 	assert.equal("252\n", r.toString())
 
-	r = execSync(`${__dirname}/../cli/grepfeed '(apple|ios|itunes|iphone)' -v < ${__dirname}/data/back2work.xml | grep '^#:' | wc -l`)
+	r = execSync(`${cli} '(apple|ios|itunes|iphone)' -v < ${datadir}/back2work.xml | grep '^#:' | wc -l`)
 	assert.equal("147\n", r.toString())
 
-	r = execSync(`${__dirname}/../cli/grepfeed -d=-2012 < ${__dirname}/data/back2work.xml | grep '^#:' | wc -l`)
+	r = execSync(`${cli} -d=-2012 < ${datadir}/back2work.xml | grep '^#:' | wc -l`)
 	assert.equal("47\n", r.toString())
 
-	r = execSync(`${__dirname}/../cli/grepfeed -e < ${__dirname}/data/irishhistorypodcast.xml | grep '^#:' | wc -l`)
+	r = execSync(`${cli} -e < ${datadir}/irishhistorypodcast.xml | grep '^#:' | wc -l`)
 	assert.equal("4\n", r.toString())
+    })
+
+    test('cli-no-empty-values', function() {
+	let r = execSync(`${cli} -n1 < ${datadir}/pragprog.xml`)
+	assert.equal(`title: Pragmatic Bookshelf
+link: https://pragprog.com/
+pubDate: Fri, 23 Mar 2018 10:04:55 GMT
+description: Up-to-date information about the Pragmatic Bookshelf
+language: en-us
+
+#: 1
+guid: http://pragprog.com/news/adopting-elixir-from-concept-to-production-in-print?3840754
+title: Adopting Elixir: From Concept to Production, in print
+pubDate: Tue, 13 Mar 2018 19:40:30 GMT
+link: http://pragprog.com/news/adopting-elixir-from-concept-to-production-in-print?3840754
+categories: news
+`, r.toString())
     })
 
 })
