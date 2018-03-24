@@ -47,6 +47,7 @@ class MyGrep extends feed.Grep {
 	    let val = article[key]
 
 	    if (/^(summary|description)$/.test(key)) val = feed.html2text(val)
+	    if (!this.is_printable(val)) continue
 	    r.push(`${key}: ${val}`)
 	}
 	r.push("")
