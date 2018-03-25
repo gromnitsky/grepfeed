@@ -40,14 +40,23 @@ class MyGrep extends feed.Grep {
 	let r = []
 	r.push("")
 
+	;['summary', 'description']
+	    .forEach( key => article[key] = feed.html2text(article[key]))
+
 	for (let key in article) {
-	    if (!this.is_printable(article[key])) continue
-
-	    this.to_s_set_rules(article[key])
 	    let val = article[key]
-
-	    if (/^(summary|description)$/.test(key)) val = feed.html2text(val)
 	    if (!this.is_printable(val)) continue
+
+	    this.to_s_set_rules(val)
+
+	    // if summary is a subset of desc, skip it
+	    if (key === 'summary') {
+		// FIXME: works only for en-* strings
+		let desc = article.description.replace(/[^\w]/g, '')
+		let sub = article.summary.replace(/[^\w]/g, '')
+		if (desc.indexOf(sub) !== -1) continue
+	    }
+
 	    r.push(`${key}: ${val}`)
 	}
 	r.push("")
