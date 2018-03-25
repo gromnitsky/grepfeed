@@ -31,7 +31,8 @@
         "pump": "~3.0.0",
         "mime": "~2.2.0",
         "minimist": "~1.2.0",
-        "request": "~2.85.0"
+        "request": "~2.85.0",
+        "lodash.words": "~4.2.0"
     },
     // for heroku deploys we have a separate branch 'heroku', where
     // _out/production/client dir is added to the repo, thus

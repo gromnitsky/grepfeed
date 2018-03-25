@@ -7,6 +7,7 @@ let path = require('path')
 
 let FeedParser = require('feedparser')
 let pump = require('pump')
+let words = require('lodash.words')
 
 let feed = require('../lib/feed')
 let XMLGrep = require('../lib/xmlgrep')
@@ -51,9 +52,8 @@ class MyGrep extends feed.Grep {
 
 	    // if summary is a subset of desc, skip it
 	    if (key === 'summary') {
-		// FIXME: works only for en-* strings
-		let desc = article.description.replace(/[^\w]/g, '')
-		let sub = article.summary.replace(/[^\w]/g, '')
+		let [desc, sub] = ['description', 'summary']
+		    .map(k => words(article[k]).join(''))
 		if (desc.indexOf(sub) !== -1) continue
 	    }
 
