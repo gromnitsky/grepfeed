@@ -1,6 +1,5 @@
 'use strict';
 
-let util = require('util')
 let nodeurl = require('url')
 
 let React = require('react')
@@ -25,7 +24,7 @@ let FeedBox = React.createClass({
     },
 
     url4server: function() {
-	let obj = util._extend({
+	let obj = Object.assign({
 	    query: u.opts_parse(shellquote.parse(this.state.filter || ""))
 	}, this.server_url_template)
 	obj.query.url = this.state.url
@@ -40,7 +39,7 @@ let FeedBox = React.createClass({
     },
 
     url4browser: function() {
-	let obj = util._extend({query: {}}, this.server_url_template)
+	let obj = Object.assign({query: {}}, this.server_url_template)
 	obj.pathname = null
 	if (this.state.url) obj.query.url = this.state.url
 	if (this.state.filter) obj.query.filter = this.state.filter
@@ -191,11 +190,7 @@ let FeedArgv = React.createClass({
 
     filter2argv: function(str) {
 	let argv = u.opts_parse(shellquote.parse(str || ""))
-	for (let key in argv) {
-	    if (!key.match(/^[dcenv_]$/)) delete argv[key]
-	}
-	argv.regexp = argv['_'][0] || ""
-	delete argv['_']
+	if (argv._) argv._ = argv._[0]
 	return argv
     },
 
@@ -203,7 +198,7 @@ let FeedArgv = React.createClass({
 	return (
 	    <div className="feedArgv">
 	      <b>ARGV: </b>
-	      { util.inspect(this.filter2argv(this.props.filter), {depth: null }) }
+	      { JSON.stringify(this.filter2argv(this.props.filter), ['d', 'c', 'e', 'n', 'v', '_'], 2) }
 	    </div>
 	)
     }
