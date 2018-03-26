@@ -16,9 +16,9 @@ pre
   white-space: pre-wrap;
   word-wrap: break-word;
 
-input[type="url"], input[type="text"]
+input[type="url"], input[type="search"]
   width: 100%
-  margin-top: $my-margin / 2
+  box-sizing: border-box;
 
 
 // Footer
@@ -38,73 +38,3 @@ footer
 
 .footer-item:nth-child(2)
   flex: 1 0 0
-
-
-// Feed status
-
-.feedReq-loading
-  margin-top: $my-margin
-  padding: $my-margin
-  background: midnightblue
-  color: white
-
-.feedReq-error
-  @extend .feedReq-loading
-  background: red
-  color: white
-
-
-// Feed rendering
-
-$flag_blue: #005bbb
-$flag_yellow: #ffd500
-
-.feedResUrl
-  margin-top: $my-margin
-  padding: $my-margin $my-margin 0
-  border: 1px solid darkgray
-
-  pre
-    word-wrap: break-word
-    white-space: pre-wrap
-
-  a
-    text-decoration: none
-
-.feedTableMeta
-  margin-top: $my-margin
-  width: 100%
-  border-collapse: collapse
-  table-layout: fixed
-
-  th
-    height: 2em
-    background-color: $flag_blue
-    color: white
-
-  tr:nth-child(even)
-    background-color: whitesmoke
-
-  th, td
-    padding: 4px
-    border: 1px solid whitesmoke
-    word-wrap: break-word
-
-.feedTableArticle
-  @extend .feedTableMeta
-
-  th
-    height: 2em
-    background-color: $flag_yellow
-    color: black
-
-  a
-    text-decoration: none
-
-  img,
-  object,
-  video,
-  embed
-    max-width: 100%;
-    width: auto;
-    height: auto;

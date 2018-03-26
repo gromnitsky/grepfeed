@@ -42,8 +42,8 @@
         "jquery": "~3.3.1",
         "nprogress": "~0.2.0",
         "q": "~1.5.1",
-        "react": "~0.14.9",
-        "react-dom": "~0.14.9",
+        "react": "~16.2.0",
+        "react-dom": "~16.2.0",
         "xmltojson": "~1.3.5",
         "babel-polyfill": "~6.26.0"
     },
