@@ -2,8 +2,6 @@
 
 let nodeurl = require('url')
 
-let React = require('react')
-let ReactDOM = require('react-dom')
 let shellquote = require('shell-quote')
 let xmlToJSON = require('xmltojson')
 let NProgress = require('nprogress')
