@@ -44,6 +44,7 @@
         "q": "~1.5.1",
         "react": "~16.2.0",
         "react-dom": "~16.2.0",
+        "lodash.get": "~4.4.2",
         "babel-polyfill": "~6.26.0"
     },
     "files": [

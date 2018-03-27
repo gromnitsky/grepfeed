@@ -4,6 +4,7 @@
 
 let shellquote = require('shell-quote')
 let NProgress = require('nprogress')
+let get = require('lodash.get')
 
 let u = require('../lib/u')
 let dom = require('../lib/dom')
@@ -107,12 +108,57 @@ class Status extends React.Component {
     }
 }
 
+class RssClientURL extends React.Component {
+    render() {
+	return (
+	    <div className="rss_client_url">
+	      <p>RSS client/podcatcher URL:</p>
+	      <p><a href={this.props.url}>{this.props.url}</a></p>
+	    </div>
+	)
+    }
+}
+
+class RssMeta extends React.Component {
+    render() {
+	return (
+	    <table>
+	      <colgroup>
+		<col style={{width: '20%'}} />
+		<col style={{width: '80%'}} />
+	      </colgroup>
+	      <thead>
+		<th colSpan='2'>Metadata</th>
+	      </thead>
+	      <tr>
+		<td>matched articles</td>
+		<td>{this.props.matched_articles}</td>
+	      </tr>
+	    </table>
+	)
+    }
+}
+
+class Feed extends React.Component {
+    hidden() { return this.props.data ? '' : 'hidden' }
+    render() {
+	return (
+	    <div className={this.hidden()}>
+	      <RssClientURL url={get(this.props.data, 'url')} />
+	      <RssMeta matched_articles={get(this.props.data, 'json.articles.length', -1)}
+		       data={get(this.props.data, 'json.meta', {})} />
+	    </div>
+	)
+    }
+}
+
 class App extends React.Component {
     constructor() {
 	super()
 	this.state = {
 	    status: null,
 	    download: null,
+	    feed: null
 	}
 
 	;['submit', 'reset'].forEach(fn => this[fn] = this[fn].bind(this))
@@ -131,7 +177,15 @@ class App extends React.Component {
 	    // the error is reported by this.download_feed()
 	    return
 	}
-	console.log('start rendering json', json)
+
+	let uu = this.server_json_url(child_state.url, child_state.filter)
+	uu.searchParams.delete('j')
+	this.setState({
+	    feed: {
+		json,
+		url: uu.toString()
+	    }
+	})
     }
 
     server_json_url(url, filter) {
@@ -154,6 +208,7 @@ class App extends React.Component {
 
 	    this.setState({
 		status: { value: "Loading...", type: 'info' },
+		feed: null
 	    })
 	    NProgress.start()
 	    let req = dom.http_get(json_url, 60*2*1000) // 2m timeout
@@ -208,6 +263,7 @@ class App extends React.Component {
 			busy={this.is_busy()}
 			reset={this.reset} />
 	      <Status data={this.state.status} />
+	      <Feed data={this.state.feed} />
 	    </div>
 	)
     }

@@ -5,6 +5,8 @@
 $body-width: 700px;
 $my-margin: 10px;
 $fg: #191919;
+$flag_blue: #005bbb
+$flag_yellow: #ffd500
 
 body
   max-width: $body-width;
@@ -31,6 +33,39 @@ input[type="url"], input[type="search"]
   padding: 1em;
   color: white
   background: #c82333
+
+// Feed
+
+.rss_client_url
+  border: 1px solid gray;
+  padding: 0 0.5em;
+  word-wrap: break-word
+  white-space: pre-wrap
+
+  a
+    text-decoration: none
+
+  p
+    margin: 0.5em 0
+
+table
+  margin-top: 1em;
+  width: 100%
+  border-collapse: collapse
+  table-layout: fixed
+
+  th
+    height: 2em
+    background-color: $flag_blue
+    color: white
+
+  tr:nth-child(even)
+    background-color: whitesmoke
+
+  th, td
+    padding: 4px
+    border: 1px solid whitesmoke
+    word-wrap: break-word
 
 // Footer
 
