@@ -9,14 +9,19 @@ let get = require('lodash.get')
 let u = require('../lib/u')
 let dom = require('../lib/dom')
 
-class Minimist extends React.Component {
-    render() {
-	return (
-	    <p>
-	      { JSON.stringify(this.props.argv) }
-	    </p>
-	)
-    }
+let argv_parse = function(filter) {
+    let argv = u.opts_parse(shellquote.parse(filter))
+    let r = {}
+    Object.keys(argv).filter(k => /^[endcv_]$/.test(k)).forEach(k => {
+	let val = Array.isArray(argv[k]) ? argv[k][0] : argv[k]
+	if (!val) return
+	r[k] = val
+    })
+    return r
+}
+
+let Minimist = function(props) {
+    return <p>argv: {JSON.stringify(argv_parse(props.argv), null, 2)}</p>
 }
 
 class GrepForm extends React.Component {
@@ -242,12 +247,8 @@ class App extends React.Component {
 	let uu = new URL(window.location.origin)
 	uu.pathname = '/api'
 	uu.searchParams.set('url', url)
-	let argv = u.opts_parse(shellquote.parse(filter))
-	Object.keys(argv).filter(k => /^[endc_]$/.test(k)).forEach(k => {
-	    let val = argv[k]
-	    if (Array.isArray(k)) val = val[0]
-	    uu.searchParams.set(k, val)
-	})
+	let argv = argv_parse(filter)
+	Object.keys(argv).forEach(k => uu.searchParams.set(k, argv[k]))
 	uu.searchParams.set('j', 1)
 	return uu
     }
