@@ -113,15 +113,13 @@ class Status extends React.Component {
     }
 }
 
-class RssClientURL extends React.Component {
-    render() {
-	return (
-	    <div className="rss_client_url">
-	      <p>RSS client/podcatcher URL:</p>
-	      <p><a href={this.props.url}>{this.props.url}</a></p>
-	    </div>
-	)
-    }
+let RssClientURL = function(props) {
+    return (
+	<div className="rss_client_url">
+	  <p>RSS client/podcatcher URL:</p>
+	  <p><a href={props.url}>{props.url}</a></p>
+	</div>
+    )
 }
 
 let TableRows = function(props) {
