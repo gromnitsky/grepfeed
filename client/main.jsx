@@ -25,11 +25,13 @@ class GrepForm extends React.Component {
 	let uu = new URL(window.location.href)
 	this.state = {
 	    url: uu.searchParams.get('url'),
-	    filter: uu.searchParams.get('filter')
+	    filter: uu.searchParams.get('filter'),
 	}
 
 	this.handleInputChange = this.handleInputChange.bind(this)
     }
+
+    is_busy() { return this.props.mode === 'busy' }
 
     handleInputChange(evt) {
 	let name = evt.target.name
@@ -54,10 +56,14 @@ class GrepForm extends React.Component {
 
     handleReset(evt) {
 	evt.preventDefault()
-	this.update({
-	    url: '',
-	    filter: ''
-	})
+	if (this.is_busy()) {
+	    this.props.reset()
+	} else {
+	    this.update({
+		url: '',
+		filter: ''
+	    })
+	}
     }
 
     render() {
@@ -67,7 +73,8 @@ class GrepForm extends React.Component {
 	      <input type='url' placeholder='http://example.com/rss'
 		     spellCheck="false"
 		     name="url" value={this.state.url}
-		     onChange={this.handleInputChange}/>
+		     onChange={this.handleInputChange}
+		     disabled={this.is_busy()} />
 	      <label>
 		<details>
 		  <summary>Filter options:</summary>
@@ -75,14 +82,28 @@ class GrepForm extends React.Component {
 		</details>
 		<input name="filter" type="search" spellCheck="false"
 		       value={this.state.filter}
-		       onChange={this.handleInputChange} />
+		       onChange={this.handleInputChange}
+		       disabled={this.is_busy()} />
 	      </label>
 	      <Minimist argv={this.state.filter} />
 	      <p>
-		<input type='submit' />&nbsp;
+		<input type='submit' disabled={this.is_busy()} />&nbsp;
 		<input type='reset' />
 	      </p>
 	    </form>
+	)
+    }
+}
+
+class Status extends React.Component {
+    hidden() { return this.props.data ? '' : 'hidden'}
+    type() { return this.props.data ? this.props.data.type : '' }
+
+    render() {
+	return (
+	    <div className={`status ${this.type()} ${this.hidden()}`}>
+	      {this.props.data ? this.props.data.value : ''}
+	    </div>
 	)
     }
 }
@@ -91,16 +112,41 @@ class App extends React.Component {
     constructor() {
 	super()
 	this.state = {
+	    mode: 'normal',	// or 'busy'
+	    status: null
 	}
+
+	;['submit', 'reset'].forEach(fn => this[fn] = this[fn].bind(this))
     }
 
     submit(child_event, child_state) {
 	child_event.preventDefault()
 	console.log('submit', child_state)
+	this.setState({
+	    mode: 'busy'
+	})
+    }
+
+    reset() {
+	console.log('reset busy')
+	this.setState({
+	    mode: 'normal',
+	    status: {
+		value: new Error('user interrupt'),
+		type: 'error'
+	    }
+	})
     }
 
     render() {
-	return <GrepForm submit={this.submit} />
+	return (
+	    <div>
+	      <GrepForm submit={this.submit}
+			mode={this.state.mode}
+			reset={this.reset} />
+	      <Status data={this.state.status} />
+	    </div>
+	)
     }
 }
 
