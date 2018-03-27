@@ -1,9 +1,6 @@
 @import "nprogress/nprogress"
 
-// Body
-
 $body-width: 700px;
-$my-margin: 10px;
 $fg: #191919;
 $flag_blue: #005bbb
 $flag_yellow: #ffd500
@@ -88,17 +85,13 @@ table ul
 // Footer
 
 footer
-  margin-top: $my-margin
-  border-top: 1px solid $fg
+  margin-top: 1em
+  border-top: 1px solid lightgray
   display: flex
+  justify-content: space-between
 
-.footer-item img
-  filter: opacity(0.75)
+  img
+    filter: opacity(0.75)
 
-.footer-item:first-child
-  margin-right: $my-margin
-  padding-top: $my-margin
-  flex: 2 0 0
-
-.footer-item:nth-child(2)
-  flex: 1 0 0
+  div
+    margin-top: 1em

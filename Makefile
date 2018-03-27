@@ -71,6 +71,11 @@ $(js.dest): $(cache)/%: %
 	$(mkdir)
 	babel --presets $(bp)-es2015 $(babel.opt) $< -o $@
 
+$(cache)/lib/package.json: package.json
+	$(mkdir)
+	$(copy)
+
+js.dest += $(cache)/lib/package.json
 compile.all += $(js.dest)
 
 

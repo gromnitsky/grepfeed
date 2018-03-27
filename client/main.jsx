@@ -8,6 +8,7 @@ let get = require('lodash.get')
 
 let u = require('../lib/u')
 let dom = require('../lib/dom')
+let meta = require('../lib/package.json')
 
 let argv_parse = function(filter) {
     let argv = u.opts_parse(shellquote.parse(filter))
@@ -325,6 +326,17 @@ class App extends React.Component {
 			reset={this.reset} />
 	      <Status data={this.state.status} />
 	      <Feed data={this.state.feed} />
+	      <footer>
+		<div>
+		  <img src="moomintroll.svg"
+		       alt="" title="A happy Moomintroll"/>
+		</div>
+		<div>
+		  <a href="https://github.com/gromnitsky/grepfeed">Help</a>
+		  <br/><br/>
+		  v{meta.version}
+		</div>
+	      </footer>
 	    </div>
 	)
     }
