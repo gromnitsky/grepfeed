@@ -82,8 +82,20 @@ class GrepForm extends React.Component {
 		     required />
 	      <label>
 		<details>
-		  <summary>Filter options:</summary>
-		  TODO
+		  <summary>Filter:</summary>
+		  <pre>{`  -e      get only articles w/ enclosures
+  -n NUM  number of articles to get
+
+Filter by:
+
+  -d      [-]date[,date]
+  -c      categories
+
+Or/and search for a regexp PATTERN in each rss article & print the
+matching ones. The internal order of the search: title, summary,
+description, author.
+
+-v      invert match`}</pre>
 		</details>
 		<input name="filter" type="search" spellCheck="false"
 		       value={this.state.filter}
