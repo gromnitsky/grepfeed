@@ -36,8 +36,8 @@ $(static.dest): $(out)/%: %
 	$(copy)
 
 npm.src := babel-polyfill/dist/polyfill.min.js \
-	react-dom/dist/react-dom.min.js \
-	react/dist/react.min.js
+	react-dom/umd/react-dom.production.min.js \
+	react/umd/react.production.min.js
 npm.dest := $(addprefix $(out)/client/vendor/, $(npm.src))
 $(out)/client/vendor/%: node_modules/%
 	$(mkdir)
