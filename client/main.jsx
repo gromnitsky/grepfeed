@@ -31,8 +31,6 @@ class GrepForm extends React.Component {
 	this.handleInputChange = this.handleInputChange.bind(this)
     }
 
-    is_busy() { return this.props.mode === 'busy' }
-
     handleInputChange(evt) {
 	let name = evt.target.name
 	let val = evt.target.value
@@ -56,7 +54,7 @@ class GrepForm extends React.Component {
 
     handleReset(evt) {
 	evt.preventDefault()
-	if (this.is_busy()) {
+	if (this.props.busy) {
 	    this.props.reset()
 	} else {
 	    this.update({
@@ -74,7 +72,7 @@ class GrepForm extends React.Component {
 		     spellCheck="false"
 		     name="url" value={this.state.url}
 		     onChange={this.handleInputChange}
-		     disabled={this.is_busy()}
+		     disabled={this.props.busy}
 		     required />
 	      <label>
 		<details>
@@ -84,11 +82,11 @@ class GrepForm extends React.Component {
 		<input name="filter" type="search" spellCheck="false"
 		       value={this.state.filter}
 		       onChange={this.handleInputChange}
-		       disabled={this.is_busy()} />
+		       disabled={this.props.busy} />
 	      </label>
 	      <Minimist argv={this.state.filter} />
 	      <p>
-		<input type='submit' disabled={this.is_busy()} />&nbsp;
+		<input type='submit' disabled={this.props.busy} />&nbsp;
 		<input type='reset' />
 	      </p>
 	    </form>
@@ -113,7 +111,6 @@ class App extends React.Component {
     constructor() {
 	super()
 	this.state = {
-	    mode: 'normal',	// or 'busy'
 	    status: null,
 	    download: null,
 	}
@@ -122,9 +119,11 @@ class App extends React.Component {
 	console.info('App')
     }
 
+    is_busy() { return !!this.state.download }
+
     async submit(child_event, child_state) {
+	console.info('App#submit()', child_state)
 	child_event.preventDefault()
-	console.log('submit', child_state)
 	let xml
 	try {
 	    xml = await this.download_feed(child_state.url, child_state.filter)
@@ -154,7 +153,6 @@ class App extends React.Component {
 
 	    this.setState({
 		status: { value: "Loading...", type: 'info' },
-		mode: 'busy'
 	    })
 	    NProgress.start()
 	    let req = dom.http_get(xmlurl, 60*2*1000) // 2m timeout
@@ -187,7 +185,6 @@ class App extends React.Component {
 		NProgress.done()
 		this.setState({
 		    download: null,
-		    mode: 'normal',
 		    status: req_status
 		})
 	    }).done()
@@ -195,19 +192,16 @@ class App extends React.Component {
     }
 
     reset() {
-	console.log('reset busy')
+	console.info('App#reset()')
 	if (this.state.download)
 	    this.state.download.jqXHR.abort("user interrupt")
-	this.setState({
-	    mode: 'normal'
-	})
     }
 
     render() {
 	return (
 	    <div>
 	      <GrepForm submit={this.submit}
-			mode={this.state.mode}
+			busy={this.is_busy()}
 			reset={this.reset} />
 	      <Status data={this.state.status} />
 	    </div>
