@@ -124,17 +124,17 @@ class App extends React.Component {
     async submit(child_event, child_state) {
 	console.info('App#submit()', child_state)
 	child_event.preventDefault()
-	let xml
+	let json
 	try {
-	    xml = await this.download_feed(child_state.url, child_state.filter)
+	    json = await this.download_feed(child_state.url, child_state.filter)
 	} catch (err) {
-	    console.log(err)
+	    // the error is reported by this.download_feed()
 	    return
 	}
-	console.log('start rendering xml')
+	console.log('start rendering json', json)
     }
 
-    server_url(url, filter) {
+    server_json_url(url, filter) {
 	let uu = new URL(window.location.origin)
 	uu.pathname = '/api'
 	uu.searchParams.set('url', url)
@@ -144,27 +144,31 @@ class App extends React.Component {
 	    if (Array.isArray(k)) val = val[0]
 	    uu.searchParams.set(k, val)
 	})
-	return uu.toString()
+	uu.searchParams.set('j', 1)
+	return uu
     }
 
     download_feed(url, filter) {
 	return new Promise( (resolve, reject) => {
-	    let xmlurl = this.server_url(url, filter)
+	    let json_url = this.server_json_url(url, filter).toString()
 
 	    this.setState({
 		status: { value: "Loading...", type: 'info' },
 	    })
 	    NProgress.start()
-	    let req = dom.http_get(xmlurl, 60*2*1000) // 2m timeout
+	    let req = dom.http_get(json_url, 60*2*1000) // 2m timeout
 	    this.setState({ download: req })
 	    let req_status
 
 	    req.promise.then( body => {
 		dom.nprogress("yellow")
-		// parse xml
-		// ...
-		req_status = null	// OK
-		resolve(body)
+		let json = JSON.parse(body)
+		if (json.articles && json.articles.length) {
+		    req_status = null // OK
+		} else {
+		    throw new Error('no matching articles')
+		}
+		resolve(json)
 	    }).catch( err => {
 		if ((err instanceof Error)) {
 		    console.error(err)

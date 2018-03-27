@@ -11,6 +11,7 @@ let words = require('lodash.words')
 
 let feed = require('../lib/feed')
 let XMLGrep = require('../lib/xmlgrep')
+let JSONGrep = require('../lib/jsongrep')
 let u = require('../lib/u')
 let meta = require('../package.json')
 
@@ -79,7 +80,9 @@ if (argv.V) {
 }
 
 let feedparser = new FeedParser()
-let grep = argv.x ? new XMLGrep(argv) : new MyGrep(argv)
+let grep = new MyGrep(argv)
+if (argv.j) grep = new JSONGrep(argv)
+if (argv.x) grep = new XMLGrep(argv)
 
 grep.on('finish', function() {
     if (!argv.m && this.articles_matched === 0) process.exitCode = 1

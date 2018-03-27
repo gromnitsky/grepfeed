@@ -13,6 +13,7 @@ let FeedParser = require('feedparser')
 let pump = require('pump')
 
 let XMLGrep = require('../lib/xmlgrep')
+let JSONGrep = require('../lib/jsongrep')
 let meta = require('../package.json')
 
 
@@ -129,7 +130,7 @@ let server = http.createServer(function (req, res) {
 	    errx(res, 400, `${xmlurl}: ${err.message}`)
 	})
 
-	let grep = new XMLGrep(argv)
+	let grep = argv.j ? new JSONGrep(argv) : new XMLGrep(argv)
 	grep.once('data', () => {
 	    headers_are_sent = true
 	})

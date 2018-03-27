@@ -3,6 +3,7 @@ Usage: grepfeed [opt] [PATTERN] < xml
   -e      print only articles w/ enclosures
   -n NUM  number of articles to print
   -x      xml output
+  -j      json output
   -m      print only meta
   -V      program version
 
