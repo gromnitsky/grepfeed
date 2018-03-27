@@ -74,7 +74,8 @@ class GrepForm extends React.Component {
 		     spellCheck="false"
 		     name="url" value={this.state.url}
 		     onChange={this.handleInputChange}
-		     disabled={this.is_busy()} />
+		     disabled={this.is_busy()}
+		     required />
 	      <label>
 		<details>
 		  <summary>Filter options:</summary>
@@ -113,31 +114,92 @@ class App extends React.Component {
 	super()
 	this.state = {
 	    mode: 'normal',	// or 'busy'
-	    status: null
+	    status: null,
+	    download: null,
 	}
 
 	;['submit', 'reset'].forEach(fn => this[fn] = this[fn].bind(this))
 	console.info('App')
     }
 
-    submit(child_event, child_state) {
+    async submit(child_event, child_state) {
 	child_event.preventDefault()
 	console.log('submit', child_state)
-	this.setState({
-	    mode: 'busy',
-	    status: null
+	let xml
+	try {
+	    xml = await this.download_feed(child_state.url, child_state.filter)
+	} catch (err) {
+	    console.log(err)
+	    return
+	}
+	console.log('start rendering xml')
+    }
+
+    server_url(url, filter) {
+	let uu = new URL(window.location.origin)
+	uu.pathname = '/api'
+	uu.searchParams.set('url', url)
+	let argv = u.opts_parse(shellquote.parse(filter))
+	Object.keys(argv).filter(k => /^[endc_]$/.test(k)).forEach(k => {
+	    let val = argv[k]
+	    if (Array.isArray(k)) val = val[0]
+	    uu.searchParams.set(k, val)
+	})
+	return uu.toString()
+    }
+
+    download_feed(url, filter) {
+	return new Promise( (resolve, reject) => {
+	    let xmlurl = this.server_url(url, filter)
+
+	    this.setState({
+		status: { value: "Loading...", type: 'info' },
+		mode: 'busy'
+	    })
+	    NProgress.start()
+	    let req = dom.http_get(xmlurl, 60*2*1000) // 2m timeout
+	    this.setState({ download: req })
+	    let req_status
+
+	    req.promise.then( body => {
+		dom.nprogress("yellow")
+		// parse xml
+		// ...
+		req_status = null	// OK
+		resolve(body)
+	    }).catch( err => {
+		if ((err instanceof Error)) {
+		    console.error(err)
+		} else {
+		    err = new Error(err.statusText)
+		}
+		req_status = { value: err, type: 'error' }
+		reject(err)
+	    }).progress( event => {
+		let bytes = u.commas(event.loaded)
+		this.setState({
+		    status: {
+			value: `Loading... ${bytes} B`,
+			type: 'info'
+		    }
+		})
+	    }).finally( ()=> {
+		NProgress.done()
+		this.setState({
+		    download: null,
+		    mode: 'normal',
+		    status: req_status
+		})
+	    }).done()
 	})
     }
 
-    reset(reason) {
+    reset() {
 	console.log('reset busy')
-	if (reason === undefined) reason = {
-	    value: new Error('user interrupt'),
-	    type: 'error'
-	}
+	if (this.state.download)
+	    this.state.download.jqXHR.abort("user interrupt")
 	this.setState({
-	    mode: 'normal',
-	    status: reason
+	    mode: 'normal'
 	})
     }
 
