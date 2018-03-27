@@ -102,7 +102,7 @@ class Status extends React.Component {
     render() {
 	return (
 	    <div className={`status ${this.type()} ${this.hidden()}`}>
-	      {this.props.data ? this.props.data.value : ''}
+	      {this.props.data ? this.props.data.value.toString() : ''}
 	    </div>
 	)
     }
@@ -117,24 +117,27 @@ class App extends React.Component {
 	}
 
 	;['submit', 'reset'].forEach(fn => this[fn] = this[fn].bind(this))
+	console.info('App')
     }
 
     submit(child_event, child_state) {
 	child_event.preventDefault()
 	console.log('submit', child_state)
 	this.setState({
-	    mode: 'busy'
+	    mode: 'busy',
+	    status: null
 	})
     }
 
-    reset() {
+    reset(reason) {
 	console.log('reset busy')
+	if (reason === undefined) reason = {
+	    value: new Error('user interrupt'),
+	    type: 'error'
+	}
 	this.setState({
 	    mode: 'normal',
-	    status: {
-		value: new Error('user interrupt'),
-		type: 'error'
-	    }
+	    status: reason
 	})
     }
 
