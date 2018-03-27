@@ -83,7 +83,7 @@ compile.all += $(js.dest)
 jsx.dest := $(addprefix $(cache)/, $(wildcard client/*.jsx))
 $(jsx.dest): $(cache)/%: %
 	$(mkdir)
-	babel --presets $(bp)-es2015,$(bp)-react $(babel.opt) $< -o $@
+	babel --presets $(bp)-react,$(bp)-env $(babel.opt) $< -o $@
 
 compile.all += $(jsx.dest)
 

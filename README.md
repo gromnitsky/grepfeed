@@ -32,7 +32,7 @@ A live example: https://serene-river-17732.herokuapp.com/
 * web client, that isn't included in the npm pkg
 
     ~~~
-    $ npm -g i browserify babel-cli babel-preset-es2015 babel-preset-react node-sass uglifyjs
+    $ npm -g i browserify babel-cli babel-preset-env babel-preset-react node-sass uglifyjs
     $ make NODE_ENV=production
     ~~~
 
