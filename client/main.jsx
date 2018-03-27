@@ -119,24 +119,73 @@ class RssClientURL extends React.Component {
     }
 }
 
-class RssMeta extends React.Component {
-    render() {
+let TableRows = function(props) {
+    return Object.keys(props.data).map( (name, idx) => {
+	let val = props.data[name]
+	if (name === '#') return ''
+	if (name === 'pubDate') {
+	    val = new Date(val).toUTCString()
+	} else if (name === 'description') {
+	    val = <span dangerouslySetInnerHTML={{__html: val}} />
+	} else if (name === 'enclosures') {
+	    let li = val.map( (enc, idx) => {
+		return (
+		    <li key={idx}>
+		      <a href={enc.url}>{enc.url}</a> ({enc.type} {u.commas(enc.length)})
+		    </li>
+		)
+	    })
+	    val = <ul>{li}</ul>
+	} else if (Array.isArray(val))
+	    val = val.join(', ')
+
 	return (
-	    <table>
+	    <tr key={idx}>
+	      <td>{name}</td>
+	      <td>{val}</td>
+	    </tr>
+	)
+    })
+}
+
+let RssMeta = function(props) {
+    return (
+	<table className="meta">
+	  <colgroup>
+	    <col style={{width: '20%'}} />
+	    <col style={{width: '80%'}} />
+	  </colgroup>
+	  <thead>
+	    <th colSpan='2'>Metadata</th>
+	  </thead>
+	  <tr>
+	    <td>matched articles</td>
+	    <td>{props.matched_articles}</td>
+	  </tr>
+
+	  <TableRows data={props.data} />
+
+	</table>
+    )
+}
+
+let RssArticles = function(props) {
+    return props.data.map( (article, idx) => {
+	return (
+	    <table key={idx} className="article">
 	      <colgroup>
-		<col style={{width: '20%'}} />
-		<col style={{width: '80%'}} />
+		<col style={{width: '15%'}} />
+		<col style={{width: '85%'}} />
 	      </colgroup>
 	      <thead>
-		<th colSpan='2'>Metadata</th>
+		<th colSpan='2'>#{article['#']}</th>
 	      </thead>
-	      <tr>
-		<td>matched articles</td>
-		<td>{this.props.matched_articles}</td>
-	      </tr>
+
+	      <TableRows data={article} />
+
 	    </table>
 	)
-    }
+    })
 }
 
 class Feed extends React.Component {
@@ -147,6 +196,7 @@ class Feed extends React.Component {
 	      <RssClientURL url={get(this.props.data, 'url')} />
 	      <RssMeta matched_articles={get(this.props.data, 'json.articles.length', -1)}
 		       data={get(this.props.data, 'json.meta', {})} />
+	      <RssArticles data={get(this.props.data, 'json.articles', [])} />
 	    </div>
 	)
     }
