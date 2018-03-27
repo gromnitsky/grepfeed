@@ -38,6 +38,12 @@ class GrepForm extends React.Component {
 	this.handleInputChange = this.handleInputChange.bind(this)
     }
 
+    componentDidMount() {
+	console.info("GrepForm#componentDidMount()")
+	if (this.state.url.trim().length)
+	    this.props.submit(null, this.state)
+    }
+
     handleInputChange(evt) {
 	let name = evt.target.name
 	let val = evt.target.value
@@ -235,7 +241,7 @@ class App extends React.Component {
 
     async submit(child_event, child_state) {
 	console.info('App#submit()', child_state)
-	child_event.preventDefault()
+	if (child_event) child_event.preventDefault()
 	let json
 	try {
 	    json = await this.download_feed(child_state.url, child_state.filter)
