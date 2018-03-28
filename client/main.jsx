@@ -31,8 +31,8 @@ class GrepForm extends React.Component {
 
 	let uu = new URL(window.location.href)
 	this.state = {
-	    url: uu.searchParams.get('url'),
-	    filter: uu.searchParams.get('filter'),
+	    url: uu.searchParams.get('url') || '',
+	    filter: uu.searchParams.get('filter') || '',
 	}
 
 	this.handleInputChange = this.handleInputChange.bind(this)
