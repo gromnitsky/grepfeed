@@ -67,14 +67,13 @@ class GrepForm extends React.Component {
 
     handleReset(evt) {
 	evt.preventDefault()
-	if (this.props.busy) {
-	    this.props.reset()
-	} else {
+	if (!this.props.busy) {
 	    this.update({
 		url: '',
 		filter: ''
 	    })
 	}
+	this.props.reset()
     }
 
     render() {
@@ -320,8 +319,14 @@ class App extends React.Component {
 
     reset() {
 	console.info('App#reset()')
-	if (this.state.download)
+	if (this.state.download) {
 	    this.state.download.jqXHR.abort("user interrupt")
+	} else {
+	    this.setState({
+		status: null,
+		feed: null
+	    })
+	}
     }
 
     render() {
