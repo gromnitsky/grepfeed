@@ -46,9 +46,9 @@ feeds. Its core is `Grep` class--a Transform stream:
 ### cli
 
 `cli/grepfeed` extends `Grep` to override several methods where it's
-convenient to write the output in any format one wants. 2 interfaces
-are included: a text-only (the default) & an xml one. The latter
-produces a valid rss 2.0 feed. E.g.
+convenient to write the output in any format one wants. 3 interfaces
+are included: text-only (the default), json, xml. The latter produces
+a valid rss 2.0 feed. E.g.
 
     $ curl http://example.com/rss | cli/grepfeed apple -d=2016 -x
 
@@ -61,6 +61,7 @@ Usage: grepfeed [opt] [PATTERN] < xml
   -e      print only articles w/ enclosures
   -n NUM  number of articles to print
   -x      xml output
+  -j      json output
   -m      print only meta
   -V      program version
 
