@@ -53,7 +53,7 @@ class GrepForm extends React.Component {
     }
 
     update_href(url, filter) {
-	let uu = new URL(window.location.href)
+	let uu = new URL(window.location.origin)
 	uu.searchParams.set('url', url)
 	uu.searchParams.set('filter', filter)
 	window.history.replaceState(null, null, uu.toString())
@@ -146,6 +146,8 @@ let TableRows = function(props) {
 	if (name === '#') return ''
 	if (name === 'pubDate') {
 	    val = new Date(val).toUTCString()
+	} else if (name === 'link') {
+	    val = <a href={val}>{val}</a>
 	} else if (name === 'description') {
 	    val = <span dangerouslySetInnerHTML={{__html: val}} />
 	} else if (name === 'enclosures') {
@@ -192,6 +194,8 @@ let RssMeta = function(props) {
 
 let RssArticles = function(props) {
     return props.data.map( (article, idx) => {
+	let up = idx === 0 ? '' : <a href={`#${idx-1}`}>⯅</a>
+	let down = idx === props.data.length-1 ? '' : <a href={`#${idx+1}`}>⯆</a>
 	return (
 	    <table key={idx} className="article">
 	      <colgroup>
@@ -199,7 +203,7 @@ let RssArticles = function(props) {
 		<col style={{width: '85%'}} />
 	      </colgroup>
 	      <thead>
-		<th colSpan='2'>#{article['#']}</th>
+		<th colSpan='2' id={idx}>{up} #{article['#']} {down}</th>
 	      </thead>
 
 	      <TableRows data={article} />
