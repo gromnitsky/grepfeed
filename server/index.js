@@ -130,7 +130,7 @@ let server = http.createServer(function (req, res) {
 	    errx(res, 400, `${xmlurl}: ${err.message}`)
 	})
 
-	let grep = argv.j ? new JSONGrep(argv) : new XMLGrep(argv)
+	let grep = argv.j ? new JSONGrep(argv, feedparser) : new XMLGrep(argv, feedparser)
 	grep.once('data', () => {
 	    headers_are_sent = true
 	})

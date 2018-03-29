@@ -80,9 +80,10 @@ if (argv.V) {
 }
 
 let feedparser = new FeedParser()
-let grep = new MyGrep(argv)
-if (argv.j) grep = new JSONGrep(argv)
-if (argv.x) grep = new XMLGrep(argv)
+let klass = MyGrep
+if (argv.j) klass = JSONGrep
+if (argv.x) klass = XMLGrep
+let grep = new klass(argv, feedparser)
 
 grep.on('finish', function() {
     if (!argv.m && this.articles_matched === 0) process.exitCode = 1
