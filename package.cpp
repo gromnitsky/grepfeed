@@ -19,7 +19,7 @@
     "repository": "github:gromnitsky/grepfeed",
 #ifndef NPM
     "engines": {
-        "node": "8.10.0"
+        "node": "8.11.0"
     },
     "scripts": {
         "start": "node server _out/production/client"
