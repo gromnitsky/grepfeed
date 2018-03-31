@@ -78,7 +78,7 @@ compile.all += $(js.dest)
 jsx.dest := $(addprefix $(cache)/, $(wildcard client/*.jsx))
 $(jsx.dest): $(cache)/%: %
 	$(mkdir)
-	babel --plugins babel-plugin-git-log-1 --presets $(bp)-react,$(bp)-env $(babel.opt) $< -o $@
+	babel --presets $(bp)-react,$(bp)-env $(babel.opt) $< -o $@
 
 compile.all += $(jsx.dest)
 

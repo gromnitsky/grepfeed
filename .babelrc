@@ -1,0 +1,7 @@
+{
+    "plugins": [
+        ["babel-plugin-git-log-1", {
+            "ref": "master"
+        }]
+    ]
+}
