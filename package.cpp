@@ -45,7 +45,8 @@
         "react": "~16.2.0",
         "react-dom": "~16.2.0",
         "lodash.get": "~4.4.2",
-        "babel-polyfill": "~6.26.0"
+        "babel-polyfill": "~6.26.0",
+        "babel-plugin-git-log-1": "gromnitsky/babel-plugin-git-log-1"
     },
     "files": [
         "cli/",

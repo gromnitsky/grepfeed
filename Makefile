@@ -71,11 +71,6 @@ $(js.dest): $(cache)/%: %
 	$(mkdir)
 	babel --presets $(bp)-es2015 $(babel.opt) $< -o $@
 
-$(cache)/lib/package.json: package.json
-	$(mkdir)
-	$(copy)
-
-js.dest += $(cache)/lib/package.json
 compile.all += $(js.dest)
 
 
@@ -83,7 +78,7 @@ compile.all += $(js.dest)
 jsx.dest := $(addprefix $(cache)/, $(wildcard client/*.jsx))
 $(jsx.dest): $(cache)/%: %
 	$(mkdir)
-	babel --presets $(bp)-react,$(bp)-env $(babel.opt) $< -o $@
+	babel --plugins babel-plugin-git-log-1 --presets $(bp)-react,$(bp)-env $(babel.opt) $< -o $@
 
 compile.all += $(jsx.dest)
 

@@ -5,10 +5,10 @@
 let shellquote = require('shell-quote')
 let NProgress = require('nprogress')
 let get = require('lodash.get')
+let git = require('babel-plugin-git-log-1/json')
 
 let u = require('../lib/u')
 let dom = require('../lib/dom')
-let meta = require('../lib/package.json')
 
 let argv_parse = function(filter) {
     let argv = u.opts_parse(shellquote.parse(filter || ''))
@@ -349,7 +349,9 @@ class App extends React.Component {
 		<div>
 		  <a href="https://github.com/gromnitsky/grepfeed">Help</a>
 		  <br/><br/>
-		  v{meta.version}
+		  <span title={git.log.subject}>{git.log.hash.slice(0,7)}</span>
+		  &nbsp;{git.ref}<br />
+		  {git.log.commiter.date}
 		</div>
 	      </footer>
 	    </div>
