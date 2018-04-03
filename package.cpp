@@ -7,7 +7,7 @@
 {
     "//": "DON'T EDIT! See package.cpp instead",
     "name": "grepfeed",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Filters out rss/atom feeds. Returns articles matching a pattern. The output can be another valid xml feed.",
     "keywords": [
         "grep",
@@ -46,7 +46,7 @@
         "react-dom": "~16.2.0",
         "lodash.get": "~4.4.2",
         "babel-polyfill": "~6.26.0",
-        "babel-plugin-git-log-1": "gromnitsky/babel-plugin-git-log-1"
+        "babel-plugin-git-log-1": "~0.0.2"
     },
     "files": [
         "cli/",
