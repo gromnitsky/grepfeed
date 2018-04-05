@@ -11,7 +11,7 @@ let u = require('../lib/u')
 let dom = require('../lib/dom')
 
 let argv_parse = function(filter) {
-    let argv = u.opts_parse(shellquote.parse(filter || ''))
+    let argv = u.opts_parse(shellquote.parse(filter || '').filter(v => typeof v !== 'object'))
     let r = {}
     Object.keys(argv).filter(k => /^[endcv_]$/.test(k)).forEach(k => {
 	let val = Array.isArray(argv[k]) ? argv[k][0] : argv[k]
