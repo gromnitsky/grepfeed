@@ -39,9 +39,7 @@
     // we need the pkgs below only for `make compile`
     "devDependencies": {
         "shell-quote": "~1.6.1",
-        "jquery": "~3.3.1",
         "nprogress": "~0.2.0",
-        "q": "~1.5.1",
         "react": "~16.2.0",
         "react-dom": "~16.2.0",
         "lodash.get": "~4.4.2",

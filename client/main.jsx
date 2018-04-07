@@ -273,58 +273,57 @@ class App extends React.Component {
 	return uu
     }
 
-    download_feed(url, filter) {
-	return new Promise( (resolve, reject) => {
-	    let json_url = this.server_json_url(url, filter).toString()
+    async download_feed(url, filter) {
+	let json_url = this.server_json_url(url, filter).toString()
 
-	    this.setState({
-		status: { value: "Loading...", type: 'info' },
-		feed: null
-	    })
-	    NProgress.start()
-	    let req = dom.http_get(json_url, 60*2*1000) // 2m timeout
-	    this.setState({ download: req })
-	    let req_status
-
-	    req.promise.then( body => {
-		dom.nprogress("yellow")
-		let json = JSON.parse(body)
-		if (json.articles && json.articles.length) {
-		    req_status = null // OK
-		} else {
-		    throw new Error('no matching articles')
-		}
-		resolve(json)
-	    }).catch( err => {
-		if ((err instanceof Error)) {
-		    console.error(err)
-		} else {
-		    err = new Error(err.statusText)
-		}
-		req_status = { value: err, type: 'error' }
-		reject(err)
-	    }).progress( event => {
-		let bytes = u.commas(event.loaded)
-		this.setState({
-		    status: {
-			value: `Loading... ${bytes} B`,
-			type: 'info'
-		    }
-		})
-	    }).finally( ()=> {
-		NProgress.done()
-		this.setState({
-		    download: null,
-		    status: req_status
-		})
-	    }).done()
+	this.setState({
+	    status: { value: "Loading...", type: 'info' },
+	    feed: null
 	})
+	NProgress.start()
+	let fetch = dom.fetch(json_url)
+	this.setState({ download: fetch })
+	let req_status
+
+	fetch.req.onprogress = evt => {
+	    let bytes = u.commas(evt.loaded)
+	    this.setState({
+		status: {
+		    value: `Loading... ${bytes} B`,
+		    type: 'info'
+		}
+	    })
+	}
+
+	let json, err
+	try {
+	    let body = await fetch.promise
+	    dom.nprogress("yellow")
+	    json = JSON.parse(body)
+	    if (json.articles && json.articles.length) {
+		req_status = null // OK
+	    } else {
+		throw new Error('no matching articles')
+	    }
+	} catch(e) {
+	    err = e		// see below
+	    req_status = { value: e, type: 'error' }
+	}
+
+    	NProgress.done()
+	this.setState({
+	    download: null,
+	    status: req_status
+	})
+
+	if (err) throw err
+	return json
     }
 
     reset() {
 	console.info('App#reset()')
 	if (this.state.download) {
-	    this.state.download.jqXHR.abort("user interrupt")
+	    this.state.download.req.abort()
 	} else {
 	    this.setState({
 		status: null,
