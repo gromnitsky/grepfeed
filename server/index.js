@@ -118,8 +118,9 @@ let server = http.createServer(function (req, res) {
 	    errx(res, xmlres.statusCode, `${xmlurl}: failed to fetch`)
 	    return
 	}
-	// copy the content-type value from the orig url
-	res.setHeader('Content-Type', xmlres.headers['content-type'])
+	// copy the content-type from the orig url unless we have -j opt
+	let content_type = argv.j ? 'application/json' : xmlres.headers['content-type']
+	res.setHeader('Content-Type', content_type)
 	res.setHeader('Access-Control-Allow-Origin', '*')
 	set_cache_headers(res)
 
