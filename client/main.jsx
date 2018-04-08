@@ -283,7 +283,6 @@ class App extends React.Component {
 	NProgress.start()
 	let fetch = dom.fetch(json_url)
 	this.setState({ download: fetch })
-	let req_status
 
 	fetch.req.onprogress = evt => {
 	    let bytes = u.commas(evt.loaded)
@@ -295,28 +294,22 @@ class App extends React.Component {
 	    })
 	}
 
-	let json, err
+	let json, req_status
 	try {
 	    let body = await fetch.promise
-	    dom.nprogress("yellow")
 	    json = JSON.parse(body)
-	    if (json.articles && json.articles.length) {
-		req_status = null // OK
-	    } else {
+	    if (!(json.articles && json.articles.length))
 		throw new Error('no matching articles')
-	    }
 	} catch(e) {
-	    err = e		// see below
 	    req_status = { value: e, type: 'error' }
+	    throw e
+	} finally {
+    	    NProgress.done()
+	    this.setState({
+		download: null,
+		status: req_status
+	    })
 	}
-
-    	NProgress.done()
-	this.setState({
-	    download: null,
-	    status: req_status
-	})
-
-	if (err) throw err
 	return json
     }
 
