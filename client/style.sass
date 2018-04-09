@@ -53,7 +53,8 @@ input[type="url"], input[type="search"]
   p
     margin: 0.5em 0
 
-table
+table.meta,
+table.article
   margin-top: 1em;
   width: 100%
   border-collapse: collapse
@@ -62,7 +63,7 @@ table
   th
     height: 2em
 
-  tr:nth-child(even)
+  > tr:nth-child(even)
     background-color: whitesmoke
 
   th, td
