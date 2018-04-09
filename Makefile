@@ -80,6 +80,7 @@ $(jsx.dest): $(cache)/%: %
 	$(mkdir)
 	babel --presets $(bp)-react,$(bp)-env $(babel.opt) $< -o $@
 
+$(jsx.dest): .babelrc
 compile.all += $(jsx.dest)
 
 
