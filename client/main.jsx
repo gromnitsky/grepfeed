@@ -159,8 +159,10 @@ let TableRows = function(props) {
 		)
 	    })
 	    val = <ul>{li}</ul>
-	} else if (Array.isArray(val))
+	} else if (Array.isArray(val)) {
 	    val = val.join(', ')
+	    if (val.length > 300) val = <details>{val}</details>
+	}
 
 	return (
 	    <tr key={idx}>
