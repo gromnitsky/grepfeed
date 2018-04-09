@@ -2,8 +2,10 @@
 
 let assert = require('assert')
 let execSync = require('child_process').execSync
+let fs = require('fs')
 
 let feed = require('../lib/feed')
+let u = require('../lib/u')
 
 let cli = `${__dirname}/../cli/grepfeed`
 let datadir = `${__dirname}/data`
@@ -97,4 +99,18 @@ categories: news
 `, r.toString())
     })
 
+    test('html2text', function() {
+	let html = fs.readFileSync(__dirname + '/data/chunk.html').toString()
+	assert.equal(`Kotlin Kotlin with Android KTX val uri = Uri.parse(myUriString) val uri = myUriString. toUri () Getting Started To start using Android KTX in your Android Kotlin projects, add the following to your app module's build.gradle file: repositories { google() } dependencies { // Android KTX for framework API implementation 'androidx.core:core-ktx:0.1' ... }`, feed.html2text(html))
+    })
+
+    test('html_sanitize', function() {
+	assert.equal(`
+<title>omg</title>
+hello
+<p>world <b style="color: red"><i>!</i></b>!!</p>`, u.html_sanitize(`
+<head><title>omg</title></head>
+hello
+<p onclick="alert(1)"><script type="omg">1<heh>2</heh></script>world <b style="color: red"><i>!</i></b><style>css</style>!!</p>`))
+    })
 })

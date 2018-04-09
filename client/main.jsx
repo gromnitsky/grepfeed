@@ -149,7 +149,7 @@ let TableRows = function(props) {
 	} else if (name === 'link') {
 	    val = <a href={val}>{val}</a>
 	} else if (name === 'description') {
-	    val = <span dangerouslySetInnerHTML={{__html: val}} />
+	    val = <div dangerouslySetInnerHTML={{__html: u.html_sanitize(val)}} />
 	} else if (name === 'enclosures') {
 	    let li = val.map( (enc, idx) => {
 		return (
