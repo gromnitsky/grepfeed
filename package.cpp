@@ -40,10 +40,9 @@
     "devDependencies": {
         "shell-quote": "~1.6.1",
         "nprogress": "~0.2.0",
-        "react": "~16.2.0",
-        "react-dom": "~16.2.0",
+        "react": "~16.3.1",
+        "react-dom": "~16.3.1",
         "lodash.get": "~4.4.2",
-        "babel-polyfill": "~6.26.0",
         "babel-plugin-git-log-1": "~0.0.2",
         "parse5": "~4.0.0"
     },

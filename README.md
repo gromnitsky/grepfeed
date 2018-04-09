@@ -32,7 +32,7 @@ A live example: https://serene-river-17732.herokuapp.com/
 * web client, that isn't included in the npm pkg
 
     ~~~
-    $ npm -g i browserify babel-cli babel-preset-env babel-preset-react node-sass uglifyjs
+    $ npm -g i browserify babel-cli babel-preset-react node-sass babel-minify
     $ make NODE_ENV=production
     ~~~
 
@@ -100,9 +100,9 @@ the behaviour.
 
 ### web client
 
-A web client is a simple React app that internally talks to the above
-server. If you have indeed built the web client, pass to the server
-the dir w/ the compiled client files:
+A web client is a simple React app (chrome/ff only) that internally
+talks to the above server. If you have indeed built the web client,
+pass to the server the dir w/ the compiled client files:
 
     $ server/index.js _out/production/client
 

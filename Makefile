@@ -61,31 +61,31 @@ compile.all += $(sass.dest)
 
 
 
-ifeq ($(NODE_ENV), development)
-babel.opt := -s inline
-endif
-bp := $(shell npm -g root)/babel-preset
-
 js.dest := $(addprefix $(cache)/, $(wildcard lib/*.js))
 $(js.dest): $(cache)/%: %
 	$(mkdir)
-	babel --presets $(bp)-es2015 $(babel.opt) $< -o $@
+	$(copy)
 
 compile.all += $(js.dest)
 
 
 
+ifeq ($(NODE_ENV), development)
+babel.opt := -s inline
+endif
+bp := $(shell npm -g root)/babel-preset
+
 jsx.dest := $(addprefix $(cache)/, $(wildcard client/*.jsx))
 $(jsx.dest): $(cache)/%: %
 	$(mkdir)
-	babel --presets $(bp)-react,$(bp)-env $(babel.opt) $< -o $@
+	babel --presets $(bp)-react $(babel.opt) $< -o $@
 
 $(jsx.dest): .babelrc
 compile.all += $(jsx.dest)
 
 
 
-bundle.target := $(cache)/client/%.jsx.es5
+bundle.target := $(cache)/client/%.jsx.es6
 ifeq ($(NODE_ENV), development)
 browserify.opt := -d
 bundle.target := $(out)/client/%.js
@@ -96,8 +96,8 @@ $(bundle.target): $(cache)/client/%.jsx $(js.dest)
 	browserify $(browserify.opt) $< -o $@
 
 # production
-$(out)/client/%.js: $(cache)/client/%.jsx.es5 $(js.dest)
-	uglifyjs $< -o $@ -mc --screw-ie8
+$(out)/client/%.js: $(cache)/client/%.jsx.es6 $(js.dest)
+	babel-minify $< -o $@ --mangle.keepClassName
 
 compile.all += $(out)/client/main.js
 
