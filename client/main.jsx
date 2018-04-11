@@ -329,7 +329,7 @@ class App extends React.Component {
 
     render() {
 	return (
-	    <div>
+	    <React.Fragment>
 	      <GrepForm submit={this.submit}
 			busy={this.is_busy()}
 			reset={this.reset} />
@@ -348,7 +348,7 @@ class App extends React.Component {
 		  {git.log.commiter.date}
 		</div>
 	      </footer>
-	    </div>
+	    </React.Fragment>
 	)
     }
 }
