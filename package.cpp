@@ -7,7 +7,7 @@
 {
     "//": "DON'T EDIT! See package.cpp instead",
     "name": "grepfeed",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Filters out rss/atom feeds. Returns articles matching a pattern. The output can be another valid xml feed.",
     "keywords": [
         "grep",
@@ -32,7 +32,8 @@
         "mime": "~2.2.0",
         "minimist": "~1.2.0",
         "request": "~2.85.0",
-        "lodash.words": "~4.2.0"
+        "lodash.words": "~4.2.0",
+        "parse5": "~4.0.0"
     },
     // for heroku deploys we have a separate branch 'heroku', where
     // _out/production/client dir is added to the repo, thus
@@ -43,8 +44,7 @@
         "react": "~16.3.1",
         "react-dom": "~16.3.1",
         "lodash.get": "~4.4.2",
-        "babel-plugin-git-log-1": "~0.0.2",
-        "parse5": "~4.0.0"
+        "babel-plugin-git-log-1": "~0.0.2"
     },
     "files": [
         "cli/",
