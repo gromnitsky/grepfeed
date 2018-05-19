@@ -94,7 +94,7 @@ language: en-us
 guid: http://pragprog.com/news/adopting-elixir-from-concept-to-production-in-print?3840754
 title: Adopting Elixir: From Concept to Production, in print
 pubDate: Tue, 13 Mar 2018 19:40:30 GMT
-link: http://pragprog.com/news/adopting-elixir-from-concept-to-production-in-print?3840754
+link: http://pragprog.com/news/adopting-elixir-from-concept-to-production-in-print
 categories: news
 `, r.toString())
     })
