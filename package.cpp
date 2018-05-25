@@ -7,7 +7,7 @@
 {
     "//": "DON'T EDIT! See package.cpp instead",
     "name": "grepfeed",
-    "version": "1.2.2",
+    "version": "1.3.0",
     "description": "Filters out rss/atom feeds. Returns articles matching a pattern. The output can be another valid xml feed.",
     "keywords": [
         "grep",
@@ -19,7 +19,7 @@
     "repository": "github:gromnitsky/grepfeed",
 #ifndef NPM
     "engines": {
-        "node": "8.11.0"
+        "node": "8.11.2"
     },
     "scripts": {
         "start": "node server _out/production/client"
