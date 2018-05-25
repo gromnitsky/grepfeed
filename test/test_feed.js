@@ -52,12 +52,14 @@ suite('Feed', function() {
 	let a1 = {
 	    pubDate: new Date("2000-01-02"),
 	    title: "a1",
-	    categories: ["foo"]
+	    categories: ["foo"],
+	    author: new feed.Author('bob@example.com')
 	}
 	let a2 = {
 	    pubDate: new Date("1999-01-02"),
 	    title: "a2",
-	    categories: ["foo", "bar"]
+	    categories: ["foo", "bar"],
+	    author: new feed.Author('bob@example.com')
 	}
 
 	assert.equal(true, feed.article_match(a1, {}))
@@ -87,6 +89,7 @@ suite('Feed', function() {
 	assert.equal(`title: Pragmatic Bookshelf
 link: https://pragprog.com/
 pubDate: Fri, 23 Mar 2018 10:04:55 GMT
+managingEditor: rss@example.com
 description: Up-to-date information about the Pragmatic Bookshelf
 language: en-us
 
@@ -95,6 +98,7 @@ guid: http://pragprog.com/news/adopting-elixir-from-concept-to-production-in-pri
 title: Adopting Elixir: From Concept to Production, in print
 pubDate: Tue, 13 Mar 2018 19:40:30 GMT
 link: http://pragprog.com/news/adopting-elixir-from-concept-to-production-in-print
+author: rss@example.com (Pragmatic Bookshelf)
 categories: news
 `, r.toString())
     })
