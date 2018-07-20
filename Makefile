@@ -97,7 +97,7 @@ $(bundle.target): $(cache)/client/%.jsx $(js.dest)
 
 # production
 $(out)/client/%.js: $(cache)/client/%.jsx.es6 $(js.dest)
-	babel-minify $< -o $@ --mangle.keepClassName
+	terser $< -o $@ -cm
 
 compile.all += $(out)/client/main.js
 
