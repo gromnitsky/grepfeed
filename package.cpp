@@ -7,7 +7,7 @@
 {
     "//": "DON'T EDIT! See package.cpp instead",
     "name": "grepfeed",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "description": "Filters out rss/atom feeds. Returns articles matching a pattern. The output can be another valid xml feed.",
     "keywords": [
         "grep",
@@ -32,7 +32,7 @@
         "pump": "~3.0.0",
         "mime": "~2.2.0",
         "minimist": "~1.2.0",
-        "request": "~2.85.0",
+        "request": "~2.88.2",
         "lodash.words": "~4.2.0",
         "parse5": "~4.0.0"
     },
@@ -45,7 +45,11 @@
         "react": "~16.3.1",
         "react-dom": "~16.3.1",
         "lodash.get": "~4.4.2",
-        "babel-plugin-git-log-1": "~0.0.2"
+        "babel-plugin-git-log-1": "~0.0.2",
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.8.4",
+        "@babel/preset-react": "^7.8.3",
+        "eslint-plugin-react": "^7.18.3"
     },
     "files": [
         "cli/",

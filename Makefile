@@ -73,12 +73,11 @@ compile.all += $(js.dest)
 ifeq ($(NODE_ENV), development)
 babel.opt := -s inline
 endif
-bp := $(shell npm -g root)/babel-preset
 
 jsx.dest := $(addprefix $(cache)/, $(wildcard client/*.jsx))
 $(jsx.dest): $(cache)/%: %
 	$(mkdir)
-	babel --presets $(bp)-react $(babel.opt) $< -o $@
+	node_modules/.bin/babel $(babel.opt) $< -o $@
 
 $(jsx.dest): .babelrc
 compile.all += $(jsx.dest)

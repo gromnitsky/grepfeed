@@ -3,5 +3,8 @@
         ["babel-plugin-git-log-1", {
             "rev": "master"
         }]
+    ],
+    "presets": [
+        "@babel/preset-react"
     ]
 }
