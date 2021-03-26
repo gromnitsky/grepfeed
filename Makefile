@@ -20,7 +20,7 @@ test: node_modules
 
 include $(out)/.npm
 $(out)/.npm: package.json
-	npm i
+	npm i $(npm)
 	$(mkdir)
 	touch $@
 	@echo Restarting Make...
@@ -120,7 +120,7 @@ REMOTE := sigwait
 deploy:
 	git checkout $(REMOTE)
 	git merge master
-	$(MAKE)
+	$(MAKE) npm=--production=false
 	git add -f $(out)/client
 	git commit -m build
 	git push $(REMOTE) $(REMOTE):master
