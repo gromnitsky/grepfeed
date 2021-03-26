@@ -3,8 +3,6 @@
 Filters out rss/atom feeds. Returns articles matching a pattern. The
 output is another valid xml feed.
 
-A live example: https://serene-river-17732.herokuapp.com/
-
 ## What's included
 
 * a cli util `grepfeed`;
@@ -14,7 +12,7 @@ A live example: https://serene-river-17732.herokuapp.com/
 
 ## Requirements
 
-* node 8.10.0
+* node >= 8.10.0
 * GNU make
 
 ## Setup
@@ -26,14 +24,14 @@ A live example: https://serene-river-17732.herokuapp.com/
     or manually after cloning the repo:
 
     ~~~
-    $ make package.json
+    $ NODE_ENV=production npm i
     ~~~
 
 * web client, that isn't included in the npm pkg
 
     ~~~
-    $ npm -g i browserify babel-cli babel-preset-react node-sass terser
-    $ make NODE_ENV=production
+    $ npm -g i browserify node-sass terser
+    $ make
     ~~~
 
 ## How it works
@@ -101,10 +99,10 @@ the behaviour.
 ### web client
 
 A web client is a simple React app (chrome/ff only) that internally
-talks to the above server. If you have indeed built the web client,
-pass to the server the dir w/ the compiled client files:
+talks to the above server. If you have built the web client, pass to
+the server the dir w/ the compiled client files:
 
-    $ server/index.js _out/production/client
+    $ server/index.js _out/development/client
 
 & open http://127.0.0.1:3000 in a browser.
 
