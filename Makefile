@@ -122,7 +122,7 @@ deploy:
 	git merge master
 	$(MAKE) npm=--production=false
 	git add -f $(out)/client
-	git commit -m build
+	git commit -m build --allow-empty
 	git push $(REMOTE) $(REMOTE):master
 	git checkout master
 
