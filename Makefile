@@ -20,7 +20,7 @@ test: node_modules
 
 include $(out)/.npm
 $(out)/.npm: package.json
-	npm i $(npm)
+	npm i
 	$(mkdir)
 	touch $@
 	@echo Restarting Make...
@@ -122,7 +122,7 @@ deploy:
 	git merge master
 	$(MAKE)
 	git add -f $(out)/client
-	-git commit -am build
+	git commit -m build
 	git push $(REMOTE) $(REMOTE):master
 	git checkout master
 
