@@ -10,6 +10,7 @@
     "author": "Alexander Gromnitsky <alexander.gromnitsky@gmail.com>",
     "license": "MIT",
     "repository": "github:gromnitsky/grepfeed",
+    "type": "module",
     "scripts": {
         "start": "node server _out/production/client"
     },

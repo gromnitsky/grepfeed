@@ -1,13 +1,12 @@
-'use strict';
+import assert from 'assert'
+import {execSync} from 'child_process'
+import fs from 'fs'
 
-let assert = require('assert')
-let execSync = require('child_process').execSync
-let fs = require('fs')
+import * as feed from '../lib/feed.js'
+import * as u from '../lib/u.js'
 
-let feed = require('../lib/feed')
-let u = require('../lib/u')
-
-let cli = `${__dirname}/../cli/grepfeed`
+let __dirname = new URL('.', import.meta.url).pathname
+let cli = `${__dirname}/../cli/grepfeed.js`
 let datadir = `${__dirname}/data`
 
 suite('Feed', function() {

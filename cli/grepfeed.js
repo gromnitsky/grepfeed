@@ -1,19 +1,18 @@
 #!/usr/bin/env node
 
-'use strict';
+import fs from 'fs'
+import path from 'path'
 
-let fs = require('fs')
-let path = require('path')
+import FeedParser from 'feedparser'
+import pump from 'pump'
+import words from 'lodash.words'
 
-let FeedParser = require('feedparser')
-let pump = require('pump')
-let words = require('lodash.words')
+import * as feed from '../lib/feed.js'
+import XMLGrep from '../lib/xmlgrep.js'
+import JSONGrep from '../lib/jsongrep.js'
+import * as u from '../lib/u.js'
 
-let feed = require('../lib/feed')
-let XMLGrep = require('../lib/xmlgrep')
-let JSONGrep = require('../lib/jsongrep')
-let u = require('../lib/u')
-let meta = require('../package.json')
+let __dirname = new URL('.', import.meta.url).pathname
 
 let errx = function(msg) {
     console.error(path.basename(process.argv[1]) + " error: " + msg)
@@ -75,7 +74,7 @@ if (argv.h || argv.help) {
     process.exit(0)
 }
 if (argv.V) {
-    console.log(meta.version)
+    console.log(JSON.parse(fs.readFileSync(__dirname + '../package.json')).version)
     process.exit(0)
 }
 
