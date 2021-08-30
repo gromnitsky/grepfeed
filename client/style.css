@@ -1,7 +1,9 @@
 body {
   max-width: 700px;
   margin: 0 auto;
-  color: #191919; }
+  color: #191919;
+  overflow-y: scroll;
+}
 
 img,
 object,
@@ -81,6 +83,15 @@ table ul {
 .article__title {
   display: flex;
   justify-content: space-between;
+}
+
+form li {
+  list-style-type: none
+}
+
+form summary {
+  cursor: pointer;
+  color: #0000ee;
 }
 
 @media (max-width: 700px) {

@@ -89,19 +89,38 @@ class GrepForm extends React.Component {
 	      <label>
 		<details>
 		  <summary>Filter:</summary>
-		  <pre>{`  -e      get only articles w/ enclosures
-  -n NUM  number of articles to get
+		  <code>[opt] [PATTERN]</code>
 
-Filter by:
+                  <p>
+                    If a PATTERN contains spaces, enclose it in quotes, e.g.
+                    &quot;some text&quot;. All regular shell quoting rules
+                    apply here.
+                  </p>
+                  <ul>
+                    <li><code>-e</code>&emsp;&emsp;&emsp;&emsp;
+                    get only articles w/ enclosures</li>
+                    <li><code>-n NUM</code>&emsp;&emsp;
+                    number of articles to get</li>
+                  </ul>
 
-  -d      [-]date[,date]
-  -c      categories
+                  <p>Filter by:</p>
+                  <ul>
+                    <li><code>-d</code>&emsp;&emsp;&emsp;&emsp;
+                    <code>[-]date[,date]</code></li>
+                    <li><code>-c</code>&emsp;&emsp;&emsp;&emsp;
+                    categories</li>
+                  </ul>
 
-Or/and search for a regexp PATTERN in each rss article & print the
-matching ones. The internal order of the search: title, summary,
-description, author.
+                  <p>
+                    Or/and search for a regexp PATTERN in each rss article
+                    & print the matching ones. The internal order of the search:
+                    title, summary, description, author.
+                  </p>
 
--v      invert match`}</pre>
+                  <ul>
+                    <li><code>-v</code>&emsp;&emsp;&emsp;&emsp;
+                    invert match</li>
+                  </ul>
 		</details>
 		<input name="filter" type="search" spellCheck="false"
 		       value={this.state.filter}
