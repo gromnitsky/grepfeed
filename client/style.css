@@ -29,14 +29,13 @@ input[type="url"], input[type="search"] {
   background: #c82333; }
 
 .rss_client_url {
-  border: 1px solid gray;
-  padding: 0 0.5em;
   word-wrap: break-word;
-  white-space: pre-wrap; }
-  .rss_client_url a {
-    text-decoration: none; }
-  .rss_client_url p {
-    margin: 0.5em 0; }
+  white-space: pre-wrap;
+}
+
+.rss_client_url a {
+  text-decoration: none;
+}
 
 table.meta,
 table.article {
@@ -82,6 +81,13 @@ table ul {
 .article__title {
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 700px) {
+  header, form, .rss_client_url {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 }
 
 footer {

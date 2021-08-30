@@ -134,7 +134,7 @@ class Status extends React.Component {
 let RssClientURL = function(props) {
     return (
 	<div className="rss_client_url">
-	  <p>RSS client/podcatcher URL:</p>
+	  <p><b>RSS client/podcatcher URL:</b></p>
 	  <p><a href={props.url}>{props.url}</a></p>
 	</div>
     )
