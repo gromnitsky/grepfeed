@@ -1,8 +1,6 @@
-'use strict';
-
 // we use XMLHttpRequest() in fetch() stead, for we want to abort
 // early & report a progress
-exports.fetch = function(url, timeout = 2*60*1000 /* 2 min */) {
+export function fetch(url, timeout = 2*60*1000 /* 2 min */) {
     let req = new XMLHttpRequest()
     req.timeout = timeout
 

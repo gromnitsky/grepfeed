@@ -1,118 +1,54 @@
-.DELETE_ON_ERROR:
+out = _out
+all:
 
-NODE_ENV ?= development
-out = _out/$(NODE_ENV)
-cache := $(out)/.ccache
-
-mkdir = @mkdir -p $(dir $@)
-copy = cp $< $@
-
-compile:
-compile.all :=
-
-
-
-.PHONY: test
-test: node_modules
-	mocha -u tdd $(t) test/test_*.js
-
-
-
-include $(out)/.npm
-$(out)/.npm: package.json
-	npm i $(npm)
-	$(mkdir)
-	touch $@
-	@echo Restarting Make...
-
-
-
-static.dest := $(addprefix $(out)/, $(wildcard $(addprefix client/, *.html *.svg *.png)))
-$(static.dest): $(out)/%: %
+$(out)/%: client/%
 	$(mkdir)
 	$(copy)
 
-npm.src := babel-polyfill/dist/polyfill.min.js \
-	react-dom/umd/react-dom.production.min.js \
-	react/umd/react.production.min.js
-npm.dest := $(addprefix $(out)/client/vendor/, $(npm.src))
-$(out)/client/vendor/%: node_modules/%
+$(out)/node_modules/%: node_modules/%
 	$(mkdir)
 	$(copy)
 
-compile.all += $(static.dest) $(npm.dest)
+static.dest := $(patsubst client/%, $(out)/%, $(wildcard client/*)) \
+	$(addprefix $(out)/, node_modules/react/umd/react.production.min.js \
+		node_modules/react-dom/umd/react-dom.production.min.js \
+		node_modules/nprogress/nprogress.js \
+		node_modules/nprogress/nprogress.css)
+
+all: $(static.dest)
 
 
 
-sass.opt := -q --output-style compressed
-ifeq ($(NODE_ENV), development)
-sass.opt := -q --source-map true
-endif
-sass.dest := $(patsubst %.sass, $(out)/%.css, $(wildcard client/*.sass))
+define cjs-to-es
+$(mkdir)
+node_modules/.bin/rollup -p @rollup/plugin-commonjs -m -i $< -o $@
+endef
 
-$(out)/%.css: %.sass
-	$(mkdir)
-	node-sass $(sass.opt) --include-path node_modules -o $(dir $@) $<
+$(out)/rollup/get.js: node_modules/lodash.get/index.js
+	$(cjs-to-es)
 
-compile.all += $(sass.dest)
+$(out)/rollup/shellquote.js: node_modules/shell-quote/index.js
+	$(cjs-to-es)
 
-
+$(out)/rollup/u.js: lib/u.js
+	node_modules/.bin/rollup -m -c -i $< -o $@
 
-js.dest := $(addprefix $(cache)/, $(wildcard lib/*.js))
-$(js.dest): $(cache)/%: %
-	$(mkdir)
-	$(copy)
-
-compile.all += $(js.dest)
+all: $(addprefix $(out)/rollup/, get.js shellquote.js u.js)
 
 
 
-ifeq ($(NODE_ENV), development)
-babel.opt := -s inline
-endif
+$(out)/main.js: client/main.jsx
+	node_modules/.bin/babel -s true $< -o $@
 
-jsx.dest := $(addprefix $(cache)/, $(wildcard client/*.jsx))
-$(jsx.dest): $(cache)/%: %
-	$(mkdir)
-	node_modules/.bin/babel $(babel.opt) $< -o $@
-
-$(jsx.dest): .babelrc
-compile.all += $(jsx.dest)
+all: $(out)/main.js
 
 
 
-bundle.target := $(cache)/client/%.jsx.es6
-ifeq ($(NODE_ENV), development)
-browserify.opt := -d
-bundle.target := $(out)/client/%.js
-endif
-
-$(bundle.target): $(cache)/client/%.jsx $(js.dest)
-	$(mkdir)
-	browserify $(browserify.opt) $< -o $@
-
-# production
-$(out)/client/%.js: $(cache)/client/%.jsx.es6 $(js.dest)
-	terser $< -o $@ -cm
-
-compile.all += $(out)/client/main.js
-
-
-
-$(compile.all): $(out)/.npm
-compile: $(compile.all)
-
-
+test: node_modules; mocha -u tdd $(t) test/test_*.js
 
 # $ watchthis.sound -e _out -- make server
-
-.PHONY: server
-server: kill compile
-	server/index.js $(out)/client &
-
-.PHONY: kill
-kill:
-	-pkill -f 'node server/index.js'
+server: kill all; server/index.js $(out) &
+kill:; -pkill -f 'node server/index.js'
 
 
 
@@ -126,4 +62,8 @@ deploy:
 	git push $(REMOTE) $(REMOTE):master
 	git checkout master
 
-deploy: export NODE_ENV := production
+
+
+mkdir = @mkdir -p $(dir $@)
+copy = cp $< $@
+.DELETE_ON_ERROR:

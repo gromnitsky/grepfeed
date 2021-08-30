@@ -12,7 +12,7 @@ output is another valid xml feed.
 
 ## Requirements
 
-* node >= 8.10.0
+* node >= 16.8.0
 * GNU make
 
 ## Setup
@@ -30,7 +30,7 @@ output is another valid xml feed.
 * web client, that isn't included in the npm pkg
 
     ~~~
-    $ npm -g i browserify node-sass terser
+    $ npm i
     $ make
     ~~~
 
@@ -102,7 +102,7 @@ A web client is a simple React app (chrome/ff only) that internally
 talks to the above server. If you have built the web client, pass to
 the server the dir w/ the compiled client files:
 
-    $ server/index.js _out/development/client
+    $ server/index.js _out
 
 & open http://127.0.0.1:3000 in a browser.
 

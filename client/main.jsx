@@ -1,14 +1,14 @@
 'use strict';
 
-/* global React, ReactDOM */
+/* global React, ReactDOM, NProgress */
 
-let shellquote = require('shell-quote')
-let NProgress = require('nprogress')
-let get = require('lodash.get')
-let git = require('babel-plugin-git-log-1/json')
+let git = require('babel-plugin-git-log-1')
 
-let u = require('../lib/u')
-let dom = require('../lib/dom')
+import get from './rollup/get.js'
+import shellquote from './rollup/shellquote.js'
+
+import * as u from './rollup/u.js'
+import * as dom from './dom.js'
 
 let argv_parse = function(filter) {
     let argv = u.opts_parse(shellquote.parse(filter || '').filter(v => typeof v !== 'object'))

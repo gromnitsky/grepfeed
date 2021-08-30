@@ -1,0 +1,42 @@
+{
+    "root": true,
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "impliedStrict": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "mocha": true,
+        "webextensions": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "rules": {
+        "no-mixed-spaces-and-tabs": [ "off" ],
+        "no-unused-vars": [ "warn", { "argsIgnorePattern": "^_" } ],
+
+        "eqeqeq": ["error", "always", {"null": "ignore"}],
+        "block-scoped-var": [ "warn" ],
+        "default-case": [ "warn" ],
+        "dot-notation": [ "warn" ],
+        "no-throw-literal": [ "error" ],
+        "no-constant-condition": [ "error", { "checkLoops": false } ],
+        "react/prop-types": 0,
+        "react/jsx-no-undef": [2, { "allowGlobals": true }]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "plugins": [
+        "react"
+    ]
+}

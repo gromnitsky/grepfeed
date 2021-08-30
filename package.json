@@ -1,6 +1,6 @@
 {
     "name": "grepfeed",
-    "version": "1.3.3",
+    "version": "2.0.0-alpha",
     "description": "Filters out rss/atom feeds. Returns articles matching a pattern. The output can be another valid xml feed.",
     "keywords": [
         "grep",
@@ -12,35 +12,38 @@
     "repository": "github:gromnitsky/grepfeed",
     "type": "module",
     "scripts": {
-        "start": "node server _out/production/client"
+        "start": "node server/index.js _out"
     },
     "dependencies": {
         "addressparser": "~1.0.1",
         "ent": "~2.2.0",
         "feedparser": "~2.2.9",
+        "lodash.get": "~4.4.2",
         "lodash.words": "~4.2.0",
-        "mime": "~2.2.0",
+        "mime": "~2.5.2",
         "minimist": "~1.2.0",
         "parse5": "~4.0.0",
         "pump": "~3.0.0",
         "request": "~2.88.2"
     },
     "devDependencies": {
-        "@babel/cli": "^7.8.4",
-        "@babel/core": "^7.8.4",
-        "@babel/preset-react": "^7.8.3",
+        "@babel/cli": "~7.14.8",
+        "@babel/core": "~7.15.0",
+        "@babel/preset-react": "~7.14.5",
+        "@rollup/plugin-commonjs": "~20.0.0",
+        "@rollup/plugin-node-resolve": "~13.0.4",
         "babel-plugin-git-log-1": "~0.0.2",
-        "eslint-plugin-react": "^7.18.3",
-        "lodash.get": "~4.4.2",
+        "eslint-plugin-react": "~7.25.1",
         "nprogress": "~0.2.0",
-        "react": "~16.3.1",
-        "react-dom": "~16.3.1",
-        "shell-quote": "~1.6.1"
+        "react": "~16.3.2",
+        "react-dom": "~16.3.2",
+        "rollup": "~2.56.3",
+        "rollup-plugin-node-polyfills": "~0.2.1",
+        "shell-quote": "~1.7.2"
     },
     "files": [
         "cli/",
         "lib/",
-        "!lib/dom.js",
         "server/"
     ],
     "bin": {

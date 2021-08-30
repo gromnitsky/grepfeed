@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
-'use strict';
+import http from 'http'
+import url from 'url'
+import fs from 'fs'
+import path from 'path'
 
-let http = require('http')
-let url = require('url')
-let fs = require('fs')
-let path = require('path')
+import request from 'request'
+import mime from 'mime'
+import FeedParser from 'feedparser'
+import pump from 'pump'
 
-let request = require('request')
-let mime = require('mime')
-let FeedParser = require('feedparser')
-let pump = require('pump')
+import XMLGrep from '../lib/xmlgrep.js'
+import JSONGrep from '../lib/jsongrep.js'
 
-let XMLGrep = require('../lib/xmlgrep')
-let JSONGrep = require('../lib/jsongrep')
-let meta = require('../package.json')
+let __dirname = new URL('.', import.meta.url).pathname
+let meta = JSON.parse(fs.readFileSync(__dirname + '../package.json'))
 
 
 let user_agent = function() {
