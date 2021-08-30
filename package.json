@@ -47,7 +47,7 @@
         "server/"
     ],
     "bin": {
-        "grepfeed": "cli/grepfeed",
+        "grepfeed": "cli/grepfeed.js",
         "grepfeed-server": "server/index.js"
     }
 }

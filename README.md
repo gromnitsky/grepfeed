@@ -5,7 +5,7 @@ output is another valid xml feed.
 
 ## What's included
 
-* a cli util `grepfeed`;
+* a cli util `grepfeed.js`;
 * a standalone http server that shares the same engine w/ the cli util.
 * a web client that uses the included server as an intermediary and
   acts as a gui version of the cli util.
@@ -48,13 +48,13 @@ convenient to write the output in any format one wants. 3 interfaces
 are included: text-only (the default), json, xml. The latter produces
 a valid rss 2.0 feed. E.g.
 
-    $ curl http://example.com/rss | cli/grepfeed apple -d=2016 -x
+    $ curl http://example.com/rss | cli/grepfeed.js apple -d=2016 -x
 
 parses the input feed, selects only articles written in 2016 or newer
 that match the regexp pattern `/apple/`. `-x` means xml output.
 
 ~~~
-Usage: grepfeed [opt] [PATTERN] < xml
+Usage: grepfeed.js [opt] [PATTERN] < xml
 
   -e      print only articles w/ enclosures
   -n NUM  number of articles to print
@@ -78,21 +78,21 @@ description, author.
 ### server
 
 Acts as a proxy: downloads a requested feed & returns the filtered
-xml. Query params match `cli/grepfeed` command line interface. To
+xml. Query params match `cli/grepfeed.js` command line interface. To
 start a server, run
 
-    $ server/index .
+    $ server/index.js .
 
 (To select a diff port, use `PORT` env var.)
 
-This following example yields the same xml as in the `cli/grepfeed`
+This following example yields the same xml as in the `cli/grepfeed.js`
 case, only does it through http:
 
     $ curl '127.0.0.1:3000/api/?_=apple&d=2016&url=http%3A%2F%2Fexample.com%2Frss'
 
-Notice `d` means `-d` in the `cli/grepfeed` example, `-x` doesn't make
+Notice `d` means `-d` in the `cli/grepfeed.js` example, `-x` doesn't make
 sense here, `_` means the 1st command line arg, `apple` in this
-case. The server doesn't invoke `cli/grepfeed` program; they both use
+case. The server doesn't invoke `cli/grepfeed.js` program; they both use
 minimist to parse command options, thus the perceived similarity in
 the behaviour.
 
