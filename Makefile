@@ -53,14 +53,10 @@ kill:; -pkill -f 'node server/index.js'
 
 
 REMOTE := sigwait
+BRANCH_LOCAL := master
 deploy:
-	git checkout $(REMOTE)
-	git merge master
-	$(MAKE) npm=--production=false
-	git add -f $(out)/client
-	git commit -m build --allow-empty
-	git push $(REMOTE) $(REMOTE):master
-	git checkout master
+	git checkout $(BRANCH_LOCAL)
+	git push $(REMOTE) $(BRANCH_LOCAL):master
 
 
 
