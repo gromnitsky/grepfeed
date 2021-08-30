@@ -196,8 +196,11 @@ let RssMeta = function(props) {
 
 let RssArticles = function(props) {
     return props.data.map( (article, idx) => {
-	let up = idx === 0 ? '' : <a href={`#${idx-1}`}>⯅</a>
-	let down = idx === props.data.length-1 ? '' : <a href={`#${idx+1}`}>⯆</a>
+        let up_visibility = idx === 0 ? 'hidden' : 'visible'
+        let down_visibility = idx === props.data.length-1 ? 'hidden' : 'visible'
+
+	let up = <a style={{visibility: up_visibility}} className="nav_btn" href={`#${idx-1}`}>Prev</a>
+	let down = <a style={{visibility: down_visibility}} className="nav_btn" href={`#${idx+1}`}>Next</a>
 	return (
 	    <table key={idx} className="article">
 	      <colgroup>
@@ -205,7 +208,7 @@ let RssArticles = function(props) {
 		<col style={{width: '85%'}} />
 	      </colgroup>
 	      <thead>
-		<th colSpan='2' id={idx}>{up} #{article['#']} {down}</th>
+		<th colSpan='2' id={idx}><span className="article__title">{up} <span>#{article['#']}</span> {down}</span></th>
 	      </thead>
 
 	      <TableRows data={article} />

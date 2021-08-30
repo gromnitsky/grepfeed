@@ -72,6 +72,18 @@ table ul {
   margin: 0;
   padding-left: 1.2em; }
 
+.nav_btn {
+  display: inline-block;
+  border: 1px solid #005bbb;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.article__title {
+  display: flex;
+  justify-content: space-between;
+}
+
 footer {
   margin-top: 1em;
   border-top: 1px solid lightgray;
