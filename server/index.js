@@ -116,7 +116,7 @@ let server = http.createServer(function (req, res) {
 	    return
 	}
 	// copy the content-type from the orig url unless we have -j opt
-	let content_type = argv.j ? 'application/json' : xmlres.headers['content-type']
+        let content_type = argv.j ? 'application/json' : (xmlres.headers['content-type'] || 'text/xml')
 	res.setHeader('Content-Type', content_type)
 	res.setHeader('Access-Control-Allow-Origin', '*')
 	set_cache_headers(res)
