@@ -73,8 +73,8 @@
       all of your answers here.</itunes:summary>
 
       <enclosure
-	  url="http://example.com/podcasts/everything/AllAboutEverythingEpisode2.mp3"
-	  length="5650889" type="audio/mpeg" />
+	  url="     "
+	  length="NaN"/>
       <enclosure
 	  url="http://example.com/podcasts/everything/omglol.mp3"
 	  length="123" type=" audio/mpeg" />
@@ -94,9 +94,7 @@
       <itunes:summary>This week we talk about surviving in a Red state
       if you are a Blue person. Or vice versa.</itunes:summary>
 
-      <enclosure
-	  url="http://example.com/podcasts/everything/AllAboutEverythingEpisode1.mp3"
-	  length="4989537" type="audio/mpeg" />
+      <enclosure />
 
       <guid>http://example.com/podcasts/archive/aae20050601.mp3</guid>
       <pubDate>Wed, 1 Jun 2004 19:00:00 GMT</pubDate>

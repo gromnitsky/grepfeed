@@ -83,6 +83,15 @@ suite('Feed', function() {
 	assert.equal("4\n", r.toString())
     })
 
+    test('cli-invalid-enclosure', function() {
+        let r = execSync(`${cli} -j < ${datadir}/simple.xml "Red, Whine, & Blue" `)
+        assert.deepEqual(JSON.parse(r).articles[0].enclosures[0], {
+            length: 0,
+            type: 'application/octet-stream',
+            url: 'http://example.com/invalid-enclosure-url'
+        })
+    })
+
     test('cli-no-empty-values', function() {
 	let r = execSync(`${cli} -n1 < ${datadir}/pragprog.xml`)
 	assert.equal(`title: Pragmatic Bookshelf
