@@ -44,7 +44,8 @@ all: $(out)/main.js
 
 
 
-test: node_modules; mocha -u tdd $(t) test/test_*.js
+.PHONY: test
+test:; mocha -u tdd $(t) test/test_*.js
 
 # $ watchthis.sound -e _out -- make server
 server: kill all; server/index.js $(out) &
