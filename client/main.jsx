@@ -42,6 +42,13 @@ class GrepForm extends React.Component {
 	console.info("GrepForm#componentDidMount()")
 	if (this.state.url && this.state.url.trim().length)
 	    this.props.submit(null, this.state)
+
+        this.update_href = dom.debounce( (url, filter) => {
+            let uu = new URL(window.location.origin)
+            uu.searchParams.set('url', url)
+            uu.searchParams.set('filter', filter)
+            window.history.replaceState(null, null, uu.toString())
+        }, 300)
     }
 
     handleInputChange(evt) {
@@ -50,13 +57,6 @@ class GrepForm extends React.Component {
 	this.update({
 	    [name]: val
 	})
-    }
-
-    update_href(url, filter) {
-	let uu = new URL(window.location.origin)
-	uu.searchParams.set('url', url)
-	uu.searchParams.set('filter', filter)
-	window.history.replaceState(null, null, uu.toString())
     }
 
     update(state) {
