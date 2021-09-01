@@ -143,7 +143,7 @@ class Status extends React.Component {
 
     render() {
 	return (
-	    <div className={`status ${this.type()} ${this.hidden()}`}>
+            <div className={`status text-wrap ${this.type()} ${this.hidden()}`}>
 	      {this.props.data ? this.props.data.value.toString() : ''}
 	    </div>
 	)
@@ -152,7 +152,7 @@ class Status extends React.Component {
 
 let RssClientURL = function(props) {
     return (
-	<div className="rss_client_url">
+        <div className="rss_client_url text-wrap">
 	  <p><b>RSS client/podcatcher URL:</b></p>
 	  <p><a href={props.url}>{props.url}</a></p>
 	</div>

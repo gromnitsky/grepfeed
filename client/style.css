@@ -30,12 +30,8 @@ input[type="url"], input[type="search"] {
   color: white;
   background: #c82333; }
 
-.rss_client_url {
-  word-wrap: break-word;
-  white-space: pre-wrap;
-}
-
 .rss_client_url a {
+  font-family: monospace;
   text-decoration: none;
 }
 
@@ -92,6 +88,15 @@ form li {
 form summary {
   cursor: pointer;
   color: #0000ee;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-wrap {
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 @media (max-width: 700px) {
