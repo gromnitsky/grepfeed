@@ -21,6 +21,36 @@ export function fetch(url, timeout = 2*60*1000 /* 2 min */) {
     return { req, promise }
 }
 
+export function colourise(url) {
+    let paint = (str, fg, bg) => {
+        let span = document.createElement('span')
+        span.style.color = fg
+        span.style.backgroundColor = bg
+        span.innerText = str
+        return span.outerHTML
+    }
+
+    let u
+    try {
+        u = new URL(url)
+    } catch (e) {
+        return null
+    }
+
+    return [
+        paint(u.origin, '#191919', '#b0e2ff'),
+        paint(u.pathname, '#191919', '#ffd500'),
+        paint('?', '#fffff0', '#191919'),
+        Array.from(u.searchParams.entries()).map( param => {
+            return [
+                paint(param[0], '#191919', '#ffd500'),
+                paint('=', '#191919', '#ffd500'),
+                paint(encodeURIComponent(param[1]), '#191919', '#ebebeb'),
+            ].join``
+        }).join(paint('&', '#fffff0', '#191919'))
+    ].join``
+}
+
 // from underscore.js 1.8.3
 export function debounce(func, wait, immediate) {
     var timeout, args, context, timestamp, result;

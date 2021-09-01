@@ -154,7 +154,7 @@ let RssClientURL = function(props) {
     return (
         <div className="rss_client_url text-wrap">
 	  <p><b>RSS client/podcatcher URL:</b></p>
-	  <p><a href={props.url}>{props.url}</a></p>
+          <p><a href={props.url} dangerouslySetInnerHTML={{ __html: dom.colourise(props.url) }} /></p>
 	</div>
     )
 }
