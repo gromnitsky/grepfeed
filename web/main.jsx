@@ -5,6 +5,8 @@ import shellwords from './rollup/shellwords.js'
 import * as u from './rollup/u.js'
 import * as dom from './dom.js'
 
+let DEBUG = (new URL(document.location)).searchParams.get('debug') === '1'
+
 function App() {
     let [is_busy, set_is_busy] = React.useState(false)
     let [feed, set_feed] = React.useState()
@@ -58,10 +60,11 @@ function App() {
         let argv = filter_parse(filter)
         Object.keys(argv).forEach(k => uu.searchParams.set(k, argv[k]))
         uu.searchParams.set('j', 1)
+        uu.searchParams.delete('error')
         return uu
     }
 
-    console.log('App')
+    if (DEBUG) console.log('App')
     return (
         <>
           <Form submit={submit} reset={reset} is_busy={is_busy} />
@@ -114,7 +117,7 @@ function Form(props) {
         })[evt.target.name](evt.target.value)
     }
 
-    console.log('Form props: ', props)
+    if (DEBUG) console.log('Form props: ', props)
     return (
         <form onSubmit={handle_submit} onReset={handle_reset} >
 
@@ -172,7 +175,12 @@ function Form(props) {
 }
 
 function filter_parse(filter) {
-    let argv = u.opts_parse(shellwords.split(filter || ''))
+    let argv
+    try {
+        argv = u.opts_parse(shellwords.split(filter || ''))
+    } catch(e) {
+        return { error: `shellwords: ${e.message}` }
+    }
     return Object.keys(argv).filter(k => /^[endcv_]$/.test(k))
         .reduce( (result, key) => {
             if (argv[key]) result[key] = argv[key]
