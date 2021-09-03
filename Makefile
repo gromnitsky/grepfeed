@@ -1,7 +1,7 @@
 out = _out
 all:
 
-$(out)/%: client/%
+$(out)/%: web/%
 	$(mkdir)
 	$(copy)
 
@@ -9,7 +9,7 @@ $(out)/node_modules/%: node_modules/%
 	$(mkdir)
 	$(copy)
 
-static.dest := $(patsubst client/%, $(out)/%, $(wildcard client/*)) \
+static.dest := $(patsubst web/%, $(out)/%, $(wildcard web/*)) \
 	$(addprefix $(out)/, node_modules/react/umd/react.production.min.js \
 		node_modules/react-dom/umd/react-dom.production.min.js \
 		node_modules/nprogress/nprogress.js \
@@ -24,20 +24,17 @@ $(mkdir)
 node_modules/.bin/rollup -p @rollup/plugin-commonjs -m -i $< -o $@
 endef
 
-$(out)/rollup/get.js: node_modules/lodash.get/index.js
-	$(cjs-to-es)
-
-$(out)/rollup/shellquote.js: node_modules/shell-quote/index.js
+$(out)/rollup/shellwords.js: node_modules/shellwords/lib/shellwords.js
 	$(cjs-to-es)
 
 $(out)/rollup/u.js: lib/u.js
 	node_modules/.bin/rollup -m -c -i $< -o $@
 
-all: $(addprefix $(out)/rollup/, get.js shellquote.js u.js)
+all: $(addprefix $(out)/rollup/, shellwords.js u.js)
 
 
 
-$(out)/main.js: client/main.jsx
+$(out)/main.js: web/main.jsx
 	node_modules/.bin/babel -s true $< -o $@
 
 all: $(out)/main.js

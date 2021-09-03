@@ -1,0 +1,96 @@
+<!doctype html>
+<title>Grepfeed v2.0.0</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="node_modules/nprogress/nprogress.css">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  body {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #191919;
+    overflow-y: scroll;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  form summary {
+    cursor: pointer;
+    color: #0000ee;
+  }
+
+  #progress {
+    margin: 1em 0;
+    padding: 10px;
+  }
+  
+  .progress-error {
+    background-color: #c82333;
+    color: white;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .text-wrap { /* FIXME */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  #rss_url a {
+    text-decoration: none;
+    font-family: monospace;
+  }
+
+  table.article {
+    margin-top: 1em;
+  }
+
+  @media (max-width: 700px) {
+    form, .rss_client_url {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+
+  footer {
+    margin-top: 1em;
+    border-top: 1px solid lightgray;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1em;
+  }
+  
+  footer img {
+    filter: opacity(0.75);
+  }
+</style>
+
+<h2 class="text-center">Greepfeed</h2>
+
+<div id="app">
+  <div class="text-center">
+    Loading... <noscript>Error: Javascript is required</noscript>
+  </div>
+</div>
+
+<footer>
+  <img src="moomintroll.svg" alt="" title="A happy Moomintroll">
+  <div>
+    <a href="https://github.com/gromnitsky/grepfeed">Help</a>
+  </div>
+</footer>
+
+<script src="node_modules/react/umd/react.production.min.js"></script>
+<script src="node_modules/react-dom/umd/react-dom.production.min.js"></script>
+<script src="node_modules/nprogress/nprogress.js"></script>
+
+<script type="module" src="main.js"></script>
