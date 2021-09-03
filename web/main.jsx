@@ -41,7 +41,6 @@ function App() {
             set_progress({ value: e, type: 'error' })
         }
 
-        console.log(json)
         NProgress.done()
         set_is_busy(false)
     }
@@ -249,7 +248,7 @@ let TableRows = function(props) {
 
 function RssMeta(props) {
     return (
-        <table id="meta">
+        <table className="meta">
           <colgroup>
             <col style={{width: '20%'}} />
             <col style={{width: '80%'}} />
