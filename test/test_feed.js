@@ -120,12 +120,12 @@ categories: news
 	assert.equal(`
 <title>omg</title>
 hello
-<p>world <b style="color: red"><i>!</i></b>!!</p>`, u.html_sanitize(`
+<p>world <b style="color: red"><i>!</i></b>!!</p>`, feed.html_sanitize(`
 <head><title>omg</title></head>
 hello
 <p onclick="alert(1)"><script type="omg">1<heh>2</heh></script>world <b style="color: red"><i>!</i></b><style>css</style>!!</p>`))
 
     assert.equal('<p class="">q</p><a>w</a>',
-		 u.html_sanitize('<p class>q</p><a href="javascript:alert(1)">w</a>'))
+                 feed.html_sanitize('<p class>q</p><a href="javascript:alert(1)">w</a>'))
     })
 })
