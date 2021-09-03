@@ -35,7 +35,7 @@ all: $(addprefix $(out)/rollup/, shellwords.js u.js)
 
 
 $(out)/main.js: web/main.jsx
-	node_modules/.bin/babel -s true $< -o $@
+	node_modules/.bin/babel --presets '@babel/preset-react' -s true $< -o $@
 
 all: $(out)/main.js
 
