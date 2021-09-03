@@ -9,7 +9,7 @@ function App() {
     let [is_busy, set_is_busy] = React.useState(false)
     let [feed, set_feed] = React.useState()
     let [progress, set_progress] = React.useState({})
-    let [request, set_request] = React.useState()
+    let request = React.useRef()
 
     async function submit(url, filter) {
         reset()
@@ -19,7 +19,7 @@ function App() {
         let fetch = dom.fetch(su.toString())
         NProgress.start()
         set_progress({ value: `Loading...`, type: 'info' })
-        set_request(fetch.req)
+        request.current = fetch.req
         fetch.req.onprogress = evt => {
             let bytes = u.commas(evt.loaded)
             set_progress({
@@ -46,8 +46,9 @@ function App() {
     }
 
     function reset() {
-        request?.abort()
+        request.current?.abort()
         set_feed()
+        set_progress({})
     }
 
     function server_url(url, filter) {
@@ -74,6 +75,13 @@ function Form(props) {
     let [url, set_url] = React.useState('')
     let [filter, set_filter] = React.useState('')
 
+    let address_bar_update = React.useRef(dom.debounce( (url, filter) => {
+        let ab = new URL(document.location)
+        ab.searchParams.set('url', url)
+        ab.searchParams.set('filter', filter)
+        window.history.replaceState(null, null, ab.toString())
+    }, 500))
+
     React.useEffect( () => {    // run only once
         let params = (new URL(document.location)).searchParams
         let url = params.get('url') || ''
@@ -84,12 +92,7 @@ function Form(props) {
         set_filter(filter)
     }, [])
 
-    React.useEffect( () => {
-        let address_bar = new URL(document.location)
-        address_bar.searchParams.set('url', url)
-        address_bar.searchParams.set('filter', filter)
-        window.history.replaceState(null, null, address_bar.toString())
-    })
+    React.useEffect(() => address_bar_update.current(url, filter), [url, filter])
 
     function handle_submit(evt) {
         evt.preventDefault()
