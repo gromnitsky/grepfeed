@@ -133,18 +133,14 @@ function Form(props) {
                 All regular shell quoting rules apply.
               </p>
               <ul>
-                <li><code>-e</code>&emsp;&emsp;&emsp;&emsp;
-                get only articles w/ enclosures</li>
-                <li><code>-n NUM</code>&emsp;&emsp;
-                number of articles to get</li>
+                <li><code>-e</code> get only articles w/ enclosures</li>
+                <li><code>-n NUM</code> number of articles to get</li>
               </ul>
 
               <p>Filter by:</p>
               <ul>
-                <li><code>-d</code>&emsp;&emsp;&emsp;&emsp;
-                <code>[-]date[,date]</code></li>
-                <li><code>-c</code>&emsp;&emsp;&emsp;&emsp;
-                categories</li>
+                <li><code>-d</code> <code>[-]date[,date]</code></li>
+                <li><code>-c</code> categories</li>
               </ul>
 
               <p>
@@ -154,8 +150,7 @@ function Form(props) {
               </p>
 
               <ul>
-                <li><code>-v</code>&emsp;&emsp;&emsp;&emsp;
-                invert match</li>
+                <li><code>-v</code> invert match</li>
               </ul>
             </details>
           </label>
