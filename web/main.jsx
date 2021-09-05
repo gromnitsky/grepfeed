@@ -16,8 +16,13 @@ function App() {
     async function submit(url, filter) {
         reset()
 
-        set_is_busy(true)
         let su = server_url(url, filter)
+        if (su.error) {
+            set_progress({ value: su.error, type: 'error' })
+            return
+        }
+
+        set_is_busy(true)
         let fetch = dom.fetch(su.toString())
         NProgress.start()
         set_progress({ value: `Loading...`, type: 'info' })
@@ -54,14 +59,15 @@ function App() {
     }
 
     function server_url(url, filter) {
-        let uu = new URL(document.location.origin)
-        uu.pathname = '/api'
-        uu.searchParams.set('url', url)
+        let su = new URL(document.location.origin)
+        su.pathname = '/api'
+        su.searchParams.set('url', url)
         let argv = filter_parse(filter)
-        Object.keys(argv).forEach(k => uu.searchParams.set(k, argv[k]))
-        uu.searchParams.set('j', 1)
-        uu.searchParams.delete('error')
-        return uu
+        if (argv.error) return argv
+
+        Object.keys(argv).forEach(k => su.searchParams.set(k, argv[k]))
+        su.searchParams.set('j', 1)
+        return su
     }
 
     if (DEBUG) console.log('App')
@@ -174,7 +180,7 @@ function filter_parse(filter) {
     try {
         argv = u.opts_parse(shellwords.split(filter || ''))
     } catch(e) {
-        return { error: `shellwords: ${e.message}` }
+        return { error: `Filter parse error: ${e.message}` }
     }
     return Object.keys(argv).filter(k => /^[endcv_]$/.test(k))
         .reduce( (result, key) => {
@@ -184,7 +190,9 @@ function filter_parse(filter) {
 }
 
 function Minimist(props) {
-    return <p>argv: {JSON.stringify(filter_parse(props.filter), null, 2)}</p>
+    let argv = filter_parse(props.filter)
+    if (argv.error) return <p>{argv.error}</p>
+    return <p>argv: {JSON.stringify(argv, null, 2)}</p>
 }
 
 function Progress(props) {

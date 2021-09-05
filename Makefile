@@ -24,7 +24,7 @@ $(mkdir)
 node_modules/.bin/rollup -p @rollup/plugin-commonjs -m -i $< -o $@
 endef
 
-$(out)/rollup/shellwords.js: node_modules/shellwords/lib/shellwords.js
+$(out)/rollup/shellwords.js: node_modules/shellwords-ts/dist/shellwords.js
 	$(cjs-to-es)
 
 $(out)/rollup/u.js: lib/u.js
