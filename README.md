@@ -12,7 +12,7 @@ output is another valid xml feed.
 
 ## Requirements
 
-* node >= 16.8.0
+* node >= 14.17.6
 * GNU make
 
 ## Setup
