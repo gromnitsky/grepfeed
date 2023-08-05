@@ -92,6 +92,12 @@ suite('Feed', function() {
         })
     })
 
+    test('cli-title-with-tag-name', function() {
+        this.skip() // upstream feedparser's bug
+        let r = execSync(`${cli} -j < ${datadir}/simple.xml "Red, Whine, & Blue" `)
+        assert.equal(JSON.parse(r).articles[0].title, "Red, Whine, & Blue <a>!")
+    })
+
     test('cli-no-empty-values', function() {
 	let r = execSync(`${cli} -n1 < ${datadir}/pragprog.xml`)
 	assert.equal(`title: Pragmatic Bookshelf
