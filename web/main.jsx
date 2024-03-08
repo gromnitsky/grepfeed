@@ -131,7 +131,7 @@ function Form(props) {
                  spellCheck="false" name="url" value={url}
                  onInput={handle_input} disabled={props.is_busy} required />
 
-          <label>
+          <label htmlFor='filter'>
             <details>
               <summary>Filter:</summary>
               <code>[opt] [PATTERN]</code>
@@ -161,7 +161,8 @@ function Form(props) {
             </details>
           </label>
 
-          <input type='search' spellCheck="false" name="filter" value={filter}
+          <input type='search' spellCheck="false" name="filter" id="filter"
+                 value={filter}
                  onInput={handle_input} disabled={props.is_busy} />
 
           <Minimist filter={filter} />
