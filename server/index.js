@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
 import http from 'http'
-import url from 'url'
+import querystring from 'querystring'
 import fs from 'fs'
 import path from 'path'
+import {pipeline} from 'stream';
 
-import request from 'request'
 import mime from 'mime'
 import FeedParser from 'feedparser'
-import pump from 'pump'
 
 import XMLGrep from '../lib/xmlgrep.js'
 import JSONGrep from '../lib/jsongrep.js'
@@ -16,18 +15,15 @@ import JSONGrep from '../lib/jsongrep.js'
 let __dirname = new URL('.', import.meta.url).pathname
 let meta = JSON.parse(fs.readFileSync(__dirname + '../package.json'))
 
+function user_agent() { return `${meta.name}/${meta.version}` }
 
-let user_agent = function() {
-    return `${meta.name}/${meta.version} (${process.platform}; ${process.arch}) node/${process.versions.node}`
-}
-
-let errx = function(res, code, msg) {
+function errx(res, code, msg) {
     try {
-	res.setHeader('Access-Control-Allow-Origin', '*')
-	res.statusCode = code
-	res.statusMessage = msg.replace(/\s+/g, ' ')
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        res.statusCode = code
+        res.statusMessage = msg.replace(/\s+/g, ' ')
     } catch (e) {
-	console.error(`errx: ${e.message}`)
+        console.error(`BAD errx(): ${e.message}`)
     }
     res.end()
     console.error(`ERROR: ${msg}`)
@@ -38,23 +34,22 @@ let set_cache_headers = function(res) {
     res.setHeader('Expires', new Date(Date.now() + 600*1000).toUTCString())
 }
 
-let serve_static = function(req, res, purl) {
-    if (purl.pathname.match(/\/$/)) purl.pathname += 'index.html'
-    let fname = path.join(public_root, path.normalize(purl.pathname))
+function serve_static(req, res, url) {
+    if (url.pathname.match(/\/$/)) url.pathname += 'index.html'
+    let fname = path.join(public_root, path.normalize(url.pathname))
     fs.stat(fname, (err, stats) => {
-	if (err) {
-	    errx(res, 404, `${err.syscall} ${err.code}`)
-	    return
-	}
-	res.setHeader('Content-Length', stats.size)
-	set_cache_headers(res)
-	res.setHeader('Content-Type', mime.getType(fname))
+        if (err) return errx(res, 404, `${err.syscall} ${err.code}`)
 
-	let stream = fs.createReadStream(fname)
-	stream.on('error', (err) => {
-	    errx(res, 500, `${err.syscall} ${err.code}`)
-	})
-	stream.pipe(res)
+        let readable = fs.createReadStream(fname)
+        readable.once('data', () => {
+            res.setHeader('Content-Length', stats.size)
+            set_cache_headers(res)
+            res.setHeader('Content-Type', mime.getType(fname))
+        })
+        readable.on('error', (err) => {
+            errx(res, 500, `${err.syscall} ${err.code}`)
+        })
+        readable.pipe(res)
     })
 }
 
@@ -68,79 +63,58 @@ process.chdir(process.argv[2])
 let public_root = fs.realpathSync(process.cwd())
 
 let server = http.createServer(function (req, res) {
-    if (req.method !== "GET") {
-	errx(res, 501, "not implemented")
-	return
-    }
+    if (req.method !== "GET") return errx(res, 501, "not implemented")
 
-    let purl = url.parse(req.url, true)
-    if (!purl.pathname.match(/^\/api/)) {
-	serve_static(req, res, purl)
-	return
-    }
+    let url = new URL(req.url, `http://${req.headers.host}`)
+    if (!url.pathname.match(/^\/api/)) return serve_static(req, res, url)
 
-    let argv = purl.query
+    let argv = querystring.parse(url.search.replace(/^\?+/, ''))
     let xmlurl = argv.url
-    if (!xmlurl) {
-	errx(res, 412, "`?url=str` param is required")
-	return
-    }
-    argv.size = parseInt(argv.size)
+    if (!xmlurl) return errx(res, 412, "`?url=str` param is required")
 
-    let cur
-    let size = 0
-    try {
-	cur = request.get({
-	    url: xmlurl,
-	    headers: { 'User-Agent': user_agent() }
-	})
-    } catch (e) {
-	// usually it's an "Invalid URI" bump, like if you pass
-	// file:///etc/passwd
-	errx(res, 400, e.message)
-	return
-    }
+    let controller = new AbortController()
+    res.on('error', () => controller.abort())
 
-    cur.on('error', (err) => {
-	errx(res, 500, `${err.message}: ${xmlurl}`)
-    }).on('data', (chunk) => {
-	size += chunk.length
-	if (argv.size && size >= argv.size) {
-	    // the user has no clue why the data was incomplete
-	    cur.abort()
-	    console.error(`${xmlurl}: data >= ${argv.size}b`)
-	}
-    }).on('response', (xmlres) => {
-	if (xmlres.statusCode !== 200) {
-	    errx(res, xmlres.statusCode, `${xmlurl}: failed to fetch`)
-	    return
-	}
-	// copy the content-type from the orig url unless we have -j opt
-        let content_type = argv.j ? 'application/json' : (xmlres.headers['content-type'] || 'text/xml')
-	res.setHeader('Content-Type', content_type)
-	res.setHeader('Access-Control-Allow-Origin', '*')
-	set_cache_headers(res)
+    fetch(xmlurl, {
+        headers: { 'User-Agent': user_agent() },
+        signal: controller.signal
+    }).then( xml => {
+        if (xml.status !== 200)
+            throw new Error(`upstream status is ${xml.status}`)
 
-	let feedparser = new FeedParser()
-	feedparser.on('error', err => {
-	    // to be able to return http/400 we should catch
-	    // FeedParser errors as soon as possible
-	    errx(res, 400, `${xmlurl}: ${err.message}`)
-	})
+        let feedparser = new FeedParser()
+        feedparser.on('error', err => {
+            // catch FeedParser errors as soon as possible
+            if (!res.headersSent)
+                errx(res, 400, `${xmlurl}: feedparser: ${err.message}`)
+        })
 
-	let grep = argv.j ? new JSONGrep(argv, feedparser) : new XMLGrep(argv, feedparser)
-	pump(cur, feedparser, grep, res, err => {
-	    if (!err) return
-	    if (argv.debug) console.error(err.stack)
-	    errx(res, 400, `${xmlurl}: ${err.message}`)
-	})
+        let grep = argv.j ? new JSONGrep(argv, feedparser) : new XMLGrep(argv, feedparser)
+        grep.once('data', () => {
+            res.setHeader('Content-Type',
+                          argv.j ? 'application/json' : 'text/xml')
+            res.setHeader('Access-Control-Allow-Origin', '*')
+            set_cache_headers(res)
+        })
+//        grep.on('finish', () => grep.destroy())
+
+        pipeline(xml.body, feedparser, grep, res, (err) => {
+            if (argv.debug) console.error('pipeline finish')
+            if (!err) return
+            if (!res.headersSent) {
+                if (argv.debug) console.error(err.stack)
+                errx(res, 400, `${xmlurl}: pipeline: ${err.message}`)
+            }
+        })
+    }).catch( err => {
+        errx(res, 500, `${xmlurl}: general: ${err.message}`)
     })
-
 })
 
-server.listen(process.env.PORT || 3000,
-	      function() {
-		  console.error('Listening: http://' + this.address().address +
-				(this.address().port === 80 ?
-				 "" : ":" + this.address().port))
+server.listen({
+    host: process.env.HOST || '127.0.0.1',
+    port: process.env.PORT || 3000
+}, function() {
+    console.error('Listening: http://'
+                  + this.address().address + ":" + this.address().port)
 })

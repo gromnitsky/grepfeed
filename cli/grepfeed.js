@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 import FeedParser from 'feedparser'
-import pump from 'pump'
+import {pipeline} from 'stream';
 import words from 'lodash.words'
 
 import * as feed from '../lib/feed.js'
@@ -88,7 +88,8 @@ grep.on('finish', function() {
     if (!argv.m && this.articles_matched === 0) process.exitCode = 1
 })
 
-pump(process.stdin, feedparser, grep, process.stdout, err => {
-    if (err && err.code !== 'EPIPE')
+pipeline(process.stdin, feedparser, grep, process.stdout, (err) => {
+    if (!err) return
+    if (err.code !== 'EPIPE' && err.code !== 'ERR_STREAM_PREMATURE_CLOSE')
 	errx(argv.debug ? err.stack : err.message)
 })
