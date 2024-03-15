@@ -183,7 +183,7 @@ function filter_parse(filter) {
     } catch(e) {
         return { error: `Filter parse error: ${e.message}` }
     }
-    return Object.keys(argv).filter(k => /^[endcv_]$/.test(k))
+    return Object.keys(argv).filter(k => k === 'debug' || /^[endcv_]$/.test(k))
         .reduce( (result, key) => {
             if (argv[key]) result[key] = argv[key]
             return result
