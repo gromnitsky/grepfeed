@@ -82,6 +82,25 @@ case. The server doesn't invoke `cli/grepfeed.js` program; they both use
 minimist to parse command options, thus the perceived similarity in
 the behaviour.
 
-# License
+### caveats
+
+A URL you'd like to filter must be reachable from within the machine
+`server/index.js` is running on. This could pose a security risk or be
+inconvenient if you want to filter XML from *your* LAN. In the latter
+case run `grepfeed-server` on your local machine.
+
+## Bugs
+
+* All html tags in article titles are removed, even if a title is in
+  plain text.
+* This should've been written in Rust or something similar, as Node is
+  slow and memory hungry for this kind of tasks.
+
+## See also
+
+[itunesrss](https://github.com/gromnitsky/itunesrss),
+[rss2mail](https://github.com/gromnitsky/rss2mail)
+
+## License
 
 MIT.
