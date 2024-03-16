@@ -1,5 +1,5 @@
-Filters out rss/atom feeds. Returns articles matching a pattern. The
-output is another valid xml feed.
+Filters out RSS/Atom feeds, returning articles that match a specified
+pattern. The output is another valid XML feed.
 
 ## What's included
 
@@ -28,10 +28,10 @@ feeds. Its core is `Grep` class--a Transform stream:
 
 ### cli
 
-`cli/grepfeed` extends `Grep` to override several methods where it's
-convenient to write the output in any format one wants. 3 interfaces
-are included: text-only (the default), json, xml. The latter produces
-a valid rss 2.0 feed. E.g.
+`cli/grepfeed.js` extends `Grep` to override several methods where
+it's convenient to write the output in any format one wants. 3
+interfaces are included: text-only (the default), json, xml. The
+latter produces a valid rss 2.0 feed. E.g.
 
     $ curl http://example.com/rss | cli/grepfeed.js apple -d=2016 -x
 
