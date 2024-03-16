@@ -3,7 +3,6 @@ import {execSync} from 'child_process'
 import fs from 'fs'
 
 import * as feed from '../lib/feed.js'
-import * as u from '../lib/u.js'
 
 let __dirname = new URL('.', import.meta.url).pathname
 let cli = `${__dirname}/../cli/grepfeed.js`
@@ -81,6 +80,9 @@ suite('Feed', function() {
 
 	r = execSync(`${cli} -e < ${datadir}/irishhistorypodcast.xml | grep '^#:' | wc -l`)
 	assert.equal("4\n", r.toString())
+
+        r = execSync(`${cli} "^\\(tags:\\)" < ${datadir}/pocket.xml | grep '^#:' | wc -l`)
+        assert.equal("43\n", r.toString())
     })
 
     test('cli-invalid-enclosure', function() {
