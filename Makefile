@@ -1,4 +1,4 @@
-out = _out
+out = dist
 all:
 
 $(out)/%: web/%
@@ -44,9 +44,9 @@ all: $(out)/main.js
 .PHONY: test
 test:; mocha -u tdd $(t) test/test_*.js
 
-# $ watchthis.sound -e _out -- make server
-server: kill all; server/index.js $(out) &
-kill:; -pkill -f 'node server/index.js'
+# $ watchthis.sound -e dist -- make server
+server: kill all; server/index.js &
+kill:; -pkill grepfeed-server
 
 
 

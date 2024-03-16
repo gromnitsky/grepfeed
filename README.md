@@ -1,38 +1,23 @@
-# Grepfeed
-
 Filters out rss/atom feeds. Returns articles matching a pattern. The
 output is another valid xml feed.
 
 ## What's included
 
-* a cli util `grepfeed.js`;
+* a cli util;
 * a standalone http server that shares the same engine w/ the cli util.
 * a web client that uses the included server as an intermediary and
   acts as a gui version of the cli util.
 
 ## Requirements
 
-* node >= 14.17.6
-* GNU make
+* node >= 20
 
 ## Setup
 
-* cli/server
+    $ npm i -g grepfeed
+    $ grepfeed-server
 
-        $ npm i grepfeed
-
-    or manually after cloning the repo:
-
-    ~~~
-    $ NODE_ENV=production npm i
-    ~~~
-
-* web client, that isn't included in the npm pkg
-
-    ~~~
-    $ npm i
-    $ make
-    ~~~
+Open http://127.0.0.0:3000 in a browser.
 
 ## How it works
 
@@ -81,9 +66,10 @@ Acts as a proxy: downloads a requested feed & returns the filtered
 xml. Query params match `cli/grepfeed.js` command line interface. To
 start a server, run
 
-    $ server/index.js .
+    $ make
+    $ server/index.js
 
-(To select a diff port, use `PORT` env var.)
+(For a different host/port combination, use `HOST` & `PORT` env vars.)
 
 This following example yields the same xml as in the `cli/grepfeed.js`
 case, only does it through http:
@@ -96,18 +82,6 @@ case. The server doesn't invoke `cli/grepfeed.js` program; they both use
 minimist to parse command options, thus the perceived similarity in
 the behaviour.
 
-### web client
-
-A web client is a simple React app (chrome/ff only) that internally
-talks to the above server. If you have built the web client, pass to
-the server the dir w/ the compiled client files:
-
-    $ server/index.js _out
-
-& open http://127.0.0.1:3000 in a browser.
-
 # License
 
 MIT.
-
-Have fun!

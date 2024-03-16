@@ -15,7 +15,7 @@
     },
     "type": "module",
     "scripts": {
-        "start": "node server/index.js _out"
+        "start": "node server/index.js"
     },
     "dependencies": {
         "addressparser": "~1.0.1",
@@ -44,7 +44,8 @@
     "files": [
         "cli/",
         "lib/",
-        "server/"
+        "server/",
+        "dist/"
     ],
     "bin": {
         "grepfeed": "cli/grepfeed.js",

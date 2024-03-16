@@ -55,12 +55,16 @@ function serve_static(req, res, url) {
 
 // main
 
-if (process.argv.length < 3) {
-    console.error("Usage: index.js public_dir")
+try {
+    process.chdir(process.argv[2] || `${__dirname}/../dist`)
+} catch (err) {
+    console.error(`grepfeed-server error: ${err.message}\n\n`
+                  + 'Usage: grepfeed-server public_root')
     process.exit(1)
 }
-process.chdir(process.argv[2])
+
 let public_root = fs.realpathSync(process.cwd())
+process.title = `grepfeed-server ${public_root}`
 
 let server = http.createServer(function (req, res) {
     if (req.method !== "GET") return errx(res, 501, "not implemented")
@@ -115,6 +119,7 @@ server.listen({
     host: process.env.HOST || '127.0.0.1',
     port: process.env.PORT || 3000
 }, function() {
-    console.error('Listening: http://'
-                  + this.address().address + ":" + this.address().port)
+    console.error('Public root:', public_root)
+    console.error('Listening: ',
+                  `http://${this.address().address}:${this.address().port}`)
 })
