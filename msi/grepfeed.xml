@@ -1,0 +1,8 @@
+<service>
+  <id>grepfeed</id>
+  <name>Grepfeed</name>
+  <env name="PORT" value="3000" />
+  <executable>node</executable>
+  <arguments>package\server\index.js</arguments>
+  <logpath>%TEMP%</logpath>
+</service>

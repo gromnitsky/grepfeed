@@ -1,0 +1,42 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <Package Name="Grepfeed" Version="$(var.Version)" Manufacturer="sigwait.org"
+           Language="1033" Scope="perMachine"
+           UpgradeCode="241cb45a-f396-48aa-af2d-9273d5444896"
+           Compressed="yes" InstallerVersion="500">
+
+    <MediaTemplate EmbedCab="yes" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of this product is already installed." />
+
+    <ComponentGroup Id="Files">
+      <Files Include="$(var.SourceDir)\**">
+        <Exclude Files="$(var.SourceDir)\WinSW-x64.exe" />
+      </Files>
+    </ComponentGroup>
+
+    <Component Id="Daemon" Guid="c4dc339c-aae1-43c6-83e0-05442e21c843">
+      <File Source="$(var.SourceDir)\WinSW-x64.exe" />
+      <ServiceInstall ErrorControl="ignore" Name="grepfeed" Type="ownProcess"
+                      Start="auto" Arguments='"[INSTALLFOLDER]grepfeed.xml"'
+                      Vital="no" Account="NT Authority\Network Service"
+                      Description="Filters out RSS/Atom feeds, returning articles that match a specified pattern. The output is another valid XML feed." />
+      <ServiceControl Name="grepfeed" Wait="no"
+                      Start="install" Stop="both" Remove="uninstall" />
+    </Component>
+
+    <Component Id="Shortcut" Guid="a714d55d-ffff-4793-903e-1dba679c1048">
+      <util:InternetShortcut Directory="DesktopFolder" Name="Grepfeed Server"
+                             IconFile="[INSTALLFOLDER]icon.ico"
+                             Target="http://127.0.0.1:3000" />
+    </Component>
+
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLFOLDER" Name="grepfeed" />
+    </StandardDirectory>
+
+    <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.SourceDir)\license.rtf" />
+
+  </Package>
+</Wix>
