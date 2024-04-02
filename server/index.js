@@ -12,8 +12,8 @@ import FeedParser from 'feedparser'
 import XMLGrep from '../lib/xmlgrep.js'
 import JSONGrep from '../lib/jsongrep.js'
 
-let __dirname = new URL('.', import.meta.url).pathname
-let meta = JSON.parse(fs.readFileSync(__dirname + '../package.json'))
+let __dirname = import.meta.dirname
+let meta = JSON.parse(fs.readFileSync(__dirname + '/../package.json'))
 
 function user_agent() { return `${meta.name}/${meta.version}` }
 

@@ -12,7 +12,7 @@ import XMLGrep from '../lib/xmlgrep.js'
 import JSONGrep from '../lib/jsongrep.js'
 import * as u from '../lib/u.js'
 
-let __dirname = new URL('.', import.meta.url).pathname
+let __dirname = import.meta.dirname
 
 let errx = function(msg) {
     console.error(path.basename(process.argv[1]) + " error: " + msg)
@@ -74,7 +74,7 @@ if (argv.h || argv.help) {
     process.exit(0)
 }
 if (argv.V) {
-    console.log(JSON.parse(fs.readFileSync(__dirname + '../package.json')).version)
+    console.log(JSON.parse(fs.readFileSync(__dirname + '/../package.json')).version)
     process.exit(0)
 }
 
