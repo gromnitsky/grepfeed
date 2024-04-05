@@ -2,7 +2,12 @@
   <id>grepfeed</id>
   <name>Grepfeed</name>
   <env name="PORT" value="3000" />
+  <env name="HOST" value="127.0.0.1" />
   <executable>node</executable>
   <arguments>package\server\index.js</arguments>
-  <logpath>%TEMP%</logpath>
+  <logpath>%WINDIR%\Temp</logpath>
+  <serviceaccount>
+    <username>NT AUTHORITY\LocalService</username>
+  </serviceaccount>
+  <autoRefresh>false</autoRefresh>
 </service>

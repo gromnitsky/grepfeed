@@ -19,7 +19,7 @@
       <File Source="$(var.SourceDir)\WinSW-x64.exe" />
       <ServiceInstall ErrorControl="ignore" Name="grepfeed" Type="ownProcess"
                       Start="auto" Arguments='"[INSTALLFOLDER]grepfeed.xml"'
-                      Vital="no" Account="NT Authority\Network Service"
+                      Vital="no" Account="NT Authority\Local Service"
                       Description="Filters out RSS/Atom feeds, returning articles that match a specified pattern. The output is another valid XML feed." />
       <ServiceControl Name="grepfeed" Wait="no"
                       Start="install" Stop="both" Remove="uninstall" />

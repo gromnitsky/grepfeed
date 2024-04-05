@@ -1,4 +1,4 @@
 <WixLocalization xmlns="http://wixtoolset.org/schemas/v4/wxl" Culture="en-US">
   <String Id="WelcomeDlgDescription"
-          Value="Grepfeed attempts to start a server at http://127.0.0.1:3000. If the port is alredy in use, stop whatever is listening on 3000, rerun this installer, edit [INSTALLFOLDER]grepfeed.xml, restart the service manually (e.g., `Restart-Service -Name grepfeed`), then restart whatever was listening on 3000. Log files: $env:SystemRoot/Temp/grepfeed*" />
+          Value="The .msi starts a server at http://127.0.0.1:3000. If the port is occupied, edit [INSTALLFOLDER]grepfeed.xml aftewards and manually restart the service. Logs: $env:SystemRoot/Temp/grepfeed*." />
 </WixLocalization>
