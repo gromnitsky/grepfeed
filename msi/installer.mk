@@ -13,7 +13,7 @@ clean:
 
 src := $(if $(findstring CYGWIN,$(shell uname)),`cygpath -wa $(w)`,$(w))
 
-$(out)/$(prog).msi: msi/installer.wxs .wix/.deps $(addprefix $(w)/, icon.ico grepfeed.xml node.exe WinSW-x64.exe package/package.json license.rtf)
+$(out)/$(prog).msi: msi/installer.wxs msi/$(wildcard *.wxl) .wix/.deps $(addprefix $(w)/, icon.ico grepfeed.xml node.exe WinSW-x64.exe package/package.json license.rtf)
 	wix build $< -loc msi/en-us.wxl -ext WixToolset.Util.wixext -ext WixToolset.UI.wixext -arch x64 -out $@ -d SourceDir=$(src) -d Version=$(ver)
 
 .wix/.deps:
