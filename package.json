@@ -1,6 +1,6 @@
 {
     "name": "grepfeed",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "Filters out rss/atom feeds. Returns articles matching a pattern. The output can be another valid xml feed.",
     "keywords": [
         "grep",
@@ -20,7 +20,7 @@
     "dependencies": {
         "addressparser": "~1.0.1",
         "ent": "~2.2.0",
-        "feedparser": "~2.2.9",
+        "feedparser": "~2.3.1",
         "lodash.get": "~4.4.2",
         "lodash.words": "~4.2.0",
         "mime": "~4.0.1",
@@ -28,16 +28,15 @@
         "parse5": "~7.1.2"
     },
     "devDependencies": {
-        "@babel/cli": "~7.23.9",
-        "@babel/core": "~7.24.0",
-        "@babel/preset-react": "~7.23.3",
-        "@rollup/plugin-commonjs": "~25.0.7",
-        "@rollup/plugin-node-resolve": "~15.2.3",
-        "eslint-plugin-react": "~7.34.0",
+        "@babel/cli": "~7.28.6",
+        "@babel/core": "~7.29.0",
+        "@babel/preset-react": "~7.28.5",
+        "@rollup/plugin-commonjs": "~29.0.2",
+        "@rollup/plugin-node-resolve": "~16.0.3",
         "nprogress": "~0.2.0",
         "react": "~17.0.2",
         "react-dom": "~17.0.2",
-        "rollup": "~4.13.0",
+        "rollup": "~4.60.1",
         "rollup-plugin-node-polyfills": "~0.2.1",
         "shellwords-ts": "~3.0.1"
     },
